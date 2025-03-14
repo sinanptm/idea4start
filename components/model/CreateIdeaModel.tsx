@@ -86,7 +86,7 @@ const CreateIdeaModel = ({ open, onOpenChange }: CreateIdeaModelProps) => {
                   <div className="space-y-3">
                     <LabeledInput
                       label="Tags (required)"
-                      placeholder="Add relevant tags (e.g., AI, Mobile, SaaS), press comma to add"
+                      placeholder="Add relevant tags , press comma to add"
                       onChange={handleTagInput}
                       error={errors.tags?.message}
                     />
@@ -123,7 +123,7 @@ const CreateIdeaModel = ({ open, onOpenChange }: CreateIdeaModelProps) => {
 
                   <LabeledInput
                     label="Email (optional)"
-                    placeholder="your@email.com"
+                    placeholder="johnwick@gmail.com"
                     type="email"
                     {...register("userEmail")}
                     error={errors.userEmail?.message}
@@ -131,14 +131,14 @@ const CreateIdeaModel = ({ open, onOpenChange }: CreateIdeaModelProps) => {
                   
                   <LabeledInput
                     label="Name (optional)"
-                    placeholder="Your full name"
+                    placeholder="John Wick"
                     {...register("userName")}
                     error={errors.userName?.message}
                   />
                   
                   <LabeledInput
-                    label="Buy Me a Coffee URL (optional)"
-                    placeholder="https://www.buymeacoffee.com/sinanz"
+                    label="Your Buy Me a Coffee URL (optional)"
+                    placeholder="https://www.buymeacoffee.com/johnwick"
                     {...register("userBuyMeACoffeeUrl")}
                     error={errors.userBuyMeACoffeeUrl?.message}
                   />
@@ -162,6 +162,7 @@ const CreateIdeaModel = ({ open, onOpenChange }: CreateIdeaModelProps) => {
                   <RelatedUrlSelector
                     onSelect={(urls) => setValue("relatedUrls", urls)}
                     error={errors.relatedUrls?.message}
+                    defaultValue={watch("relatedUrls")}
                   />
                 
 
@@ -172,10 +173,12 @@ const CreateIdeaModel = ({ open, onOpenChange }: CreateIdeaModelProps) => {
                   />
 
                   <LabeledTextarea
-                    label="Milestones (optional)"
-                    placeholder="Enter your milestones"
-                    {...register("milestones")}
+                    label="Risks (optional)"
+                    placeholder="What are the risks associated with your startup idea? How can you mitigate them?"
+                    {...register("risks")}
+                    error={errors.risks?.message}
                   />
+                  
                 </TabsContent>
               </div>
             </Tabs>

@@ -1,12 +1,13 @@
 "use client";
 
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Label } from '../ui/label';
 import MultipleSelector, { Option } from '../ui/multiselect';
 
 interface IndustrySelectorProps {
   onSelect: (industries: string[]) => void;
   error?: string;
+  defaultValue?: string[];
 }
 
 const defaultIndustries: Option[] = [
@@ -22,8 +23,12 @@ const defaultIndustries: Option[] = [
   { value: 'Food & Beverage', label: 'Food & Beverage' }
 ];
 
-const IndustrySelector = ({ onSelect, error }: IndustrySelectorProps) => {
+const IndustrySelector = ({ onSelect, error, defaultValue }: IndustrySelectorProps) => {
   const [selectedIndustries, setSelectedIndustries] = useState<Option[]>([]);
+
+  useEffect(() => {
+    setSelectedIndustries(defaultValue?.map(industry => ({ label: industry, value: industry })) || []);
+  }, [defaultValue]);
 
   const handleSelect = (options: Option[]) => {
     setSelectedIndustries(options);
@@ -37,8 +42,7 @@ const IndustrySelector = ({ onSelect, error }: IndustrySelectorProps) => {
         commandProps={{
           label: "Select industries",
         }}
-        value={selectedIndustries}
-        defaultOptions={defaultIndustries}
+        value={selectedIndustries}       
         placeholder="Select industries"
         hideClearAllButton={false}
         hidePlaceholderWhenSelected

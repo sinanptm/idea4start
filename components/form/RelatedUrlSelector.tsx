@@ -7,9 +7,10 @@ import MultipleSelector, { Option } from '../ui/multiselect';
 interface RelatedUrlSelectorProps {
   onSelect: (urls: string[]) => void;
   error?: string;
+  defaultValue?: string[];
 }
 
-const RelatedUrlSelector = ({ onSelect, error }: RelatedUrlSelectorProps) => {
+const RelatedUrlSelector = ({ onSelect, error, defaultValue }: RelatedUrlSelectorProps) => {
   const [selectedUrls, setSelectedUrls] = useState<Option[]>([]);
 
   const handleSelect = (options: Option[]) => {
@@ -34,7 +35,7 @@ const RelatedUrlSelector = ({ onSelect, error }: RelatedUrlSelectorProps) => {
           label: "Add related URLs",
         }}
         value={selectedUrls}
-        defaultOptions={[]}
+        defaultOptions={defaultValue?.map(url => ({ label: url, value: url })) || []}
         placeholder="Enter URLs (e.g., website, GitHub)"
         hideClearAllButton={false}
         hidePlaceholderWhenSelected
