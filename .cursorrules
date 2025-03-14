@@ -1,0 +1,50 @@
+{
+  "rules": [
+    {
+      "name": "Initial Prompt Execution",
+      "description": "Execute all setup requirements and generate the complete initial codebase before proceeding.",
+      "sequential": true,
+      "steps": [
+        "Execute all setup requirements as specified in .initial-prompt.",
+        "Generate the complete initial codebase.",
+        "Index and document the current structure.",
+        "Verify all implementation steps.",
+        "Log completion status before proceeding to .features."
+      ]
+    },
+    {
+      "name": "Feature Implementation",
+      "description": "Generate and integrate all features defined in .features without modifying the initial structure.",
+      "sequential": true,
+      "steps": [
+        "Begin only after .initial-prompt completion.",
+        "Implement all feature specifications from .features.",
+        "Ensure seamless integration with the initial codebase.",
+        "Verify proper functionality before proceeding to .seo-guidelines."
+      ]
+    },
+    {
+      "name": "SEO Implementation",
+      "description": "Optimize for search engines based on .seo-guidelines.",
+      "sequential": true,
+      "steps": [
+        "Implement structured data (schema markup) for improved search visibility.",
+        "Ensure metadata, Open Graph, and performance optimizations are applied.",
+        "Generate XML sitemap and configure robots.txt for better indexing.",
+        "Verify all optimizations before proceeding to .development-guidelines."
+      ]
+    },
+    {
+      "name": "Development Guidelines Adherence",
+      "description": "Maintain coding standards, performance, and modularity as per .development-guidelines.",
+      "sequential": true,
+      "steps": [
+        "Ensure modular, scalable, and maintainable code.",
+        "Optimize code for performance and scalability.",
+        "Enforce best practices across frontend and backend.",
+        "Perform a final verification before project completion."
+      ]
+    }
+  ]
+}
+
