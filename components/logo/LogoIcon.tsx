@@ -6,7 +6,7 @@ import  { memo } from 'react'
 const LogoIcon = ({ className }: { className?: string }) => {
   return (
     <Link href="/" className={cn("flex items-center gap-2", className)}>
-        <GalleryVerticalEnd size={32} />
+        <GalleryVerticalEnd aria-hidden="true" size={32} />
     </Link>
   )
 }

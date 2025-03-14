@@ -1,3 +1,16 @@
+import { ReactNode } from "react";
+
 export type RootLayoutProps = {
-    children: React.ReactNode;
+    children: ReactNode;
 }
+
+export type ContainerProps = {
+    children: ReactNode;
+}
+
+
+export type CreateIdeaModelProps = {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+}
+

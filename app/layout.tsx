@@ -1,12 +1,9 @@
-import { ThemeProvider } from "@/components/theame-provider";
-import { RootLayoutProps } from "@/types/props";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { ThemeProvider } from "@/components/layout/theame-provider";
 import Sidebar from "@/components/layout/Sidebar";
-import { Fira_Code } from "next/font/google";
 import NavBar from "@/components/layout/NavBar";
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
+import { RootLayoutProps } from "@/types/props";
+import { Fira_Code } from "next/font/google";
 import "../styles/globals.css";
 
 const firaCode = Fira_Code({ subsets: ['latin'] });

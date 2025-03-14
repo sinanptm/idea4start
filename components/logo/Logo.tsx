@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import LogoIcon from './Icon';
-import LogoName from './Name';
+import LogoIcon from './LogoIcon';
+import LogoName from './LogoName';
 
 const Logo = () => {
     return (

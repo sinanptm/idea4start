@@ -17,7 +17,7 @@ const NavMain = () => {
                 prefetch={true}
                 className="flex items-center"
               >
-                {link.icon && <link.icon className="mr-2" />}
+                {link.icon && <link.icon aria-hidden="true" className="mr-2" />}
                 <span>{link.title}</span>
               </Link>
             </SidebarMenuButton>

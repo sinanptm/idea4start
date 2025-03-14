@@ -14,7 +14,7 @@ const NavBar = () => {
 
     if (!isMobile) {
         return (
-            <header className="flex h-7 shrink-0 items-center gap-2 px-4 transition-all duration-200 ease-in-out" />
+            <header className="flex h-3 shrink-0 items-center gap-2 px-4 transition-all duration-200 ease-in-out" />
         );
     }
 
@@ -53,7 +53,7 @@ const NavBar = () => {
                     </SheetContent>
                 </Sheet>
             </header>
-            <div className="py-2" />
+            <div className="pb-1 md:pb-0" />
         </>
     );
 };
