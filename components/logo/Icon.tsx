@@ -3,7 +3,7 @@ import { GalleryVerticalEnd } from 'lucide-react';
 import Link from 'next/link';
 import  { memo } from 'react'
 
-const Logo = ({ className }: { className?: string }) => {
+const LogoIcon = ({ className }: { className?: string }) => {
   return (
     <Link href="/" className={cn("flex items-center gap-2", className)}>
         <GalleryVerticalEnd size={32} />
@@ -11,4 +11,4 @@ const Logo = ({ className }: { className?: string }) => {
   )
 }
 
-export default memo(Logo)
+export default memo(LogoIcon)

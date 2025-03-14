@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import { APP_NAME } from '@/constants'
-const Name = () => {
+
+const LogoName = () => {
   return (
     <span className="text-xl font-bold">
         {APP_NAME}
@@ -8,4 +9,4 @@ const Name = () => {
   )
 }
 
-export default memo(Name)
+export default memo(LogoName)
