@@ -42,7 +42,8 @@ const IndustrySelector = ({ onSelect, error, defaultValue }: IndustrySelectorPro
         commandProps={{
           label: "Select industries",
         }}
-        value={selectedIndustries}       
+        value={selectedIndustries} 
+        defaultOptions={defaultIndustries}
         placeholder="Select industries"
         hideClearAllButton={false}
         hidePlaceholderWhenSelected
