@@ -7,7 +7,6 @@ import { useEffect } from "react";
 
 import { cn } from "@/lib/utils";
 import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-import { Label } from "@radix-ui/react-label";
 
 export interface Option {
   value: string;

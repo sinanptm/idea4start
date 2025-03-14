@@ -108,6 +108,7 @@ const SearchInput = ({
                 )}
                 onClick={() => onSuggestionClick?.(suggestion)}
                 role="option"
+                aria-selected
                 tabIndex={0}
               >
                 {suggestion}
