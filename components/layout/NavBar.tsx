@@ -6,7 +6,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import NavMain from "./NavMain";
-import BuyMeACoffee from "./BuyMeACoffee";
+import BuyMeACoffee from "./SideBarFooter";
 import Logo from "../logo/Logo";
 
 const NavBar = () => {

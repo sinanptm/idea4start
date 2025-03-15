@@ -1,4 +1,3 @@
-import React from 'react';
 import CreteIdea from './CreteIdea';
 
 const HeaderSection = () => {

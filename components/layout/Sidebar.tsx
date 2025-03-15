@@ -1,7 +1,7 @@
 "use client";
 
 import { ComponentProps, memo } from "react";
-import BuyMeACoffee from "./BuyMeACoffee";
+import SideBarFooter from "./SideBarFooter";
 import {
   Sidebar as SidebarComponent,
   SidebarContent,
@@ -40,7 +40,7 @@ const Sidebar = ({ ...props }: ComponentProps<typeof SidebarComponent>) => {
         <NavMain />
       </SidebarContent>
       <SidebarFooter>
-        <BuyMeACoffee />
+        <SideBarFooter />
       </SidebarFooter>
       <SidebarRail />
     </SidebarComponent>
