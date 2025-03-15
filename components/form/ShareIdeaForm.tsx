@@ -42,10 +42,11 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
         title: "Success",
         description: "Idea submitted successfully",
       });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
       toast({
         title: "Error",
-        description: "Failed to submit idea",
+        description: error.message || "Failed to submit idea",
         variant: "destructive",
       });
     }
