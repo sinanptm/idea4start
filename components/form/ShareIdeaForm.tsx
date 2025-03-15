@@ -15,9 +15,12 @@ import { BusinessModel } from "@/types";
 import SelectWithSearch from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { createIdea } from "@/actions";
+import { useToast } from "@/hooks/useToast";
 
 const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
   const [tags, setTags] = useState<string[]>([]);
+  const { toast } = useToast();
 
   const {
     register,
@@ -31,11 +34,19 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
 
   const onSubmit = async (data: CreateIdeaInput) => {
     try {
-      console.log(data);
-      // Handle form submission logic here
+      await createIdea(data);
       onSuccess();
+      toast({
+        title: "Success",
+        description: "Idea submitted successfully",
+      });
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast({
+        title: "Error",
+        description: "Failed to submit idea",
+        variant: "destructive",
+      });
     }
   };
 

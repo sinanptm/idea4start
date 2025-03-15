@@ -1,4 +1,4 @@
-export interface Idea {
+export interface IIdea {
     _id: string;
     title: string;
     description: string;
@@ -10,18 +10,14 @@ export interface Idea {
     userBuyMeACoffeeUrl?: string;
     industry?: string[];
     tags?: string[];
-    isDeleted?: boolean;
     upVotes?: number;
     downVotes?: number;
     problemStatement?: string;
     relatedUrls?: string[];
-    competitiveAnalysis?: {
-        competitors?: string[];
-        uniqueValue?: string;
-    };
     stage?: Stage;
     risks?: string[];
     businessModel?: BusinessModel;
+    voteScore?: number;
 }
 
 export type Stage = 'idea' | 'validation' | 'prototype' | 'mvp' | 'launched';
