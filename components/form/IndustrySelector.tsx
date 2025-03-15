@@ -11,23 +11,23 @@ interface IndustrySelectorProps {
 }
 
 const defaultIndustries: Option[] = [
-  { value: 'Technology', label: 'Technology' },
-  { value: 'Healthcare', label: 'Healthcare' },
-  { value: 'Finance', label: 'Finance' },
-  { value: 'Education', label: 'Education' },
-  { value: 'E-commerce', label: 'E-commerce' },
-  { value: 'Manufacturing', label: 'Manufacturing' },
-  { value: 'Real Estate', label: 'Real Estate' },
-  { value: 'Transportation', label: 'Transportation' },
-  { value: 'Entertainment', label: 'Entertainment' },
-  { value: 'Food & Beverage', label: 'Food & Beverage' }
+  { value: 'Technology' },
+  { value: 'Healthcare' },
+  { value: 'Finance' },
+  { value: 'Education' },
+  { value: 'E-commerce' },
+  { value: 'Manufacturing' },
+  { value: 'Real Estate' },
+  { value: 'Transportation' },
+  { value: 'Entertainment' },
+  { value: 'Food & Beverage' }
 ];
 
 const IndustrySelector = ({ onSelect, error, defaultValue }: IndustrySelectorProps) => {
   const [selectedIndustries, setSelectedIndustries] = useState<Option[]>([]);
 
   useEffect(() => {
-    setSelectedIndustries(defaultValue?.map(industry => ({ label: industry, value: industry })) || []);
+    setSelectedIndustries(defaultValue?.map(industry => ({ value: industry })) || []);
   }, [defaultValue]);
 
   const handleSelect = (options: Option[]) => {
@@ -37,7 +37,7 @@ const IndustrySelector = ({ onSelect, error, defaultValue }: IndustrySelectorPro
 
   return (
     <div className="*:not-first:mt-2">
-      <Label>Industry</Label>
+      <Label>Industry </Label>
       <MultipleSelector
         commandProps={{
           label: "Select industries",

@@ -29,7 +29,7 @@ const LabeledInput = ({ label, error, ...props }: { label: string; error?: strin
         <Input id={id} {...props} />
         {error && (
           <p
-            className="peer-aria-invalid:text-destructive mt-2 text-xs"
+            className="text-destructive mt-2 text-xs"
             role="alert"
             aria-live="polite"
           >

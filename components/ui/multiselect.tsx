@@ -10,7 +10,6 @@ import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui
 
 export interface Option {
   value: string;
-  label: string;
   disable?: boolean;
   /** fixed option that can't be removed. */
   fixed?: boolean;
@@ -442,7 +441,7 @@ const MultipleSelector = ({
                 data-fixed={option.fixed}
                 data-disabled={disabled || undefined}
               >
-                {option.label}
+                {option.value}
                 <button
                   className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute -inset-y-px -end-px flex size-7 items-center justify-center rounded-e-md border border-transparent p-0 outline-hidden transition-[color,box-shadow] outline-none focus-visible:ring-[3px]"
                   onKeyDown={(e) => {
@@ -574,7 +573,7 @@ const MultipleSelector = ({
                                   "pointer-events-none cursor-not-allowed opacity-50",
                               )}
                             >
-                              {option.label}
+                              {option.value}
                             </CommandItem>
                           );
                         })}

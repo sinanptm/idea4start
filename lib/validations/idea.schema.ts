@@ -15,15 +15,16 @@ export const createIdeaSchema = z.object({
   tags: z.array(z.string()).min(1, "Add at least one tag"),
   uniqueValue: z.string().min(15, "Unique value proposition must be at least 15 characters").optional(),
   relatedUrls: z.array(z.string()).optional(),
-  userName: z.string().min(3, "Name must be at least 3 characters").optional(),
-  userEmail: z.string().email("Invalid email address").optional(),
+  userName: z.string().optional(),
+  userEmail: z.string().email("Invalid email address").optional().or(z.literal("")),
   userBuyMeACoffeeUrl: z.string().optional(),
   milestones: z.object({
     shortTerm: z.array(z.string()).optional(),
     mediumTerm: z.array(z.string()).optional(),
     longTerm: z.array(z.string()).optional(),
   }).optional(),
-  risks: z.array(z.string()).optional(),
+  risks: z.string().optional(),
+  businessModel: z.array(z.string()).optional(),
 });
 
 export type CreateIdeaInput = z.infer<typeof createIdeaSchema>;

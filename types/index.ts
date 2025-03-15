@@ -19,15 +19,39 @@ export interface Idea {
         competitors?: string[];
         uniqueValue?: string;
     };
-    stage?: 'idea' | 'validation' | 'prototype' | 'mvp' | 'launched';
+    stage?: Stage;
     risks?: string[];
-    milestones?: {
-        shortTerm?: string[];
-        mediumTerm?: string[];
-        longTerm?: string[];
-    };
+    businessModel?: BusinessModel;
 }
 
+export type Stage = 'idea' | 'validation' | 'prototype' | 'mvp' | 'launched';
+export enum BusinessModel {
+    saas = 'saas',
+    physicalProduct = 'physicalProduct',
+    subscription = 'subscription',
+    adModel = 'adModel',
+    membership = 'membership',
+    freemium = 'freemium',
+    marketplace = 'marketplace',
+    licensing = 'licensing',
+    oneTimePurchase = 'oneTimePurchase',
+    transactionFee = 'transactionFee',
+    affiliateMarketing = 'affiliateMarketing',
+    consulting = 'consulting',
+    crowdsourcing = 'crowdsourcing',
+    payPerUse = 'payPerUse',
+    dataMonetization = 'dataMonetization',
+    hardwarePlusSoftware = 'hardwarePlusSoftware',
+    platformAsAService = 'platformAsAService',
+    blockchainBased = 'blockchainBased',
+    donationBased = 'donationBased',
+    bundling = 'bundling',
+    franchise = 'franchise',
+    peerToPeer = 'peerToPeer',
+    cooperative = 'cooperative',
+    sponsorship = 'sponsorship',
+    other = 'other',
+}
 
 
 export interface StageConfig {

@@ -1,18 +1,18 @@
-'use client';
 
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { Button } from './ui/button';
 import { Lightbulb } from 'lucide-react';
-import CreateIdeaModel from './model/CreateIdeaModel';
-const CreteIdea = () => {
-  const [isOpen, setIsOpen] = useState(false);
+import Link from 'next/link';
 
+const CreteIdea = () => {
   return (
-    <div>
+    <Link
+      href="/share-idea"
+      prefetch={true}
+    >
       <Button
         variant="outline"
         className="aspect-square max-sm:p-0 bg-sidebar"
-        onClick={() => setIsOpen(true)}
       >
         <Lightbulb
           className="sm:-ms-1 text-yellow-300 h-10 w-10"
@@ -20,8 +20,7 @@ const CreteIdea = () => {
         />
         <span className="max-sm:sr-only">Create New Idea</span>
       </Button>
-      <CreateIdeaModel open={isOpen} onOpenChange={setIsOpen} />
-    </div>
+    </Link>
   );
 };
 

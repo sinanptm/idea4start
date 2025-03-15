@@ -29,13 +29,13 @@ const RelatedUrlSelector = ({ onSelect, error, defaultValue }: RelatedUrlSelecto
 
   return (
     <div className="*:not-first:mt-2">
-      <Label>Related URLs (optional)</Label>
+      <Label>Related URLs </Label>
       <MultipleSelector
         commandProps={{
           label: "Add related URLs",
         }}
         value={selectedUrls}
-        defaultOptions={defaultValue?.map(url => ({ label: url, value: url })) || []}
+        defaultOptions={defaultValue?.map(url => ({ value: url })) || []}
         placeholder="Enter URLs (e.g., website, GitHub)"
         hideClearAllButton={false}
         hidePlaceholderWhenSelected

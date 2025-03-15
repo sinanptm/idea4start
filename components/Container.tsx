@@ -3,7 +3,7 @@ import { memo } from "react";
 
 const Container = ({ children }: ContainerProps) => {
   return (
-    <main className="min-h-screen p-3">
+    <main className="min-h-screen p-3 mx-auto max-w-7xl">
         {children}
     </main>
   )

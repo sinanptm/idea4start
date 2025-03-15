@@ -13,4 +13,3 @@ export type CreateIdeaModelProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
 }
-
