@@ -49,6 +49,15 @@ export enum BusinessModel {
     other = 'other',
 }
 
+export enum StatusCode{
+    Created = 201,
+    BadRequest = 400,
+    Unauthorized = 401,
+    Forbidden = 403,
+    NotFound = 404,
+    InternalServerError = 500,
+    Ok = 200,
+}
 
 export interface StageConfig {
     value: 'idea' | 'validation' | 'prototype' | 'mvp' | 'launched';

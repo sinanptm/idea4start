@@ -37,7 +37,7 @@ const IndustrySelector = ({ onSelect, error, defaultValue }: IndustrySelectorPro
 
   return (
     <div className="*:not-first:mt-2">
-      <Label>Industry </Label>
+      <Label>Industry *</Label>
       <MultipleSelector
         commandProps={{
           label: "Select industries",

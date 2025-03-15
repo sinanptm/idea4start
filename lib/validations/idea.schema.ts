@@ -24,7 +24,7 @@ export const createIdeaSchema = z.object({
     longTerm: z.array(z.string()).optional(),
   }).optional(),
   risks: z.string().optional(),
-  businessModel: z.array(z.string()).optional(),
+  businessModel: z.array(z.string()).min(1, "Select at least one business model")
 });
 
 export type CreateIdeaInput = z.infer<typeof createIdeaSchema>;

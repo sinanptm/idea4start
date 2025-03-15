@@ -10,7 +10,12 @@ export const errorCatcher = (fn: Function) => {
     try {
       return await fn(...args);
     } catch (error) {
+      console.log("error", error);
       throw new Error(error instanceof Error ? error.message : "Something went wrong");
     }
   }
+}
+
+export function serializeData<T>(data: T): T {
+  return JSON.parse(JSON.stringify(data));
 }

@@ -28,6 +28,7 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
     formState: { errors, isSubmitting },
     setValue,
     watch,
+    reset,
   } = useForm<CreateIdeaInput>({
     resolver: zodResolver(createIdeaSchema),
   });
@@ -36,12 +37,12 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
     try {
       await createIdea(data);
       onSuccess();
+      reset();
       toast({
         title: "Success",
         description: "Idea submitted successfully",
       });
-    } catch (error) {
-      console.error("Error submitting form:", error);
+    } catch (error:any) {
       toast({
         title: "Error",
         description: "Failed to submit idea",
@@ -165,7 +166,7 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
             />
 
             <LabeledTextarea
-              label="Unique Value Proposition "
+              label="Unique Value Proposition *"
               placeholder="What makes your solution unique? Why would customers choose your solution over alternatives?"
               {...register("uniqueValue")}
               error={errors.uniqueValue?.message}
@@ -183,9 +184,9 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
                 value: model,
                 label: model,
               }))}
-              value={watch("businessModel")?.join(",") || ""}
-              label="Business Model "
-              onChange={(value) => setValue("businessModel", value.split(","))}
+              value={watch("businessModel")?.[0] || ""}
+              label="Business Model *"
+              onChange={(value) => setValue("businessModel", [value])}
               error={errors.businessModel?.message}
             />
 

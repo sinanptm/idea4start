@@ -1,4 +1,4 @@
-import { IIdea , BusinessModel } from "@/types";
+import { IIdea  } from "@/types";
 import { Model, model, models, Schema } from "mongoose";
 
 const ideaSchema = new Schema<IIdea>({
@@ -6,14 +6,10 @@ const ideaSchema = new Schema<IIdea>({
         type: String, 
         required: true,
         trim: true,
-        minlength: [3, 'Title must be at least 3 characters long'],
-        maxlength: [100, 'Title cannot exceed 100 characters']
     },
     description: { 
         type: String, 
         required: true,
-        minlength: [10, 'Description must be at least 10 characters long'],
-        maxlength: [2000, 'Description cannot exceed 2000 characters']
     },
     isPublic: {
         type: Boolean,
@@ -28,23 +24,10 @@ const ideaSchema = new Schema<IIdea>({
     userName: {
         type: String,
         trim: true,
-        maxlength: [50, 'Name cannot exceed 50 characters']
     },
     userBuyMeACoffeeUrl: {
         type: String,
-        trim: true,
-        validate: {
-            validator: function(v: string) {
-                if (!v) return true; 
-                try {
-                    new URL(v);
-                    return true;
-                } catch (e) {
-                    return false;
-                }
-            },
-            message: 'Please enter a valid URL'
-        }
+        trim: true
     },
     industry: [{
         type: String,
@@ -58,7 +41,6 @@ const ideaSchema = new Schema<IIdea>({
     upVotes: {
         type: Number,
         default: 0,
-        min: 0
     },
     downVotes: {
         type: Number,
@@ -67,7 +49,6 @@ const ideaSchema = new Schema<IIdea>({
     problemStatement: {
         type: String,
         trim: true,
-        maxlength: [1000, 'Problem statement cannot exceed 1000 characters']
     },
     relatedUrls: [{
         type: String,
@@ -86,11 +67,7 @@ const ideaSchema = new Schema<IIdea>({
         trim: true
     }],
     businessModel: {
-        type: String,
-        enum: {
-            values: Object.values(BusinessModel),
-            message: '{VALUE} is not a valid business model'
-        }
+        type: String
     }
 }, {
     timestamps: true,

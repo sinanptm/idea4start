@@ -6,7 +6,7 @@ import { StageConfig } from "@/types";
 import { FieldErrors, UseFormSetValue } from "react-hook-form";
 import { memo } from "react";
 import { STAGE_CONFIG } from "@/constants";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useMobile";
 
 interface StageSelectorProps {
   currentStage: StageConfig['value'];
