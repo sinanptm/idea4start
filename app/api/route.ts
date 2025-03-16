@@ -44,7 +44,6 @@ export const GET = async (req: Request) => {
             query.stage = stage;
         }
 
-        console.log('Final query:', JSON.stringify(query, null, 2)); // Debug log
 
         // Calculate skip for pagination
         const skip = (page - 1) * limit;

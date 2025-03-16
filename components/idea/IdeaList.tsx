@@ -2,7 +2,7 @@
 
 import IdeaCard from "@/components/idea/IdeaCard"
 import IdeaListPagination from "@/components/idea/IdeaListPagination"
-import IdeasListSkeleton from "@/components/idea/IdeaListSkeleton"
+import IdeasListSkeleton from "@/components/skeleton/IdeaListSkeleton"
 import useIdeasFilter from "@/hooks/useIdeasFilter"
 import useGetIdeas from "@/hooks/api/useGetIdeas"
 import { AlertCircle, Search, RefreshCw } from "lucide-react"
