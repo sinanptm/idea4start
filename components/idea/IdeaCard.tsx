@@ -1,3 +1,5 @@
+'use client'
+
 import type { IIdea } from "@/types"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"

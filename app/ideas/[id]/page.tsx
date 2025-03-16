@@ -1,38 +1,15 @@
 import Container from "@/components/Container";
-import { IIdea, BusinessModel } from "@/types";
+import { IIdea } from "@/types";
 import IdeaDetailHeader from "@/components/idea/IdeaDetailHeader";
 import IdeaDetailContent from "@/components/idea/IdeaDetailContent";
 import IdeaDetailSidebar from "@/components/idea/IdeaDetailSideBar";
 import IdeaComments from "@/components/idea/IdeaComments";
 import { notFound } from "next/navigation";
+import { MOCK_IDEAS } from "@/constants/mock";
 
 // This would normally be fetched server-side based on the ID
 const getMockIdea = (id: string): IIdea | undefined => {
-  const mockIdeas: IIdea[] = [
-    {
-      _id: "1",
-      title: "AI-Powered Content Generator for Small Businesses",
-      description: "A tool that helps small businesses create marketing content using AI, saving time and resources. The platform would analyze the business's brand voice, target audience, and marketing goals to generate tailored content for social media, email campaigns, and blog posts. Features would include templates, customization options, and performance analytics.",
-      createdAt: new Date("2023-10-15"),
-      updatedAt: new Date("2023-10-15"),
-      isPublic: true,
-      userName: "Sarah Johnson",
-      userEmail: "sarah@example.com",
-      userBuyMeACoffeeUrl: "https://buymeacoffee.com/sarahj",
-      industry: ["Marketing", "AI"],
-      tags: ["content", "ai", "marketing", "automation"],
-      upVotes: 42,
-      downVotes: 5,
-      problemStatement: "Small businesses struggle to create consistent, high-quality content for marketing due to limited resources, time constraints, and lack of specialized skills. This leads to inconsistent brand messaging and missed opportunities for customer engagement.",
-      relatedUrls: ["https://example.com/blog/ai-marketing", "https://example.com/research/small-business-challenges"],
-      stage: "prototype",
-      risks: ["AI content quality consistency", "Market saturation", "Regulatory changes around AI content"],
-      businessModel: BusinessModel.saas,
-      voteScore: 37
-    }
-  ];
-  
-  return mockIdeas.find(idea => idea._id === id);
+  return MOCK_IDEAS.find(idea => idea._id === id);
 };
 
 export default async function IdeaDetailPage({ params }: { params: Promise<{ id: string }> }  ) {
