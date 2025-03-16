@@ -1,8 +1,10 @@
 'use server';
+
 import connectDB from "@/lib/db/connect";
 import { IIdea } from "@/types";
 import Idea from "@/lib/db/models/Idea";
 import { CreateIdeaInput, createIdeaSchema } from "@/lib/validations/idea.schema";
+
 connectDB();
 
 export const createIdea = async (data: IIdea | CreateIdeaInput) => {

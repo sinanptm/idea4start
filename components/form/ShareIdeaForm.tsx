@@ -15,7 +15,7 @@ import { BusinessModel } from "@/types";
 import SelectWithSearch from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { createIdea } from "@/actions";
+import { createIdea } from "@/app/(server)/actions";
 import { useToast } from "@/hooks/useToast";
 
 const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
