@@ -2,6 +2,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ThemeProvider } from "@/components/layout/theameProvider";
 import QueryProvider from "@/components/layout/QueryProvider";
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { Analytics } from "@vercel/analytics/react";
 import Sidebar from "@/components/layout/Sidebar";
 import NavBar from "@/components/layout/NavBar";
 import { RootLayoutProps } from "@/types/props";
@@ -25,18 +26,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
-            <Sidebar />
-            <SidebarInset>
-              <NavBar />
-              <QueryProvider>
-                <NuqsAdapter>
+          <QueryProvider>
+            <NuqsAdapter>
+              <SidebarProvider>
+                <Sidebar />
+                <SidebarInset>
+                  <NavBar />
                   {children}
-                </NuqsAdapter>
-              </QueryProvider>
-              <Toaster />
-            </SidebarInset>
-          </SidebarProvider>
+                  <Analytics mode="auto" />
+                  <Toaster />
+                </SidebarInset>
+              </SidebarProvider>
+            </NuqsAdapter>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
