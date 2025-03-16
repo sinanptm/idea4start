@@ -66,3 +66,9 @@ export interface StageConfig {
     description: string;
     color: string;
   }
+
+export interface Pagination {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+}

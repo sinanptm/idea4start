@@ -36,8 +36,7 @@ export const IDEA_SORT_OPTIONS = [
     value: 'topvoted',
     label: 'Top Voted',
     icon: ThumbsUp,
-  },
-  
+  }
 ];
 
 export const STAGE_CONFIG: StageConfig[] = [

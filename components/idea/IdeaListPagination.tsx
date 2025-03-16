@@ -8,6 +8,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import useIdeasFilter from "@/hooks/useIdeasFilter";
 
 type PaginationProps = {
     currentPage: number;
@@ -21,6 +22,7 @@ const IdeaListPagination = ({ currentPage, totalPages, paginationItemsToDisplay 
         totalPages,
         paginationItemsToDisplay,
     });
+    const { setPage } = useIdeasFilter();
 
     return (
         <Pagination>
@@ -28,10 +30,9 @@ const IdeaListPagination = ({ currentPage, totalPages, paginationItemsToDisplay 
                 {/* Previous page button */}
                 <PaginationItem>
                     <PaginationPrevious
-                        className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
-                        href={currentPage === 1 ? undefined : `/ideas?page=${currentPage - 1}`}
-                        aria-disabled={currentPage === 1 ? true : undefined}
-                        role={currentPage === 1 ? "link" : undefined}
+                        className="cursor-pointer aria-disabled:pointer-events-none aria-disabled:opacity-50"
+                        onClick={() => currentPage > 1 && setPage(currentPage - 1)}
+                        aria-disabled={currentPage === 1}
                     />
                 </PaginationItem>
 
@@ -42,11 +43,15 @@ const IdeaListPagination = ({ currentPage, totalPages, paginationItemsToDisplay 
                     </PaginationItem>
                 )}
 
-                {/* Page number links */}
-                {pages.map((page) => (
-                    <PaginationItem key={page}>
-                        <PaginationLink href={`/ideas?page=${page}`} isActive={page === currentPage}>
-                            {page}
+                {/* Page number buttons */}
+                {pages.map((pageNum) => (
+                    <PaginationItem key={pageNum}>
+                        <PaginationLink 
+                            onClick={() => setPage(pageNum)}
+                            isActive={pageNum === currentPage}
+                            className="cursor-pointer"
+                        >
+                            {pageNum}
                         </PaginationLink>
                     </PaginationItem>
                 ))}
@@ -61,10 +66,9 @@ const IdeaListPagination = ({ currentPage, totalPages, paginationItemsToDisplay 
                 {/* Next page button */}
                 <PaginationItem>
                     <PaginationNext
-                        className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
-                        href={currentPage === totalPages ? undefined : `/ideas?page=${currentPage + 1}`}
-                        aria-disabled={currentPage === totalPages ? true : undefined}
-                        role={currentPage === totalPages ? "link" : undefined}
+                        className="cursor-pointer aria-disabled:pointer-events-none aria-disabled:opacity-50"
+                        onClick={() => currentPage < totalPages && setPage(currentPage + 1)}
+                        aria-disabled={currentPage === totalPages}
                     />
                 </PaginationItem>
             </PaginationContent>

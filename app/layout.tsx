@@ -1,5 +1,6 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { ThemeProvider } from "@/components/layout/theame-provider";
+import { ThemeProvider } from "@/components/layout/theameProvider";
+import QueryProvider from "@/components/layout/QueryProvider";
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import Sidebar from "@/components/layout/Sidebar";
 import NavBar from "@/components/layout/NavBar";
@@ -28,9 +29,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <Sidebar />
             <SidebarInset>
               <NavBar />
-              <NuqsAdapter>
-                {children}
-              </NuqsAdapter>
+              <QueryProvider>
+                <NuqsAdapter>
+                  {children}
+                </NuqsAdapter>
+              </QueryProvider>
               <Toaster />
             </SidebarInset>
           </SidebarProvider>
