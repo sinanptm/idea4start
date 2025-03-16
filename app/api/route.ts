@@ -19,7 +19,7 @@ export const GET = async (req: Request) => {
         const sort = searchParams.get('sort') || 'trending';
         const stage = searchParams.get('stage') || 'all';
 
-        // Build query
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const query: any = {
             isPublic: true
         };

@@ -1,8 +1,8 @@
 "use client";
 
 import { memo, useState } from 'react';
-import { Label } from '../ui/label';
-import MultipleSelector, { Option } from '../ui/multiselect';
+import { Label } from '@/components/ui/label';
+import MultipleSelector, { Option } from '@/components/ui/multiselect';
 
 interface RelatedUrlSelectorProps {
   onSelect: (urls: string[]) => void;

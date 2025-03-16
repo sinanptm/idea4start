@@ -1,17 +1,17 @@
 "use client";
 
+import { createIdeaSchema, type CreateIdeaInput } from "@/lib/validations/idea.schema";
+import RelatedUrlSelector from "@/components/form/elements/RelatedUrlSelector";
+import IndustrySelector from "@/components/form/elements/IndustrySelector";
+import StageSelector from "@/components/form/elements/StageSelector";
 import { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createIdeaSchema, type CreateIdeaInput } from "@/lib/validations/idea.schema";
 import { LabeledInput } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import IndustrySelector from "@/components/form/IndustrySelector";
 import { LabeledTextarea } from "@/components/ui/textarea";
 import { HashIcon } from "lucide-react";
-import StageSelector from "@/components/form/StageSelector";
-import RelatedUrlSelector from "@/components/form/RelatedUrlSelector";
-import { BusinessModel, IIdea } from "@/types";
+import { BusinessModel } from "@/types";
 import SelectWithSearch from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";

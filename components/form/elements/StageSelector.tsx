@@ -32,6 +32,9 @@ const StageSelector = ({ currentStage, setValue, errors }: StageSelectorProps) =
       )}>
         {STAGE_CONFIG.map(({ value, label, icon: Icon, description, color }) => {
           const isSelected = currentStage === value;
+          if(value==="all"){
+            return null
+          }
           
           return (
             <button
