@@ -14,7 +14,7 @@ type GetIdeasProps = {
 
 
 const getIdeas = async ({ limit = 10, page = 1, sort = "trending", stage = "all", businessModel = "all", industry = "all", search = "" }: GetIdeasProps) => {
-    const res = await fetch(`${NEXT_PUBLIC_APP_URL}/api?limit=${limit}&page=${page}&sort=${sort}&stage=${stage}&businessModel=${businessModel}&industry=${industry}&search=${search}`);
+    const res = await fetch(`${NEXT_PUBLIC_APP_URL}/api/idea?limit=${limit}&page=${page}&sort=${sort}&stage=${stage}&businessModel=${businessModel}&industry=${industry}&search=${search}`);
     return res.json();
 };
 
