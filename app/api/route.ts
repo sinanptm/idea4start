@@ -8,14 +8,15 @@ connectDB();
 
 export const GET = async () => {
     try {
-        const ideas = await Idea.find()
-            .sort({ createdAt: -1 })
-            .lean();
+        const ideas = await Idea.find().lean();
+
+        const industries = await Idea.distinct("industry");
 
         return NextResponse.json({
             success: true,
             data: serializeData(ideas),
-            status: StatusCode.Ok
+            status: StatusCode.Ok,
+            industries: serializeData(industries)
         });
     } catch (error) {
         console.error('Error fetching ideas:', error);
@@ -25,4 +26,4 @@ export const GET = async () => {
             status: StatusCode.InternalServerError
         });
     }
-}
+};

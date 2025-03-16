@@ -1,4 +1,4 @@
-import CreteIdea from './CreteIdea';
+import ShareIdeaButton from './ShareIdeaButton';
 
 const HeaderSection = () => {
     return (
@@ -11,7 +11,7 @@ const HeaderSection = () => {
                         <span className="font-medium">0</span>
                     </div>
                 </div>
-                <CreteIdea />
+                <ShareIdeaButton />
             </div>
 
             <div className="grid gap-6">

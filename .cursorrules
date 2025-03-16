@@ -9,7 +9,8 @@
         "Generate the complete initial codebase.",
         "Index and document the current structure.",
         "Verify all implementation steps.",
-        "Log completion status before proceeding to .features."
+        "Log completion status before proceeding to .features.",
+        "always use memo for components"
       ]
     },
     {

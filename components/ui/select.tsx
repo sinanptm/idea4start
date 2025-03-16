@@ -57,7 +57,7 @@ const SelectWithSearch = ({ options, value, onChange, label, placeholder, error 
           align="start"
         >
           <Command>
-            <CommandInput placeholder="Search framework..." />
+            <CommandInput placeholder={placeholder} />
             <CommandList>
               <CommandEmpty>No options found.</CommandEmpty>
               <CommandGroup>

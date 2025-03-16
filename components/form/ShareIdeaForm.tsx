@@ -11,7 +11,7 @@ import { LabeledTextarea } from "@/components/ui/textarea";
 import { HashIcon } from "lucide-react";
 import StageSelector from "@/components/form/StageSelector";
 import RelatedUrlSelector from "@/components/form/RelatedUrlSelector";
-import { BusinessModel } from "@/types";
+import { BusinessModel, IIdea } from "@/types";
 import SelectWithSearch from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";

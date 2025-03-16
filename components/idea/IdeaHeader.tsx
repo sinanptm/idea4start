@@ -1,10 +1,15 @@
-'use client'
+'use client';
 
 import { Button } from "@/components/ui/button";
-import { PlusCircle, TrendingUp, Clock, ThumbsUp } from "lucide-react";
 import SelectWithSearch from "../ui/select";
+import ShareIdeaButton from "../ShareIdeaButton";
+import { IDEA_SORT_OPTIONS, STAGE_CONFIG } from "@/constants";
+import { cn } from "@/lib/utils";
+import useIdeasFilter from "@/hooks/useIdeasFilter";
 
 export default function IdeasHeader() {
+    const {setSort, setStage, sort, stage} = useIdeasFilter();
+
     return (
         <div className="space-y-4">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -15,41 +20,38 @@ export default function IdeasHeader() {
                     </p>
                 </div>
 
-                <Button className="flex items-center gap-2">
-                    <PlusCircle className="h-4 w-4" />
-                    <span>Share Idea</span>
-                </Button>
+                <ShareIdeaButton />
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t">
                 <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" className="flex items-center gap-1">
-                        <TrendingUp className="h-4 w-4" />
-                        <span>Trending</span>
-                    </Button>
-                    <Button variant="ghost" size="sm" className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        <span>Latest</span>
-                    </Button>
-                    <Button variant="ghost" size="sm" className="flex items-center gap-1">
-                        <ThumbsUp className="h-4 w-4" />
-                        <span>Top Voted</span>
-                    </Button>
+                    {IDEA_SORT_OPTIONS.map((option) => (
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className={cn(
+                                "flex items-center gap-1 hover:bg-muted",
+                                sort === option.value && "bg-primary text-primary-foreground"
+                            )}
+                            key={option.value}
+                            onClick={() => setSort(option.value)}
+                        >
+                            <option.icon className="h-4 w-4" />
+                            <span>{option.label}</span>
+                        </Button>
+                    ))}
                 </div>
 
                 <div className="w-full sm:w-auto">
                     <SelectWithSearch
-                        options={[
-                            { label: "All Stages", value: "all" },
-                            { label: "Idea", value: "idea" },
-                            { label: "Validation", value: "validation" },
-                            { label: "Prototype", value: "prototype" },
-                            { label: "MVP", value: "mvp" },
-                            { label: "Launched", value: "launched" },
-                        ]}
-                        value={""}
-                        onChange={() => { }}
-                        label={"All Stages"}
+                        options={STAGE_CONFIG.map((config) => ({
+                            label: config.label,
+                            value: config.value
+                        }))}
+                        value={stage}
+                        onChange={(value) => setStage(value)}
+                        label={""}
+                        placeholder={"Select Sage"}
                     />
                 </div>
             </div>

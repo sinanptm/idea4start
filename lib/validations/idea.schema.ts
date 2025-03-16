@@ -18,11 +18,6 @@ export const createIdeaSchema = z.object({
   userName: z.string().optional(),
   userEmail: z.string().email("Invalid email address").optional().or(z.literal("")),
   userBuyMeACoffeeUrl: z.string().optional(),
-  milestones: z.object({
-    shortTerm: z.array(z.string()).optional(),
-    mediumTerm: z.array(z.string()).optional(),
-    longTerm: z.array(z.string()).optional(),
-  }).optional(),
   risks: z.string().optional(),
   businessModel: z.array(z.string()).min(1, "Select at least one business model")
 });

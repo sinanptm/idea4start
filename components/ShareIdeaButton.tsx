@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 
-const CreteIdea = () => {
+const ShareIdeaButton = () => {
   return (
     <Link
       href="/share-idea"
@@ -24,4 +24,4 @@ const CreteIdea = () => {
   );
 };
 
-export default memo(CreteIdea);
+export default memo(ShareIdeaButton);

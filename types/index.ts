@@ -60,7 +60,7 @@ export enum StatusCode{
 }
 
 export interface StageConfig {
-    value: 'idea' | 'validation' | 'prototype' | 'mvp' | 'launched';
+    value: 'idea' | 'validation' | 'prototype' | 'mvp' | 'launched' | 'all';
     label: string;
     icon: React.ElementType;
     description: string;
