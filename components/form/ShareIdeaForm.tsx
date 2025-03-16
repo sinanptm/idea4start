@@ -71,12 +71,13 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
           <div className="space-y-4 sm:space-y-6">
             <h3 className="text-base sm:text-lg font-semibold text-gray-200">Basic Information</h3>
-            <LabeledInput
+            <LabeledTextarea
               label="Title *"
               placeholder="Enter a catchy title for your idea"
               {...register("title")}
               error={errors.title?.message}
-              className="text-sm sm:text-base"
+              draggable={false}
+              className="bg-gray-950 border-gray-800 text-sm sm:text-base max-h-12"
             />
 
             <LabeledTextarea
@@ -84,7 +85,7 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               placeholder="Provide a brief overview of your startup idea..."
               {...register("description")}
               error={errors.description?.message}
-              className="text-sm sm:text-base min-h-[100px] sm:min-h-16"
+              className="bg-gray-950 border-gray-800 text-sm sm:text-base min-h-[100px] sm:min-h-16"
             />
 
             <IndustrySelector
