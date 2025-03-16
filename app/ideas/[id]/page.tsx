@@ -35,8 +35,8 @@ const getMockIdea = (id: string): IIdea | undefined => {
   return mockIdeas.find(idea => idea._id === id);
 };
 
-export default function IdeaDetailPage({ params }: { params: { id: string } }) {
-  const idea = getMockIdea(params.id);
+export default async function IdeaDetailPage({ params }: { params: Promise<{ id: string }> }  ) {
+  const idea = getMockIdea((await params).id);
   
   if (!idea) {
     notFound();
