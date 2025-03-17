@@ -9,6 +9,7 @@ import { RootLayoutProps } from "@/types/props";
 import Toaster from "@/components/ui/toaster";
 import { Fira_Code } from "next/font/google";
 import "../styles/globals.css";
+import { SessionProvider } from "next-auth/react";
 
 const firaCode = Fira_Code({ subsets: ['latin'] });
 
@@ -26,21 +27,23 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          <QueryProvider>
-            <NuqsAdapter>
-              <SidebarProvider>
-                <Sidebar />
-                <SidebarInset>
-                  <NavBar />
-                  {children}
-                  <Analytics mode="auto" />
-                  <Toaster />
-                </SidebarInset>
-              </SidebarProvider>
-            </NuqsAdapter>
-          </QueryProvider>
+          <SessionProvider>
+            <QueryProvider>
+              <NuqsAdapter>
+                <SidebarProvider>
+                  <Sidebar />
+                  <SidebarInset>
+                    <NavBar />
+                    {children}
+                    <Analytics mode="auto" />
+                    <Toaster />
+                  </SidebarInset>
+                </SidebarProvider>
+              </NuqsAdapter>
+            </QueryProvider>
+          </SessionProvider>
         </ThemeProvider>
       </body>
-    </html>
+    </html >
   );
 }

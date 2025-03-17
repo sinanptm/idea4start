@@ -1,5 +1,3 @@
-"use client";
-
 import { ComponentProps, memo } from "react";
 import SideBarFooter from "./SideBarFooter";
 import {

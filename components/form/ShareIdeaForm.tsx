@@ -35,15 +35,23 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
 
   const onSubmit = async (data: CreateIdeaInput) => {
     try {
-      await createIdea(data);
+      const res = await createIdea(data);
       onSuccess();
       reset();
-      toast({
-        title: "Success",
-        description: "Idea submitted successfully",
-      });
+      if (res.success) {
+        toast({
+          title: "Success",
+          description: res.message,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: res.message || "Failed to submit idea",
+          variant: "destructive",
+        });
+      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
+    } catch (error: any) {
       toast({
         title: "Error",
         description: error.message || "Failed to submit idea",
@@ -204,9 +212,9 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
           </div>
 
           <div className="pt-4 sm:pt-6 flex justify-end">
-            <Button 
-              type="submit" 
-              disabled={isSubmitting} 
+            <Button
+              type="submit"
+              disabled={isSubmitting}
               className="bg-blue-600 hover:bg-blue-500 text-white px-4 sm:px-8 text-sm sm:text-base w-full sm:w-auto"
             >
               {isSubmitting ? "Submitting..." : "Submit Idea"}
