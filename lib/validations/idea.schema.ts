@@ -15,8 +15,6 @@ export const createIdeaSchema = z.object({
   tags: z.array(z.string()).min(1, "Add at least one tag"),
   uniqueValue: z.string().min(15, "Unique value proposition must be at least 15 characters").optional(),
   relatedUrls: z.array(z.string()).optional(),
-  userName: z.string().optional(),
-  userEmail: z.string().email("Invalid email address").optional().or(z.literal("")),
   userBuyMeACoffeeUrl: z.string().optional(),
   risks: z.string().optional(),
   businessModel: z.array(z.string()).min(1, "Select at least one business model")

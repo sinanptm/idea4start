@@ -5,8 +5,7 @@ export interface IIdea {
     createdAt: Date;
     updatedAt: Date;
     isPublic: boolean;
-    userName?: string;
-    userImage?: string;
+    userId?: string;
     userBuyMeACoffeeUrl?: string;
     industry?: string[];
     tags?: string[];
@@ -17,7 +16,7 @@ export interface IIdea {
     stage?: Stage;
     risks?: string[];
     businessModel?: BusinessModel;
-    voteScore?: number;
+    user?: IUser;
 }
 
 export interface IUser {

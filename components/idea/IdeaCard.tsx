@@ -20,7 +20,6 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
     title,
     description,
     createdAt,
-    userName,
     userBuyMeACoffeeUrl,
     tags,
     upVotes = 0,
@@ -30,8 +29,8 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
   } = idea
 
   // Get initials for avatar fallback
-  const initials = userName
-    ? userName
+  const initials = idea.user?.name
+    ? idea.user.name
         .split(" ")
         .map((n) => n[0])
         .join("")
@@ -55,10 +54,10 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <div className="flex items-center gap-1.5">
                 <Avatar className="h-5 w-5">
-                  <AvatarImage src={`https://avatar.vercel.sh/${userName}`} alt={userName} />
+                  <AvatarImage src={idea.user?.image} alt={idea.user?.name} />
                   <AvatarFallback className="text-xs">{initials}</AvatarFallback>
                 </Avatar>
-                <span>{userName}</span>
+                <span>{idea.user?.name}</span>
               </div>
               <span>•</span>
               <span>{timeAgo}</span>

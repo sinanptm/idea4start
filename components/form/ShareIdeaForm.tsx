@@ -17,10 +17,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { createIdea } from "@/app/(server)/actions";
 import { useToast } from "@/hooks/useToast";
+import { useSession } from "next-auth/react";
 
 const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
   const [tags, setTags] = useState<string[]>([]);
   const { toast } = useToast();
+  const { data: session } = useSession();
 
   const {
     register,
@@ -35,9 +37,7 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
 
   const onSubmit = async (data: CreateIdeaInput) => {
     try {
-      const res = await createIdea(data);
-      onSuccess();
-      reset();
+      const res = await createIdea(data, session?.user?.email!);
       if (res.success) {
         toast({
           title: "Success",
@@ -50,6 +50,8 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
           variant: "destructive",
         });
       }
+      onSuccess();
+      reset();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({
@@ -134,24 +136,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               )}
             </div>
 
-            <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2">
-              <LabeledInput
-                label="Email "
-                placeholder="johnwick@gmail.com"
-                type="email"
-                {...register("userEmail")}
-                error={errors.userEmail?.message}
-                className="bg-gray-950 border-gray-800 text-sm sm:text-base"
-              />
-
-              <LabeledInput
-                label="Name "
-                placeholder="John Wick"
-                {...register("userName")}
-                error={errors.userName?.message}
-                className="bg-gray-950 border-gray-800 text-sm sm:text-base"
-              />
-            </div>
 
             <LabeledInput
               label="Your Buy Me a Coffee URL "

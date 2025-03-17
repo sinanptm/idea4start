@@ -15,15 +15,10 @@ const ideaSchema = new Schema<IIdea>({
         type: Boolean,
         default: true
     },
-    userEmail: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
-    },
-    userName: {
-        type: String,
-        trim: true,
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     },
     userBuyMeACoffeeUrl: {
         type: String,

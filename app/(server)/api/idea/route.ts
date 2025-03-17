@@ -10,25 +10,77 @@ connectDB();
 export const GET = async (req: Request) => {
     try {
         const { searchParams } = new URL(req.url);
-
-        const { query, skip, limit, sortQuery, page } = f(searchParams);
+        const { query, skip, limit, sortQuery, page } = createFilter(searchParams);
 
         const [ideas, totalCount] = await Promise.all([
-            Idea.find(query)
-                .sort(sortQuery)
-                .skip(skip)
-                .limit(limit)
-                .lean(),
+            Idea.aggregate([
+                { $match: query },
+                {
+                    $lookup: {
+                        from: 'users', 
+                        localField: 'userId',
+                        foreignField: '_id',
+                        as: 'userDetails'
+                    }
+                },
+                {
+                    $addFields: {
+                        userDetails: {
+                            $cond: {
+                                if: { $eq: [{ $size: "$userDetails" }, 0] },
+                                then: [null],
+                                else: "$userDetails"
+                            }
+                        }
+                    }
+                },
+                { $unwind: { path: '$userDetails', preserveNullAndEmptyArrays: true } },
+                {
+                    $project: {
+                        _id: 1,
+                        title: 1,
+                        description: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                        isPublic: 1,
+                        industry: 1,
+                        tags: 1,
+                        upVotes: 1,
+                        downVotes: 1,
+                        problemStatement: 1,
+                        relatedUrls: 1,
+                        stage: 1,
+                        risks: 1,
+                        businessModel: 1,
+                        userBuyMeACoffeeUrl: 1,
+                        user: {
+                            $cond: {
+                                if: { $ne: ["$userDetails", null] },
+                                then: {
+                                    _id: '$userDetails._id',
+                                    name: '$userDetails.name',
+                                    email: '$userDetails.email',
+                                    image: '$userDetails.image'
+                                },
+                                else: null
+                            }
+                        },
+                        userId: { $ifNull: ['$userDetails._id', '$userId'] }
+                    }
+                },
+                { $sort: sortQuery },
+                { $skip: skip },
+                { $limit: limit }
+            ]),
             Idea.countDocuments(query)
         ]);
 
-        const totalPages = Math.ceil(totalCount / limit);
 
         return NextResponse.json({
             ideas: serializeData(ideas),
             pagination: {
                 currentPage: page,
-                totalPages,
+                totalPages: Math.ceil(totalCount / limit),
                 totalItems: totalCount
             },
             status: StatusCode.Ok,
@@ -43,7 +95,7 @@ export const GET = async (req: Request) => {
     }
 };
 
-const f = (searchParams: URLSearchParams) => {
+const createFilter = (searchParams: URLSearchParams) => {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '7');
     const search = searchParams.get('search');
