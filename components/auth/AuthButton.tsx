@@ -1,43 +1,79 @@
-'use client';
+"use client"
 
-import { LogIn, LogOut } from 'lucide-react';
-import { memo } from 'react';
-import { signIn, signOut } from "next-auth/react";
+import { LogIn, LogOut, User } from "lucide-react"
+import { memo } from "react"
+import { signIn, signOut } from "next-auth/react"
+import Image from "next/image"
+import { SidebarMenuButton } from "@/components/ui/sidebar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import Link from "next/link";
+import { Session } from "next-auth";
 
-//eslint-disable-next-line @typescript-eslint/no-explicit-any
-const AuthButton = ({ session }: { session: any }) => {
-
-    if (session?.user) {
-        return (
-            <button
-                onClick={() => signOut()}
-                className="flex items-center gap-2"
-            >
-                <div className="bg-red-500 text-white flex aspect-square size-8 items-center justify-center rounded-lg">
-                    <LogOut className="size-4" />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="font-medium">Logout</span>
-                    <span className="text-xs">{session.user.name}</span>
-                </div>
-            </button>
-        );
-    }
-
+const AuthButton = ({ session }: { session: Session }) => {
+  if (session && session?.user) {
     return (
-        <button
-            onClick={() => signIn("google")}
-            className="flex items-center gap-2"
-        >
-            <div className="bg-green-500 text-white flex aspect-square size-8 items-center justify-center rounded-lg">
-                <LogIn className="size-4" />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <SidebarMenuButton
+            size="lg"
+            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          >
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg overflow-hidden">
+              {session.user.image ? (
+                <Image
+                  src={session.user.image || "/placeholder.svg"}
+                  alt={session.user.name || "User profile"}
+                  width={32}
+                  height={32}
+                  className="object-cover"
+                />
+              ) : (
+                <div className="bg-blue-500 text-white flex items-center justify-center w-full h-full">
+                  {session.user.name?.charAt(0).toUpperCase() || "U"}
+                </div>
+              )}
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="font-medium">Login</span>
-                <span className="text-xs">Sign in to your account</span>
+              <span className="truncate font-semibold">{session.user.name}</span>
+              <span className="truncate text-xs hidden" aria-hidden="true" >Signed in</span>
             </div>
-        </button>
-    );
-};
+          </SidebarMenuButton>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="w-56">
+          <DropdownMenuItem asChild>
+            <Link href="/profile" prefetch={false} className="flex items-center">
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => signOut()} className="text-destructive focus:text-destructive">
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Logout</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+  }
 
-export default memo(AuthButton);
+  return (
+    <SidebarMenuButton size="lg" onClick={() => signIn("google")} className="hover:bg-sidebar-accent">
+      <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-green-500 text-white">
+        <LogIn className="size-4" />
+      </div>
+      <div className="grid flex-1 text-left text-sm leading-tight">
+        <span className="truncate font-semibold">Login</span>
+        <span className="truncate text-xs">Sign in to your account</span>
+      </div>
+    </SidebarMenuButton>
+  )
+}
+
+export default memo(AuthButton)
+

@@ -1,22 +1,20 @@
 "use client";
-
 import { memo } from "react";
 import { Menu } from "lucide-react";
-import { useSidebar } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import NavMain from "./NavMain";
-import SideBarFooter from "./SideBarFooter";
 import Logo from "../logo/Logo";
+import { useSidebar } from "../ui/sidebar";
 
-const NavBar = () => {
+const NavBar = ({ Footer }: { Footer: React.ReactNode; }) => {
     const { isMobile } = useSidebar();
 
     if (!isMobile) {
         return (
             <header className="flex h-3 shrink-0 items-center gap-2 px-4 transition-all duration-200 ease-in-out" />
         );
-    }
+    };
 
     return (
         <>
@@ -48,8 +46,9 @@ const NavBar = () => {
                             <NavMain />
                         </div>
                         <div className="border-t p-4">
-                            <SideBarFooter />
+                            {Footer}
                         </div>
+                        <SheetDescription />
                     </SheetContent>
                 </Sheet>
             </header>

@@ -24,7 +24,13 @@ const useGetIdeas = ({ limit = 10, page = 1, sort = "trending", stage = "all", b
         queryFn: async () => {
             const res = await getIdeas({ limit, page, sort, stage, businessModel, industry, search });
             return res;
-        }
+        },
+        retry: false,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchInterval: false,
+        refetchIntervalInBackground: false,
     });
 };
 
