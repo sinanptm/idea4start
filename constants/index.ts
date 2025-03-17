@@ -2,6 +2,7 @@ import { BusinessModel, StageConfig } from "@/types";
 import { Home, Lightbulb, Info, Rocket, FlaskConical, Target, Flag, TrendingUp, Clock, ThumbsUp, List } from "lucide-react";
 
 export const APP_NAME = "Idea4Start";
+export const APPLICATION_URL = "https://idea4startup.vercel.app";
 
 export const NAV_MAIN_ITEMS = [
   {
