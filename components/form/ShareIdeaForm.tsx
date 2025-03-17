@@ -17,12 +17,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { createIdea } from "@/app/(server)/actions";
 import { useToast } from "@/hooks/useToast";
-import { useSession } from "next-auth/react";
 
 const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
   const [tags, setTags] = useState<string[]>([]);
   const { toast } = useToast();
-  const { data: session } = useSession();
 
   const {
     register,
@@ -37,7 +35,7 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
 
   const onSubmit = async (data: CreateIdeaInput) => {
     try {
-      const res = await createIdea(data, session?.user?.email!);
+      const res = await createIdea(data);
       if (res.success) {
         toast({
           title: "Success",
