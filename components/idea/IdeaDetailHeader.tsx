@@ -11,11 +11,11 @@ interface IdeaDetailHeaderProps {
 }
 
 export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
-  const { title, userName, userBuyMeACoffeeUrl, createdAt, upVotes = 0, downVotes = 0, stage } = idea
+  const { title, user, userBuyMeACoffeeUrl, createdAt, upVotes = 0, downVotes = 0, stage } = idea
 
   // Get initials for avatar fallback
-  const initials = userName
-    ? userName
+  const initials = user?.name
+    ? user.name
         .split(" ")
         .map((n) => n[0])
         .join("")
@@ -46,12 +46,12 @@ export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
         <div className="mt-4 flex flex-wrap items-center justify-between gap-y-4">
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10">
-              <AvatarImage src={`https://avatar.vercel.sh/${userName}`} alt={userName} />
+              <AvatarImage src={`https://avatar.vercel.sh/${user?.name}`} alt={user?.name} />
               <AvatarFallback>{initials}</AvatarFallback>
             </Avatar>
 
             <div>
-              <div className="font-medium">{userName}</div>
+              <div className="font-medium">{user?.name}</div>
               <div className="text-sm text-muted-foreground">Posted {timeAgo}</div>
             </div>
           </div>
