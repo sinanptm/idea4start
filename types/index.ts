@@ -5,8 +5,8 @@ export interface IIdea {
     createdAt: Date;
     updatedAt: Date;
     isPublic: boolean;
-    userEmail?: string;
     userName?: string;
+    userImage?: string;
     userBuyMeACoffeeUrl?: string;
     industry?: string[];
     tags?: string[];
@@ -18,6 +18,13 @@ export interface IIdea {
     risks?: string[];
     businessModel?: BusinessModel;
     voteScore?: number;
+}
+
+export interface IUser {
+    _id: string;
+    email: string;
+    name: string;
+    image: string;
 }
 
 export type Stage = 'idea' | 'validation' | 'prototype' | 'mvp' | 'launched';
