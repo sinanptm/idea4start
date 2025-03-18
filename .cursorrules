@@ -10,7 +10,9 @@
         "Index and document the current structure.",
         "Verify all implementation steps.",
         "Log completion status before proceeding to .features.",
-        "always use memo for components"
+        "always use memo for components",
+        "always use useQuery for fetching data ",
+        "always use arrow functions and export the function in the last line of the file if possible as default export"
       ]
     },
     {

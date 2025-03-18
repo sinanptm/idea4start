@@ -22,20 +22,23 @@ type SelectWithSearchProps = {
   label: string;
   placeholder?: string;
   error?: string;
+  className?: string;
+  size?: "sm" | "lg" | "icon" | "default";
 };
 
-const SelectWithSearch = ({ options, value, onChange, label, placeholder, error }: SelectWithSearchProps) => {
+const SelectWithSearch = ({ options, value, onChange, label, placeholder, error, className, size = "default" }: SelectWithSearchProps) => {
   const id = useId();
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <div className="*:not-first:mt-2">
+    <div className={cn("*:not-first:mt-2 h-8 text-xs sm:text-sm min-w-[100px]", className)} >
       <Label htmlFor={id}>{label}</Label>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             id={id}
             variant="outline"
+            size={size}
             role="combobox"
             aria-expanded={open}
             className="bg-background hover:bg-background border-input w-full justify-between px-3 font-normal outline-offset-0 outline-none focus-visible:outline-[3px]"
