@@ -1,5 +1,5 @@
 import { BusinessModel, StageConfig } from "@/types";
-import { Home, Lightbulb, Info, Rocket, FlaskConical, Target, Flag, TrendingUp, Clock, ThumbsUp, List } from "lucide-react";
+import { Home, Lightbulb, Info, Rocket, FlaskConical, Target, Flag, TrendingUp, Clock, ThumbsUp, List, Calendar } from "lucide-react";
 
 export const APP_NAME = "Idea4Start";
 export const APPLICATION_URL = "https://idea4startup.vercel.app";
@@ -24,6 +24,11 @@ export const NAV_MAIN_ITEMS = [
 
 export const IDEA_SORT_OPTIONS = [
   {
+    value: `relevance`,
+    label: 'Relevance',
+    icon: Target,
+  },
+  {
     value: 'trending',
     label: 'Trending',
     icon: TrendingUp,
@@ -37,6 +42,25 @@ export const IDEA_SORT_OPTIONS = [
     value: 'topvoted',
     label: 'Top Voted',
     icon: ThumbsUp,
+  }
+];
+
+export const IDEA_TIME_PERIOD_OPTIONS = [
+  {
+    value: 'month',
+    label: 'Monthly',
+  },
+  {
+    value: 'week',
+    label: 'Weekly',
+  },
+  {
+    value: 'day',
+    label: 'Daily',
+  },
+  {
+    value: 'year',
+    label: 'Yearly',
   }
 ];
 

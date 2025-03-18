@@ -3,12 +3,12 @@
 import { Button } from "@/components/ui/button";
 import SelectWithSearch from "../ui/select";
 import ShareIdeaButton from "../ShareIdeaButton";
-import { IDEA_SORT_OPTIONS, STAGE_CONFIG } from "@/constants";
+import { IDEA_SORT_OPTIONS, STAGE_CONFIG, IDEA_TIME_PERIOD_OPTIONS } from "@/constants";
 import { cn } from "@/lib/utils";
 import useIdeasFilter from "@/hooks/useIdeasFilter";
 
 export default function IdeasHeader() {
-    const {setSort, setStage, sort, stage} = useIdeasFilter();
+    const { setSort, setStage, sort, stage, setTimePeriod, timePeriod } = useIdeasFilter();
 
     return (
         <div className="space-y-4">
@@ -42,17 +42,31 @@ export default function IdeasHeader() {
                     ))}
                 </div>
 
-                <div className="w-full sm:w-auto">
-                    <SelectWithSearch
-                        options={STAGE_CONFIG.map((config) => ({
-                            label: config.label,
-                            value: config.value
-                        }))}
-                        value={stage}
-                        onChange={(value) => setStage(value)}
-                        label={""}
-                        placeholder={"Select Sage"}
-                    />
+                <div className="flex items-center gap-2">
+                    <div className="w-full sm:w-auto">
+                        <SelectWithSearch
+                            options={STAGE_CONFIG.map((config) => ({
+                                label: config.label,
+                                value: config.value
+                            }))}
+                            value={stage}
+                            onChange={(value) => setStage(value)}
+                            label={""}
+                            placeholder={"Select Stage"}
+                        />
+                    </div>
+                    <div className="w-full sm:w-auto">
+                        <SelectWithSearch
+                            options={IDEA_TIME_PERIOD_OPTIONS.map((option) => ({
+                                label: option.label,
+                                value: option.value
+                            }))}
+                            value={timePeriod}
+                            onChange={(value) => setTimePeriod(value)}
+                            label={""}
+                            placeholder={"Select Time Period"}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,30 +3,33 @@ import { useCallback, useMemo } from "react";
 
 const useIdeasFilter = () => {
     const [stage, setStage] = useQueryState("stage", parseAsString.withDefault("all"));
-    const [sort, setSort] = useQueryState("sort", parseAsString.withDefault("trending"));
+    const [sort, setSort] = useQueryState("sort", parseAsString.withDefault("relevance"));
     const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
     const [businessModel, setBusinessModel] = useQueryState("businessModel", 
         parseAsString.withDefault("all"));
     const [industry, setIndustry] = useQueryState("industry", 
         parseAsString.withDefault("all"));
     const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
+    const [timePeriod, setTimePeriod] = useQueryState("timePeriod", parseAsString.withDefault("month"));
 
     const resetFilters = useCallback(() => {
         setStage("all");
-        setSort("trending");
+        setSort("relevance");
         setPage(1); 
         setBusinessModel("all");
         setIndustry("all");
         setSearch("");
-    }, [setStage, setSort, setPage, setBusinessModel, setIndustry, setSearch]);
+        setTimePeriod("month");
+    }, [setStage, setSort, setPage, setBusinessModel, setIndustry, setSearch, setTimePeriod]);
 
     const hasActiveFilters = useMemo(() => {
         return stage !== "all" ||
-            sort !== "trending" ||
+            sort !== "relevance" ||
             businessModel !== "all" ||
             industry !== "all" ||
-            search !== "";
-    }, [stage, sort, businessModel, industry, search]);
+            search !== "" ||
+            timePeriod !== "month";
+    }, [stage, sort, businessModel, industry, search, timePeriod]);
 
     return {
         // States
@@ -36,6 +39,7 @@ const useIdeasFilter = () => {
         businessModel,
         industry,
         search,
+        timePeriod,
 
         // Setters
         setStage,
@@ -44,7 +48,8 @@ const useIdeasFilter = () => {
         setBusinessModel,
         setIndustry,
         setSearch,
-
+        setTimePeriod,
+        
         // Utilities
         resetFilters,
         hasActiveFilters
