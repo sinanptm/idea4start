@@ -17,6 +17,7 @@ export interface IIdea {
     risks?: string[];
     businessModel?: BusinessModel;
     user?: IUser;
+    uniqueValue?: string;
 }
 
 export interface IUser {

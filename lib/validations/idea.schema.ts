@@ -13,7 +13,7 @@ export const createIdeaSchema = z.object({
     required_error: "Please select a stage",
   }),
   tags: z.array(z.string()).min(1, "Add at least one tag"),
-  uniqueValue: z.string().min(15, "Unique value proposition must be at least 15 characters").optional(),
+  uniqueValue: z.string().optional(),
   relatedUrls: z.array(z.string()).optional(),
   userBuyMeACoffeeUrl: z.string().optional(),
   risks: z.string().optional(),

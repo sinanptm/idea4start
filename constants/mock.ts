@@ -20,7 +20,7 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "prototype",
     risks: ["AI accuracy limitations", "Regulatory compliance in health advice", "User adoption barriers"],
     businessModel: BusinessModel.freemium,
-
+    uniqueValue: "Personalized meal plans tailored to individual health goals and preferences.",
   },
   {
     _id: "65f8ae4c2e5df1e0bd8b3a52",
@@ -40,7 +40,7 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "validation",
     risks: ["Operational logistics", "Container return rate", "Cost competitiveness"],
     businessModel: BusinessModel.subscription,
-
+    uniqueValue: "Zero-waste grocery delivery service with reusable containers and packaging.",
   },
   {
     _id: "65f8ae4c2e5df1e0bd8b3a53",
@@ -60,7 +60,7 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "mvp",
     risks: ["Community management", "Quality control", "Platform abuse"],
     businessModel: BusinessModel.freemium,
-
+    uniqueValue: "Direct skill exchange platform without monetary transactions.",
   },
   {
     _id: "65f8ae4c2e5df1e0bd8b3a54",
@@ -80,7 +80,7 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "prototype",
     risks: ["Device compatibility", "Privacy concerns", "Installation complexity"],
     businessModel: BusinessModel.hardwarePlusSoftware,
-
+    uniqueValue: "Smart home energy optimization system that learns patterns and adjusts devices for maximum efficiency.",
   },
   {
     _id: "65f8ae4c2e5df1e0bd8b3a55",
@@ -100,7 +100,7 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "idea",
     risks: ["Government adoption", "Representative participation", "Implementation challenges"],
     businessModel: BusinessModel.saas,
-
+    uniqueValue: "Crowdsourced urban planning platform that allows citizens to participate in urban planning decisions through crowdsourced inputs and feedback.",
   },
   {
     _id: "65f8ae4c2e5df1e0bd8b3a56",
@@ -120,7 +120,7 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "validation",
     risks: ["Filter efficiency", "Installation complexity", "Cost barriers"],
     businessModel: BusinessModel.physicalProduct,
-
+    uniqueValue: "Microplastic filtration system for washing machines that filters microplastics from wastewater before it enters the water system.",
   },
   {
     _id: "65f8ae4c2e5df1e0bd8b3a57",
@@ -140,7 +140,7 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "mvp",
     risks: ["User adoption", "Technical reliability", "Healthcare integration"],
     businessModel: BusinessModel.hardwarePlusSoftware,
-
+    uniqueValue: "AI-powered elderly care companion that provides assistance, medication reminders, health monitoring, and companionship for elderly individuals.",
   },
   {
     _id: "65f8ae4c2e5df1e0bd8b3a58",
@@ -160,7 +160,7 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "prototype",
     risks: ["Regulatory recognition", "Blockchain scalability", "User education"],
     businessModel: BusinessModel.blockchainBased,
-
+    uniqueValue: "Decentralized platform for creators to register and protect their intellectual property using blockchain technology.",
   },
   {
     _id: "65f8ae4c2e5df1e0bd8b3a59",
@@ -180,7 +180,7 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "validation",
     risks: ["AR accuracy", "User experience", "Hardware limitations"],
     businessModel: BusinessModel.freemium,
-
+    uniqueValue: "Augmented reality home renovation tool that allows homeowners to visualize renovation projects in their actual space before beginning work.",
   },
   {
     _id: "65f8ae4c2e5df1e0bd8b3a60",
@@ -200,6 +200,6 @@ export const MOCK_IDEAS: IIdea[] = [
     stage: "launched",
     risks: ["Regulatory hurdles", "Grid integration", "Market adoption"],
     businessModel: BusinessModel.marketplace,
-
+    uniqueValue: "Decentralized renewable energy marketplace that connects small-scale renewable energy producers with consumers, enabling peer-to-peer energy trading.",
   }
 ];

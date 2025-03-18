@@ -33,6 +33,10 @@ const ideaSchema = new Schema<IIdea>({
         trim: true,
         lowercase: true
     }],
+    uniqueValue: {
+        type: String,
+        trim: true
+    },
     upVotes: {
         type: Number,
         default: 0,
