@@ -20,11 +20,7 @@ const IdeasList = () => {
     search: search!,
     limit: 7
   })
-
-  console.log(data);
   
-
-  // Loading state with skeleton
   if (isLoading) {
     return <IdeasListSkeleton />
   }

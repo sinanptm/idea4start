@@ -3,9 +3,9 @@ import Idea from "@/lib/db/models/Idea";
 import { NextResponse } from "next/server";
 import { StatusCode } from "@/types";
 import { serializeData } from "@/lib/utils";
-import { URLSearchParams } from "url";
 import { PipelineStage } from "mongoose";
 
+// Initialize DB connection
 connectDB();
 
 export const GET = async (req: Request) => {
@@ -13,8 +13,10 @@ export const GET = async (req: Request) => {
         const { searchParams } = new URL(req.url);
         const { query, skip, limit, sortQuery, page, searchTerms } = createFilter(searchParams);
 
+        // Define base aggregation pipeline
         const pipeline: PipelineStage[] = [
             { $match: query },
+            // Join with users collection
             {
                 $lookup: {
                     from: 'users', 
@@ -23,6 +25,7 @@ export const GET = async (req: Request) => {
                     as: 'userDetails'
                 }
             },
+            // Handle cases with no user details
             {
                 $addFields: {
                     userDetails: {
@@ -37,64 +40,12 @@ export const GET = async (req: Request) => {
             { $unwind: { path: '$userDetails', preserveNullAndEmptyArrays: true } }
         ];
 
+        // Add search relevance scoring if search terms exist
         if (searchTerms && searchTerms.length > 0) {
-            const searchFields = ["title", "description", "tags", "problemStatement"];
-            
-            const textScoreExpressions = searchFields.flatMap(field => 
-                searchTerms.map(term => ({
-                    $cond: {
-                        if: { $regexMatch: { input: `$${field}`, regex: term, options: "i" } },
-                        then: { 
-                            $cond: {
-                                if: { $eq: [field, "title"] },
-                                then: 5, // Title matches are weighted higher
-                                else: { 
-                                    $cond: {
-                                        if: { $eq: [field, "tags"] },
-                                        then: 3, // Tag matches are weighted medium
-                                        else: 1 // Other fields get normal weight
-                                    }
-                                }
-                            }
-                        },
-                        else: 0
-                    }
-                }))
-            );
-            
-            pipeline.push({
-                $addFields: {
-                    relevanceScore: {
-                        $add: [
-                            { $sum: textScoreExpressions },
-                            { $divide: [{ $ifNull: ["$upVotes", 0] }, 10] }, // Factor in upvotes, but with lower weight
-                            { 
-                                $multiply: [
-                                    { 
-                                        $divide: [
-                                            1, 
-                                            { 
-                                                $add: [
-                                                    { 
-                                                        $divide: [
-                                                            { $subtract: [new Date(), "$createdAt"] }, 
-                                                            86400000 // Convert ms to days
-                                                        ] 
-                                                    }, 
-                                                    1
-                                                ] 
-                                            }
-                                        ] 
-                                    },
-                                    100 // Scale factor for recency
-                                ]
-                            }
-                        ]
-                    }
-                }
-            } as PipelineStage);
+            addSearchRelevanceScoring(pipeline, searchTerms);
         }
 
+        // Projection, sorting, pagination
         pipeline.push(
             {
                 $project: {
@@ -130,11 +81,13 @@ export const GET = async (req: Request) => {
                     userId: { $ifNull: ['$userDetails._id', '$userId'] }
                 }
             },
+            //eslint-disable-next-line
             { $sort: sortQuery as any },
             { $skip: skip },
             { $limit: limit }
         );
 
+        // Run queries in parallel for better performance
         const [ideas, totalCount] = await Promise.all([
             Idea.aggregate(pipeline),
             Idea.countDocuments(query)
@@ -159,6 +112,68 @@ export const GET = async (req: Request) => {
     }
 };
 
+/**
+ * Adds search relevance scoring to the pipeline
+ */
+const addSearchRelevanceScoring = (pipeline: PipelineStage[], searchTerms: string[]) => {
+    const searchFields = ["title", "description", "tags", "problemStatement"];
+    
+    const textScoreExpressions = searchFields.flatMap(field => 
+        searchTerms.map(term => ({
+            $cond: {
+                if: { $regexMatch: { input: `$${field}`, regex: term, options: "i" } },
+                then: { 
+                    $cond: {
+                        if: { $eq: [field, "title"] },
+                        then: 5, // Title matches are weighted higher
+                        else: { 
+                            $cond: {
+                                if: { $eq: [field, "tags"] },
+                                then: 3, // Tag matches are weighted medium
+                                else: 1 // Other fields get normal weight
+                            }
+                        }
+                    }
+                },
+                else: 0
+            }
+        }))
+    );
+    
+    pipeline.push({
+        $addFields: {
+            relevanceScore: {
+                $add: [
+                    { $sum: textScoreExpressions },
+                    { $divide: [{ $ifNull: ["$upVotes", 0] }, 10] }, // Factor in upvotes with lower weight
+                    { 
+                        $multiply: [
+                            { 
+                                $divide: [
+                                    1, 
+                                    { 
+                                        $add: [
+                                            { 
+                                                $divide: [
+                                                    { $subtract: [new Date(), "$createdAt"] }, 
+                                                    86400000 // Convert ms to days
+                                                ] 
+                                            }, 
+                                            1
+                                        ] 
+                                    }
+                                ] 
+                            },
+                            100 // Scale factor for recency
+                        ]
+                    }
+                ]
+            }
+        }
+    } as PipelineStage);
+};
+
+
 const createFilter = (searchParams: URLSearchParams) => {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '7');
@@ -167,12 +182,14 @@ const createFilter = (searchParams: URLSearchParams) => {
     const industry = searchParams.get('industry');
     const sort = searchParams.get('sort') || 'relevance';
     const stage = searchParams.get('stage') || 'all';
-    const timePeriod = searchParams.get('timePeriod') || 'month';
+    const timePeriod = searchParams.get('timePeriod') || 'all';
 
+    //eslint-disable-next-line
     const query: Record<string, any> = {
         isPublic: true
     };
 
+    // Process search terms
     let searchTerms: string[] = [];
     if (search && search.trim() !== '') {
         const processedSearch = search.trim();
@@ -185,6 +202,7 @@ const createFilter = (searchParams: URLSearchParams) => {
         ];
     }
 
+    // Apply filters for business model, industry, and stage
     if (businessModel && businessModel !== 'all' && businessModel !== 'null') {
         query.businessModel = businessModel;
     }
@@ -197,9 +215,10 @@ const createFilter = (searchParams: URLSearchParams) => {
         query.stage = stage;
     }
 
+    // Apply time period filter
     if (timePeriod && timePeriod !== 'all') {
         const now = new Date();
-        let startDate = new Date();
+        const startDate = new Date();
 
         switch (timePeriod) {
             case 'day':
@@ -208,21 +227,31 @@ const createFilter = (searchParams: URLSearchParams) => {
             case 'week':
                 startDate.setDate(now.getDate() - 7);
                 break;
+            case 'month':
+                startDate.setMonth(now.getMonth() - 1);
+                break;
             case 'year':
                 startDate.setFullYear(now.getFullYear() - 1);
                 break;
-            default:
-                startDate.setMonth(now.getMonth() - 1);
-                break;
         }
 
-        if (timePeriod !== 'all') {
-            query.createdAt = { $gte: startDate };
-        }
+        query.createdAt = { $gte: startDate };
     }
 
     const skip = (page - 1) * limit;
+    const sortQuery = buildSortQuery(sort, searchTerms);
 
+    return {
+        query,
+        skip,
+        sortQuery,
+        limit,
+        page,
+        searchTerms
+    };
+};
+
+const buildSortQuery = (sort: string, searchTerms: string[]): Record<string, 1 | -1> => {
     const sortQuery: Record<string, 1 | -1> = {};
     
     switch (sort) {
@@ -238,9 +267,10 @@ const createFilter = (searchParams: URLSearchParams) => {
             sortQuery.upVotes = -1;
             break;
         case 'relevance':
-            // If search terms exist, sort by the calculated relevance score
-            // Otherwise, fall back to a mix of popularity and recency
+            // If search terms exist, sort by relevance score
+            // Otherwise, fall back to popularity and recency
             if (searchTerms.length > 0) {
+                //eslint-disable-next-line
                 (sortQuery as any).relevanceScore = -1;
             } else {
                 sortQuery.upVotes = -1;
@@ -250,13 +280,6 @@ const createFilter = (searchParams: URLSearchParams) => {
         default:
             sortQuery.createdAt = -1;
     }
-
-    return {
-        query,
-        skip,
-        sortQuery,
-        limit,
-        page,
-        searchTerms
-    };
+    
+    return sortQuery;
 };

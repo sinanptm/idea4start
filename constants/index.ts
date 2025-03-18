@@ -48,19 +48,23 @@ export const IDEA_SORT_OPTIONS = [
 export const IDEA_TIME_PERIOD_OPTIONS = [
   {
     value: 'month',
-    label: 'Monthly',
+    label: 'This Month',
   },
   {
     value: 'week',
-    label: 'Weekly',
+    label: 'This Week',
   },
   {
     value: 'day',
-    label: 'Daily',
+    label: 'Today',
   },
   {
     value: 'year',
-    label: 'Yearly',
+    label: 'This Year',
+  },
+  {
+    value: 'all',
+    label: 'All',
   }
 ];
 

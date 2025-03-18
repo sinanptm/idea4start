@@ -10,7 +10,7 @@ const useIdeasFilter = () => {
     const [industry, setIndustry] = useQueryState("industry", 
         parseAsString.withDefault("all"));
     const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
-    const [timePeriod, setTimePeriod] = useQueryState("timePeriod", parseAsString.withDefault("month"));
+    const [timePeriod, setTimePeriod] = useQueryState("timePeriod", parseAsString.withDefault("all"));
 
     const resetFilters = useCallback(() => {
         setStage("all");
@@ -19,7 +19,7 @@ const useIdeasFilter = () => {
         setBusinessModel("all");
         setIndustry("all");
         setSearch("");
-        setTimePeriod("month");
+        setTimePeriod("all");
     }, [setStage, setSort, setPage, setBusinessModel, setIndustry, setSearch, setTimePeriod]);
 
     const hasActiveFilters = useMemo(() => {
@@ -28,7 +28,7 @@ const useIdeasFilter = () => {
             businessModel !== "all" ||
             industry !== "all" ||
             search !== "" ||
-            timePeriod !== "month";
+            timePeriod !== "all";
     }, [stage, sort, businessModel, industry, search, timePeriod]);
 
     return {
