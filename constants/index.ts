@@ -64,7 +64,7 @@ export const IDEA_TIME_PERIOD_OPTIONS = [
   },
   {
     value: 'all',
-    label: 'All',
+    label: 'All Time',
   }
 ];
 
@@ -106,7 +106,7 @@ export const STAGE_CONFIG: StageConfig[] = [
   },
   {
     value: 'all',
-    label: 'All',
+    label: 'All Stages',
     icon: List,
     description: 'All ideas',
     color: 'text-gray-500'

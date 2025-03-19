@@ -17,11 +17,11 @@ const IdeasHeader = () => {
         <div className="flex flex-wrap items-center gap-2">
             {IDEA_SORT_OPTIONS.map((option) => (
                 <Button
-                    variant="outline"
+                    // variant="outline"
                     size="sm"
                     className={cn(
-                        "flex items-center gap-1 rounded-full px-3 py-1 h-auto text-sm border-gray-700 bg-transparent hover:bg-gray-800",
-                        sort === option.value && "bg-gray-800 border-gray-600",
+                        "flex items-center gap-1 rounded-full px-3 py-1 h-auto bg-primary/10 text-primary border-primary/30 font-medium",
+                        sort === option.value && "bg-primary/50 text-primary border-primary/40"
                     )}
                     key={option.value}
                     onClick={() => setSort(option.value)}
