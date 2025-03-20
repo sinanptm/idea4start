@@ -1,14 +1,14 @@
-import type { IIdea } from "@/types"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ExternalLink, AlertTriangle } from "lucide-react"
+import type { IIdea } from "@/types";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ExternalLink, AlertTriangle } from "lucide-react";
 
 interface IdeaDetailContentProps {
-  idea: IIdea
+  idea: IIdea;
 }
 
 export default function IdeaDetailContent({ idea }: IdeaDetailContentProps) {
-  const { description, problemStatement, tags, industry, relatedUrls, risks } = idea
+  const { description, problemStatement, tags, industry, relatedUrls, risks } = idea;
 
   return (
     <div className="space-y-8">
@@ -103,6 +103,6 @@ export default function IdeaDetailContent({ idea }: IdeaDetailContentProps) {
         </Card>
       )}
     </div>
-  )
+  );
 }
 

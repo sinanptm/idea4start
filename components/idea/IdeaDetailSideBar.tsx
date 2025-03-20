@@ -1,21 +1,22 @@
-import type { IIdea, BusinessModel } from "@/types"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { MessageSquare, Users, Calendar, Lightbulb, Beaker, Rocket, Flag, BarChart } from "lucide-react"
-import { format } from "date-fns"
+import { IIdea } from "@/types/interface";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { MessageSquare, Users, Calendar, Lightbulb, Beaker, Rocket, Flag, BarChart } from "lucide-react";
+import { format } from "date-fns";
+import { BusinessModel } from "@/types";
 
 interface IdeaDetailSidebarProps {
-  idea: IIdea
+  idea: IIdea;
 }
 
 export default function IdeaDetailSidebar({ idea }: IdeaDetailSidebarProps) {
-  const { createdAt, businessModel, stage } = idea
+  const { createdAt, businessModel, stage } = idea;
 
   // Format business model for display
   const formatBusinessModel = (model?: BusinessModel) => {
-    if (!model) return "Not specified"
-    return model.replace(/([A-Z])/g, " $1").trim()
-  }
+    if (!model) return "Not specified";
+    return model.replace(/([A-Z])/g, " $1").trim();
+  };
 
   // Stage information
   const stageInfo = {
@@ -44,9 +45,9 @@ export default function IdeaDetailSidebar({ idea }: IdeaDetailSidebarProps) {
       label: "Launched",
       description: "Product is live and available to users",
     },
-  }
+  };
 
-  const StageIcon = stage && stageInfo[stage] ? stageInfo[stage].icon : Lightbulb
+  const StageIcon = stage && stageInfo[stage] ? stageInfo[stage].icon : Lightbulb;
 
   return (
     <div className="space-y-6">
@@ -104,6 +105,6 @@ export default function IdeaDetailSidebar({ idea }: IdeaDetailSidebarProps) {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
 

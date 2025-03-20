@@ -1,13 +1,13 @@
-import { Badge } from "@/components/ui/badge"
-import type { Stage } from "@/types"
-import { Lightbulb, Beaker, Rocket, Flag, BarChart } from "lucide-react"
+import { Badge } from "@/components/ui/badge";
+import type { Stage } from "@/types";
+import { Lightbulb, Beaker, Rocket, Flag, BarChart } from "lucide-react";
 
 interface StageBadgeProps {
-  stage?: Stage
+  stage?: Stage;
 }
 
 export default function StageBadge({ stage }: StageBadgeProps) {
-  if (!stage) return null
+  if (!stage) return null;
 
   const stageConfig = {
     idea: {
@@ -35,16 +35,16 @@ export default function StageBadge({ stage }: StageBadgeProps) {
       label: "Launched",
       color: "bg-red-500/10 text-red-500 border-red-500/20",
     },
-  }
+  };
 
-  const config = stageConfig[stage]
-  const Icon = config.icon
+  const config = stageConfig[stage];
+  const Icon = config.icon;
 
   return (
     <Badge variant="outline" className={`${config.color} flex items-center gap-1 px-2 py-1`}>
       <Icon className="h-3.5 w-3.5" />
       <span>{config.label}</span>
     </Badge>
-  )
+  );
 }
 

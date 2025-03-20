@@ -32,10 +32,10 @@ const StageSelector = ({ currentStage, setValue, errors }: StageSelectorProps) =
       )}>
         {STAGE_CONFIG.map(({ value, label, icon: Icon, description, color }) => {
           const isSelected = currentStage === value;
-          if(value==="all"){
-            return null
+          if (value === "all") {
+            return null;
           }
-          
+
           return (
             <button
               key={value}
@@ -48,8 +48,8 @@ const StageSelector = ({ currentStage, setValue, errors }: StageSelectorProps) =
                 isSelected
                   ? cn("border-primary bg-primary/5", color)
                   : "border-muted bg-transparent hover:bg-accent/50",
-                isMobile 
-                  ? "flex flex-row items-center" 
+                isMobile
+                  ? "flex flex-row items-center"
                   : "flex flex-col items-center space-y-2"
               )}
             >
@@ -59,7 +59,7 @@ const StageSelector = ({ currentStage, setValue, errors }: StageSelectorProps) =
                 "group-hover:scale-110",
                 isMobile ? "h-5 w-5 mr-3" : "h-6 w-6"
               )} />
-              
+
               <div className={cn(
                 isMobile ? "text-left" : "text-center"
               )}>
@@ -77,8 +77,8 @@ const StageSelector = ({ currentStage, setValue, errors }: StageSelectorProps) =
               </div>
 
               {isSelected && (
-                <Badge 
-                  variant="default" 
+                <Badge
+                  variant="default"
                   className={cn(
                     "absolute -top-2 -right-2 h-5 w-5 rounded-full p-0",
                     "flex items-center justify-center",

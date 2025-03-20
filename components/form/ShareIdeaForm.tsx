@@ -1,9 +1,9 @@
 "use client";
 
 import { createIdeaSchema, type CreateIdeaInput } from "@/lib/validations/idea.schema";
-import RelatedUrlSelector from "@/components/form/elements/RelatedUrlSelector";
-import IndustrySelector from "@/components/form/elements/IndustrySelector";
-import StageSelector from "@/components/form/elements/StageSelector";
+import RelatedUrlSelector from "@/components/form/inputs/RelatedUrlSelector";
+import IndustrySelector from "@/components/form/inputs/IndustrySelector";
+import StageSelector from "@/components/form/inputs/StageSelector";
 import { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,7 +52,7 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
       }
       onSuccess();
       reset();
-      queryClient.invalidateQueries({ queryKey: ["ideas"] }); 
+      queryClient.invalidateQueries({ queryKey: ["ideas"] });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({

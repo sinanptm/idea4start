@@ -1,14 +1,14 @@
-import { IIdea  } from "@/types";
+import { IIdea } from "@/types/interface";
 import { Model, model, models, Schema } from "mongoose";
 
 const ideaSchema = new Schema<IIdea>({
-    title: { 
-        type: String, 
+    title: {
+        type: String,
         required: true,
         trim: true,
     },
-    description: { 
-        type: String, 
+    description: {
+        type: String,
         required: true,
     },
     isPublic: {
@@ -36,14 +36,6 @@ const ideaSchema = new Schema<IIdea>({
     uniqueValue: {
         type: String,
         trim: true
-    },
-    upVotes: {
-        type: Number,
-        default: 0,
-    },
-    downVotes: {
-        type: Number,
-        default: 0,
     },
     problemStatement: {
         type: String,
@@ -83,13 +75,9 @@ ideaSchema.index({ createdAt: -1 });
 ideaSchema.index({ upVotes: -1 });
 ideaSchema.index({ title: 'text', description: 'text' }); // Text search index
 
-// Virtual for vote score
-ideaSchema.virtual('voteScore').get(function() {
-    return this.upVotes! - this.downVotes!;
-});
 
 // Pre-save middleware to clean up tags
-ideaSchema.pre('save', function(next) {
+ideaSchema.pre('save', function (next) {
     if (this.tags) {
         this.tags = this.tags
             .map(tag => tag.toLowerCase().trim())
@@ -103,7 +91,7 @@ ideaSchema.pre('save', function(next) {
 });
 
 // Instance method to safely update votes
-ideaSchema.methods.updateVotes = async function(type: 'up' | 'down', increment: boolean) {
+ideaSchema.methods.updateVotes = async function (type: 'up' | 'down', increment: boolean) {
     const field = type === 'up' ? 'upVotes' : 'downVotes';
     const update = increment ? 1 : -1;
     this[field] = Math.max(0, this[field] + update);

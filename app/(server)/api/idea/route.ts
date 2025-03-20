@@ -19,7 +19,7 @@ export const GET = async (req: Request) => {
             // Join with users collection
             {
                 $lookup: {
-                    from: 'users', 
+                    from: 'users',
                     localField: 'userId',
                     foreignField: '_id',
                     as: 'userDetails'
@@ -117,16 +117,16 @@ export const GET = async (req: Request) => {
  */
 const addSearchRelevanceScoring = (pipeline: PipelineStage[], searchTerms: string[]) => {
     const searchFields = ["title", "description", "tags", "problemStatement"];
-    
-    const textScoreExpressions = searchFields.flatMap(field => 
+
+    const textScoreExpressions = searchFields.flatMap(field =>
         searchTerms.map(term => ({
             $cond: {
                 if: { $regexMatch: { input: `$${field}`, regex: term, options: "i" } },
-                then: { 
+                then: {
                     $cond: {
                         if: { $eq: [field, "title"] },
                         then: 5, // Title matches are weighted higher
-                        else: { 
+                        else: {
                             $cond: {
                                 if: { $eq: [field, "tags"] },
                                 then: 3, // Tag matches are weighted medium
@@ -139,30 +139,30 @@ const addSearchRelevanceScoring = (pipeline: PipelineStage[], searchTerms: strin
             }
         }))
     );
-    
+
     pipeline.push({
         $addFields: {
             relevanceScore: {
                 $add: [
                     { $sum: textScoreExpressions },
                     { $divide: [{ $ifNull: ["$upVotes", 0] }, 10] }, // Factor in upvotes with lower weight
-                    { 
+                    {
                         $multiply: [
-                            { 
+                            {
                                 $divide: [
-                                    1, 
-                                    { 
+                                    1,
+                                    {
                                         $add: [
-                                            { 
+                                            {
                                                 $divide: [
-                                                    { $subtract: [new Date(), "$createdAt"] }, 
+                                                    { $subtract: [new Date(), "$createdAt"] },
                                                     86400000 // Convert ms to days
-                                                ] 
-                                            }, 
+                                                ]
+                                            },
                                             1
-                                        ] 
+                                        ]
                                     }
-                                ] 
+                                ]
                             },
                             100 // Scale factor for recency
                         ]
@@ -194,7 +194,7 @@ const createFilter = (searchParams: URLSearchParams) => {
     if (search && search.trim() !== '') {
         const processedSearch = search.trim();
         searchTerms = processedSearch.split(/\s+/).filter(term => term.length > 2);
-        
+
         query.$or = [
             { title: { $regex: processedSearch, $options: 'i' } },
             { description: { $regex: processedSearch, $options: 'i' } },
@@ -253,7 +253,7 @@ const createFilter = (searchParams: URLSearchParams) => {
 
 const buildSortQuery = (sort: string, searchTerms: string[]): Record<string, 1 | -1> => {
     const sortQuery: Record<string, 1 | -1> = {};
-    
+
     switch (sort) {
         case 'latest':
             sortQuery.createdAt = -1;
@@ -280,6 +280,6 @@ const buildSortQuery = (sort: string, searchTerms: string[]): Record<string, 1 |
         default:
             sortQuery.createdAt = -1;
     }
-    
+
     return sortQuery;
 };

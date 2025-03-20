@@ -1,29 +1,29 @@
-import type { IIdea } from "@/types"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ArrowLeft, ThumbsUp, ThumbsDown, Share2, Flag, Coffee } from "lucide-react"
-import Link from "next/link"
-import { formatDistanceToNow } from "date-fns"
-import StageBadge from "@/components/idea/StageBadge"
+import { IIdea } from "@/types/interface";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ArrowLeft, ThumbsUp, ThumbsDown, Share2, Flag, Coffee } from "lucide-react";
+import Link from "next/link";
+import { formatDistanceToNow } from "date-fns";
+import StageBadge from "@/components/idea/StageBadge";
 
 interface IdeaDetailHeaderProps {
-  idea: IIdea
+  idea: IIdea;
 }
 
 export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
-  const { title, user, userBuyMeACoffeeUrl, createdAt, upVotes = 0, downVotes = 0, stage } = idea
+  const { title, user, userBuyMeACoffeeUrl, createdAt, upVotes = 0, downVotes = 0, stage } = idea;
 
   // Get initials for avatar fallback
   const initials = user?.name
     ? user.name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-    : "?"
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+    : "?";
 
   // Format date
-  const timeAgo = formatDistanceToNow(new Date(createdAt), { addSuffix: true })
+  const timeAgo = formatDistanceToNow(new Date(createdAt), { addSuffix: true });
 
   return (
     <div className="space-y-6">
@@ -93,6 +93,6 @@ export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import type { IIdea } from "@/types";
+import { IIdea } from "@/types/interface";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

@@ -1,32 +1,3 @@
-export interface IIdea {
-    _id: string;
-    title: string;
-    description: string;
-    createdAt: Date;
-    updatedAt: Date;
-    isPublic: boolean;
-    userId?: string;
-    userBuyMeACoffeeUrl?: string;
-    industry?: string[];
-    tags?: string[];
-    upVotes?: number;
-    downVotes?: number;
-    problemStatement?: string;
-    relatedUrls?: string[];
-    stage?: Stage;
-    risks?: string[];
-    businessModel?: BusinessModel;
-    user?: IUser;
-    uniqueValue?: string;
-}
-
-export interface IUser {
-    _id: string;
-    email: string;
-    name: string;
-    image: string;
-}
-
 export type Stage = 'idea' | 'validation' | 'prototype' | 'mvp' | 'launched';
 export enum BusinessModel {
     saas = 'saas',
@@ -56,7 +27,7 @@ export enum BusinessModel {
     other = 'other',
 }
 
-export enum StatusCode{
+export enum StatusCode {
     Created = 201,
     BadRequest = 400,
     Unauthorized = 401,
@@ -72,7 +43,7 @@ export interface StageConfig {
     icon: React.ElementType;
     description: string;
     color: string;
-  }
+}
 
 export interface Pagination {
     currentPage: number;
