@@ -5,13 +5,15 @@ import { ArrowLeft, ThumbsUp, ThumbsDown, Share2, Flag, Coffee } from "lucide-re
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import StageBadge from "@/components/idea/StageBadge";
+import useGetVotes from "@/hooks/useGetVotes";
 
 interface IdeaDetailHeaderProps {
   idea: IIdea;
 }
 
 export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
-  const { title, user, userBuyMeACoffeeUrl, createdAt, upVotes = 0, downVotes = 0, stage } = idea;
+  const { title, user, userBuyMeACoffeeUrl, createdAt, stage } = idea;
+  const { upVotes, downVotes } = useGetVotes(idea.votes || []);
 
   // Get initials for avatar fallback
   const initials = user?.name

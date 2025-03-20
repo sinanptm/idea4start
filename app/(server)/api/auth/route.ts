@@ -1,6 +1,6 @@
 import connectDB from "@/lib/db/connect";
 import User from "@/lib/db/models/User";
-import {  NextResponse, NextRequest } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       { email: userData.email },
       {
         $set: {
-          name:  userData.name,
+          name: userData.name,
           image: userData.image,
           email: userData.email
         }
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     );
 
     return NextResponse.json(
-      { message: "User data saved successfully", user },
+      { message: "User data saved successfully", user: user.toJSON() },
       { status: 200 }
     );
   } catch (error) {

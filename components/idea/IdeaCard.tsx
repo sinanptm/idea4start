@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
 import StageBadge from "@/components/idea/StageBadge";
+import useGetVotes from "@/hooks/useGetVotes";
 
 interface IdeaCardProps {
   idea: IIdea;
@@ -21,11 +22,12 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
     description,
     createdAt,
     tags,
-    upVotes = 0,
-    downVotes = 0,
     stage,
     businessModel,
+    votes
   } = idea;
+
+  const { upVotes, downVotes } = useGetVotes(votes || []);
 
   // Get initials for avatar fallback
   const initials = idea.user?.name
@@ -43,7 +45,7 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
   const truncatedDescription = description.length > 120 ? `${description.substring(0, 120)}...` : description;
 
   // Calculate engagement metrics
-  const totalVotes = upVotes + downVotes;
+  const totalVotes = votes?.length || 0;
   const commentCount = Math.floor(Math.random() * 10); // Placeholder for actual comment count
 
   return (

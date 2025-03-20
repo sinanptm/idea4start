@@ -1,4 +1,4 @@
-import type { IIdea } from "@/types";
+import type { IIdea } from "@/types/interface";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExternalLink, AlertTriangle } from "lucide-react";

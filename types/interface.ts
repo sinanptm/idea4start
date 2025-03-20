@@ -19,12 +19,13 @@ export interface IIdea {
     businessModel?: BusinessModel;
     user?: IUser;
     uniqueValue?: string;
+    votes?: IVote[];
 }
 
 export interface IVote {
     _id: string;
-    ideaId: string;
-    userId: string;
+    ideaId?: string;
+    userId?: string;
     type: 'up' | 'down';
 }
 
