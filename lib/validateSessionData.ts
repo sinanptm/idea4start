@@ -10,7 +10,7 @@ const validateSessionData = async () => {
         };
     }
 
-    const user = await User.findOne({ email: session.user?.email }).lean();
+    const user = await User.findById(session.user?.id).lean();
     if (!user) {
         return {
             success: false,
@@ -22,7 +22,7 @@ const validateSessionData = async () => {
         message: "Session validated",
         user
     };
-}
+};
 
 
 export default validateSessionData;

@@ -4,13 +4,12 @@ import { IIdea } from "@/types/interface";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ThumbsUp, ThumbsDown, MessageSquare, ExternalLink } from "lucide-react";
+import { MessageSquare, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
 import StageBadge from "@/components/idea/StageBadge";
-import useGetVotes from "@/hooks/useGetVotes";
-
+import Vote from "@/components/idea/Vote";
 interface IdeaCardProps {
   idea: IIdea;
 }
@@ -26,8 +25,6 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
     businessModel,
     votes
   } = idea;
-
-  const { upVotes, downVotes } = useGetVotes(votes || []);
 
   // Get initials for avatar fallback
   const initials = idea.user?.name
@@ -45,7 +42,6 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
   const truncatedDescription = description.length > 120 ? `${description.substring(0, 120)}...` : description;
 
   // Calculate engagement metrics
-  const totalVotes = votes?.length || 0;
   const commentCount = Math.floor(Math.random() * 10); // Placeholder for actual comment count
 
   return (
@@ -103,20 +99,7 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
       {/* Forum-style footer with engagement metrics */}
       <CardFooter className="px-3 py-2 bg-muted/30 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <Button variant="ghost" size="sm" className="h-7 px-2">
-              <ThumbsUp className="h-3.5 w-3.5 mr-1" />
-              <span className="text-xs">{upVotes}</span>
-            </Button>
-            <Button variant="ghost" size="sm" className="h-7 px-2">
-              <ThumbsDown className="h-3.5 w-3.5 mr-1" />
-              <span className="text-xs">{downVotes}</span>
-            </Button>
-          </div>
-
-          <div className="text-xs text-muted-foreground">
-            {totalVotes} votes
-          </div>
+          <Vote votes={votes || []} ideaId={_id} />
 
           <div className="flex items-center">
             <Button variant="ghost" size="sm" className="h-7 px-2">

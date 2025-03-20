@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { StatusCode } from "@/types";
 import { serializeData } from "@/lib/utils";
 import { PipelineStage } from "mongoose";
-
+import Vote from "@/lib/db/models/Vote";
 // Initialize DB connection
 connectDB();
 
@@ -93,8 +93,14 @@ export const GET = async (req: Request) => {
             Idea.countDocuments(query)
         ]);
 
+        const ideasWithVotes = await Promise.all(ideas.map(async (idea) => {
+            const votes = await Vote.find({ ideaId: idea._id });
+            return { ...idea, votes };
+        }));
+
+
         return NextResponse.json({
-            ideas: serializeData(ideas),
+            ideas: serializeData(ideasWithVotes),
             pagination: {
                 currentPage: page,
                 totalPages: Math.ceil(totalCount / limit),

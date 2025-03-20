@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { IVote } from "./interface";
 
 export type RootLayoutProps = {
     children: ReactNode;
@@ -22,4 +23,10 @@ export type GetIdeasProps = {
     businessModel?: string;
     industry?: string;
     search?: string;
+};
+
+
+export type VoteProps = {
+    votes: IVote[];
+    ideaId: string;
 };

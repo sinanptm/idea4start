@@ -1,11 +1,13 @@
+"use client";
+
 import { IIdea } from "@/types/interface";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowLeft, ThumbsUp, ThumbsDown, Share2, Flag, Coffee } from "lucide-react";
+import { ArrowLeft, Share2, Flag, Coffee } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import StageBadge from "@/components/idea/StageBadge";
-import useGetVotes from "@/hooks/useGetVotes";
+import Vote from "@/components/idea/Vote";
 
 interface IdeaDetailHeaderProps {
   idea: IIdea;
@@ -13,9 +15,7 @@ interface IdeaDetailHeaderProps {
 
 export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
   const { title, user, userBuyMeACoffeeUrl, createdAt, stage } = idea;
-  const { upVotes, downVotes } = useGetVotes(idea.votes || []);
 
-  // Get initials for avatar fallback
   const initials = user?.name
     ? user.name
       .split(" ")
@@ -24,7 +24,6 @@ export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
       .toUpperCase()
     : "?";
 
-  // Format date
   const timeAgo = formatDistanceToNow(new Date(createdAt), { addSuffix: true });
 
   return (
@@ -77,23 +76,7 @@ export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
         </div>
       </div>
 
-      <div className="flex items-center gap-4 pt-4 border-t">
-        <div className="flex items-center gap-1">
-          <Button variant="outline" size="sm" className="gap-1">
-            <ThumbsUp className="h-4 w-4" />
-            <span>{upVotes}</span>
-          </Button>
-          <Button variant="outline" size="sm" className="gap-1">
-            <ThumbsDown className="h-4 w-4" />
-            <span>{downVotes}</span>
-          </Button>
-        </div>
-
-        <div className="text-sm text-muted-foreground">
-          {upVotes - downVotes > 0 ? "+" : ""}
-          {upVotes - downVotes} points
-        </div>
-      </div>
+      <Vote votes={idea.votes || []} ideaId={idea._id} />
     </div>
   );
 }
