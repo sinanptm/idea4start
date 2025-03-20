@@ -1,6 +1,5 @@
 "use client";
 
-import { IIdea } from "@/types/interface";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowLeft, Share2, Flag, Coffee } from "lucide-react";
@@ -8,10 +7,7 @@ import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import StageBadge from "@/components/idea/StageBadge";
 import Vote from "@/components/idea/Vote";
-
-interface IdeaDetailHeaderProps {
-  idea: IIdea;
-}
+import { IdeaDetailHeaderProps } from "@/types/props";
 
 export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
   const { title, user, userBuyMeACoffeeUrl, createdAt, stage } = idea;

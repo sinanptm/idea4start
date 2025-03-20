@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import mongoose, { isValidObjectId } from "mongoose";
 import validateSessionData from "@/lib/validateSessionData";
 import Vote from "@/lib/db/models/Vote";
+
 export const GET = async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
     const { id } = await params;
 

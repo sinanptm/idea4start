@@ -5,7 +5,7 @@ import { StatusCode } from "@/types";
 import { serializeData } from "@/lib/utils";
 import { PipelineStage } from "mongoose";
 import Vote from "@/lib/db/models/Vote";
-// Initialize DB connection
+
 connectDB();
 
 export const GET = async (req: Request) => {
@@ -13,10 +13,8 @@ export const GET = async (req: Request) => {
         const { searchParams } = new URL(req.url);
         const { query, skip, limit, sortQuery, page, searchTerms } = createFilter(searchParams);
 
-        // Define base aggregation pipeline
         const pipeline: PipelineStage[] = [
             { $match: query },
-            // Join with users collection
             {
                 $lookup: {
                     from: 'users',
@@ -25,7 +23,6 @@ export const GET = async (req: Request) => {
                     as: 'userDetails'
                 }
             },
-            // Handle cases with no user details
             {
                 $addFields: {
                     userDetails: {
@@ -40,12 +37,12 @@ export const GET = async (req: Request) => {
             { $unwind: { path: '$userDetails', preserveNullAndEmptyArrays: true } }
         ];
 
-        // Add search relevance scoring if search terms exist
+
         if (searchTerms && searchTerms.length > 0) {
             addSearchRelevanceScoring(pipeline, searchTerms);
         }
 
-        // Projection, sorting, pagination
+
         pipeline.push(
             {
                 $project: {
@@ -87,7 +84,6 @@ export const GET = async (req: Request) => {
             { $limit: limit }
         );
 
-        // Run queries in parallel for better performance
         const [ideas, totalCount] = await Promise.all([
             Idea.aggregate(pipeline),
             Idea.countDocuments(query)

@@ -1,6 +1,5 @@
 'use client';
 
-import { IIdea } from "@/types/interface";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -10,9 +9,8 @@ import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
 import StageBadge from "@/components/idea/StageBadge";
 import Vote from "@/components/idea/Vote";
-interface IdeaCardProps {
-  idea: IIdea;
-}
+import { IdeaCardProps } from "@/types/props";
+
 
 export default function IdeaCard({ idea }: IdeaCardProps) {
   const {

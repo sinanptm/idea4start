@@ -1,5 +1,5 @@
 import Container from "@/components/Container";
-import { IIdea } from "@/types";
+import { IIdea } from "@/types/interface";
 import IdeaDetailHeader from "@/components/idea/IdeaDetailHeader";
 import IdeaDetailContent from "@/components/idea/IdeaDetailContent";
 import IdeaDetailSidebar from "@/components/idea/IdeaDetailSideBar";
