@@ -124,7 +124,7 @@ export const DELETE = async (request: NextRequest, { params }: { params: Promise
     const { id } = await params;
     const { commentId } = await request.json();
 
-    const { success, message, user } = await validateSessionData();
+    const { success, message } = await validateSessionData();
 
     if (!success) {
         return NextResponse.json({ error: message }, { status: 401 });
