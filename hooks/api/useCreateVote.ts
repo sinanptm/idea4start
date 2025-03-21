@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useIdeasFilter from "../useIdeasFilter";
 
 const createVote = async (ideaId: string, voteType: "up" | "down") => {
-    const response = await fetch(`/api/idea/${ideaId}`, {
+    const response = await fetch(`/api/idea/${ideaId}/like`, {
         method: "PATCH",
         body: JSON.stringify({ voteType }),
         headers: {

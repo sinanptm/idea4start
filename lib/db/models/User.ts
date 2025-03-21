@@ -11,6 +11,7 @@ const UserSchema = new Schema<IUser>({
   image: String
 }, {
   timestamps: false,
+  versionKey: false
 });
 
 const User = (models.User as Model<IUser>) || model('User', UserSchema);

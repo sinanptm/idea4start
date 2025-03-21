@@ -1,145 +1,237 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ThumbsUp, Reply } from "lucide-react"
-import { formatDistanceToNow } from "date-fns"
+'use client';
 
-interface IdeaCommentsProps {
-  ideaId: string
-}
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThumbsUp, Reply, Loader2 } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
+import useGetComments from "@/hooks/api/useGetComments";
+import { useState } from "react";
+import { IComment, ICommentLike } from "@/types/interface";
+import { useSession } from "next-auth/react";
+import useCreateComment from "@/hooks/api/useCreateComment";
+import useLikeComment from "@/hooks/api/useLikeComment";
+import { cn } from "@/lib/utils";
+import { IdeaCommentsProps } from "@/types/props";
+import { toast } from "@/hooks/useToast";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function IdeaComments({ ideaId }: IdeaCommentsProps) {
-  // Mock comments data
-  const comments = [
-    {
-      id: "1",
-      user: {
-        name: "Alex Johnson",
-        avatar: "/placeholder-user.jpg",
-      },
-      content:
-        "This is a brilliant idea! I've been thinking about something similar for a while. Have you considered integrating with existing marketing platforms?",
-      createdAt: new Date("2023-10-18T14:32:00"),
-      likes: 5,
-      replies: [
-        {
-          id: "1-1",
-          user: {
-            name: "Sarah Johnson",
-            avatar: "/placeholder-user.jpg",
-          },
-          content:
-            "Thanks for the feedback! Yes, I'm planning to integrate with popular marketing tools like Mailchimp and HubSpot in the MVP stage.",
-          createdAt: new Date("2023-10-18T15:45:00"),
-          likes: 2,
+const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
+  const { data: session } = useSession();
+  const [content, setContent] = useState("");
+  const { data, isLoading } = useGetComments({ ideaId });
+  const comments = data?.comments || [];
+  const { mutate: createComment, isPending: isCreating } = useCreateComment();
+  const { mutate: likeComment, isPending: isLiking } = useLikeComment();
+
+  const handleCreateComment = () => {
+    if (!content.trim()) return;
+    const newCommentId = `comment_${Math.random().toString(36).substring(2, 15)}`;
+
+    const newComment = {
+      _id: newCommentId,
+      content,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      user: session?.user,
+      likes: [],
+    };
+
+    comments.push(newComment);
+
+    createComment(
+      { ideaId, content },
+      {
+        onSuccess: () => {
+          toast({
+            title: "Comment created successfully",
+            description: "Your comment has been created successfully",
+            variant: "success",
+          });
+          setContent("");
         },
-      ],
-    },
-    {
-      id: "2",
-      user: {
-        name: "Michael Chen",
-        avatar: "/placeholder-user.jpg",
-      },
-      content:
-        "Have you done any market research on the target audience? I'd be interested to know what size of businesses you're targeting.",
-      createdAt: new Date("2023-10-19T09:15:00"),
-      likes: 3,
-      replies: [],
-    },
-  ]
+        onError: () => {
+          toast({
+            title: "Error creating comment",
+            description: "Your comment has been created successfully",
+            variant: "destructive",
+          });
+          comments.pop();
+        },
+      }
+    );
+  };
+
+  const handleLikeComment = (commentId: string) => {
+    const id = `like_${Math.random().toString(36).substring(2, 15)}`;
+    const newLike = {
+      _id: id,
+      userId: session?.user?.id,
+      commentId,
+    };
+
+    const comment = comments.find((comment: IComment) => comment._id === commentId);
+    if (!comment) {
+      toast({
+        title: "Error",
+        description: "Comment not found",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const existingLikeIndex = comment.likes?.findIndex((like: ICommentLike) => like.userId === session?.user?.id);
+
+    try {
+      if (existingLikeIndex !== undefined && existingLikeIndex >= 0) {
+        comment.likes?.splice(existingLikeIndex, 1);
+      } else {
+        if (!comment.likes) {
+          comment.likes = [];
+        }
+        comment.likes.push(newLike);
+      }
+
+      likeComment({ ideaId, commentId }, {
+        onSuccess: () => {
+          toast({
+            title: "Comment liked successfully",
+          });
+        },
+        onError: () => {
+          if (existingLikeIndex !== undefined && existingLikeIndex >= 0) {
+            comment.likes?.push(newLike);
+          } else {
+            comment.likes?.pop();
+          }
+          toast({
+            title: "Error liking comment",
+            description: "Failed to update like status",
+            variant: "destructive",
+          });
+        },
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const isCommentLiked = (comment: IComment) => {
+    return comment.likes?.some(like => like.userId === session?.user?.id);
+  };
+
+  const getLikeCount = (comment: IComment) => {
+    return comment.likes?.length || 0;
+  };
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardContent className="flex items-center justify-center py-8">
+          <Loader2 className="h-6 w-6 animate-spin" />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl">Discussion ({comments.length})</CardTitle>
+        <CardTitle className="text-xl">
+          Discussion ({comments.length})
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="flex gap-4">
-          <Avatar className="h-10 w-10">
-            <AvatarFallback>YO</AvatarFallback>
-          </Avatar>
-          <div className="flex-1 space-y-2">
-            <Textarea placeholder="Share your thoughts or ask a question..." />
-            <Button>Post Comment</Button>
+        {session ? (
+          <div className="flex gap-4">
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={session.user?.image || ""} />
+              <AvatarFallback>
+                {session.user?.name?.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1 space-y-2">
+              <Textarea
+                placeholder="Share your thoughts or ask a question..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+              />
+              <Button
+                onClick={handleCreateComment}
+                disabled={isCreating || !content.trim()}
+              >
+                {isCreating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Post Comment
+              </Button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="text-center py-4 text-muted-foreground">
+            Please sign in to comment
+          </div>
+        )}
 
         <div className="space-y-6 pt-4">
-          {comments.map((comment) => (
-            <div key={comment.id} className="space-y-4">
+          {comments.map((comment: IComment) => (
+            <div key={comment._id} className="space-y-4">
               <div className="flex gap-4">
-                <Avatar className="h-10 w-10">
-                  <AvatarImage src={`https://avatar.vercel.sh/${comment.user.name}`} alt={comment.user.name} />
+                <Avatar className="h-10 w-10 shrink-0">
+                  <AvatarImage src={comment.user?.image} />
                   <AvatarFallback>
-                    {comment.user.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .toUpperCase()}
+                    {comment.user?.name?.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <div className="font-medium">{comment.user.name}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="font-medium">{comment.user?.name}</div>
                     <div className="text-xs text-muted-foreground">
                       {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
                     </div>
                   </div>
-                  <p className="mt-2">{comment.content}</p>
+                  <p className="mt-2 break-words">{comment.content}</p>
                   <div className="mt-3 flex items-center gap-4">
-                    <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-foreground">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className={cn(
+                        "h-8 px-2",
+                        isCommentLiked(comment) ? "text-red-500" : "text-muted-foreground"
+                      )}
+                      onClick={() => handleLikeComment(comment._id)}
+                      disabled={isLiking || !session}
+                    >
                       <ThumbsUp className="h-4 w-4 mr-1" />
-                      <span>{comment.likes}</span>
+                      <span className="text-muted-foreground">{getLikeCount(comment)}</span>
                     </Button>
-                    <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-foreground">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled
+                      className="h-8 px-2 text-muted-foreground"
+                    >
                       <Reply className="h-4 w-4 mr-1" />
                       <span>Reply</span>
                     </Button>
                   </div>
                 </div>
               </div>
-
-              {comment.replies.length > 0 && (
-                <div className="ml-14 space-y-4 pl-4 border-l-2">
-                  {comment.replies.map((reply) => (
-                    <div key={reply.id} className="flex gap-4">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={`https://avatar.vercel.sh/${reply.user.name}`} alt={reply.user.name} />
-                        <AvatarFallback>
-                          {reply.user.name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")
-                            .toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between">
-                          <div className="font-medium">{reply.user.name}</div>
-                          <div className="text-xs text-muted-foreground">
-                            {formatDistanceToNow(new Date(reply.createdAt), { addSuffix: true })}
-                          </div>
-                        </div>
-                        <p className="mt-2">{reply.content}</p>
-                        <div className="mt-3">
-                          <Button variant="ghost" size="sm" className="h-7 px-2 text-muted-foreground">
-                            <ThumbsUp className="h-3.5 w-3.5 mr-1" />
-                            <span>{reply.likes}</span>
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           ))}
+
+          {comments.length === 0 && (
+            <div className="text-center py-4 text-muted-foreground">
+              No comments yet. Be the first to comment!
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
+
+export default IdeaComments;
 

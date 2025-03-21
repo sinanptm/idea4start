@@ -63,9 +63,9 @@ const ideaSchema = new Schema<IIdea>({
 }, {
     timestamps: true,
     versionKey: false,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true }
 });
+
+ideaSchema.index({ userId: 1 });
 
 // Indexes for better query performance
 ideaSchema.index({ tags: 1 });

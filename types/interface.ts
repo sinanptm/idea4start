@@ -35,3 +35,20 @@ export interface IUser {
     name: string;
     image: string;
 }
+
+export interface IComment {
+    _id: string;
+    ideaId?: string;
+    userId?: string;
+    content: string;
+    createdAt: Date;
+    updatedAt: Date;
+    likes?: ICommentLike[];
+    user?: IUser;
+}
+
+export interface ICommentLike {
+    _id: string;
+    commentId?: string;
+    userId?: string;
+}

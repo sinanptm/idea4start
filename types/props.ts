@@ -38,3 +38,7 @@ export type IdeaCardProps = {
 export type IdeaDetailHeaderProps = {
     idea: IIdea;
 };
+
+export type IdeaCommentsProps = {
+    ideaId: string;
+};
