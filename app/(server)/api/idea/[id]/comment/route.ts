@@ -52,9 +52,11 @@ export const GET = async (request: NextRequest, { params }: { params: Promise<{ 
                             userId: "$$like.userId"
                         }
                     }
-                }
+                },
+                likesCount: { $size: "$likes" }
             }
-        }
+        },
+        { $sort: { likesCount: -1 } }
     ]);
 
     return NextResponse.json({ comments: commentsWithLikes }, { status: StatusCode.Ok });

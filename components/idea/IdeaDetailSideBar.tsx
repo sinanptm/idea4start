@@ -1,15 +1,14 @@
-import { IIdea } from "@/types/interface";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Users, Calendar, Lightbulb, Beaker, Rocket, Flag, BarChart } from "lucide-react";
+import { MessageSquare, Users, Calendar, Lightbulb } from "lucide-react";
 import { format } from "date-fns";
 import { BusinessModel } from "@/types";
+import { STAGE_CONFIG } from "@/constants";
+import { memo } from "react";
+import Link from "next/link";
+import { IdeaDetailSidebarProps } from "@/types/props";
 
-interface IdeaDetailSidebarProps {
-  idea: IIdea;
-}
-
-export default function IdeaDetailSidebar({ idea }: IdeaDetailSidebarProps) {
+const IdeaDetailSidebar = ({ idea }: IdeaDetailSidebarProps) => {
   const { createdAt, businessModel, stage } = idea;
 
   // Format business model for display
@@ -18,36 +17,7 @@ export default function IdeaDetailSidebar({ idea }: IdeaDetailSidebarProps) {
     return model.replace(/([A-Z])/g, " $1").trim();
   };
 
-  // Stage information
-  const stageInfo = {
-    idea: {
-      icon: Lightbulb,
-      label: "Idea",
-      description: "Initial concept without validation",
-    },
-    validation: {
-      icon: BarChart,
-      label: "Validation",
-      description: "Testing market demand and feasibility",
-    },
-    prototype: {
-      icon: Beaker,
-      label: "Prototype",
-      description: "Working model to demonstrate functionality",
-    },
-    mvp: {
-      icon: Rocket,
-      label: "MVP",
-      description: "Minimum viable product with core features",
-    },
-    launched: {
-      icon: Flag,
-      label: "Launched",
-      description: "Product is live and available to users",
-    },
-  };
-
-  const StageIcon = stage && stageInfo[stage] ? stageInfo[stage].icon : Lightbulb;
+  const StageIcon = STAGE_CONFIG.find((s) => s.value === stage)?.icon || Lightbulb;
 
   return (
     <div className="space-y-6">
@@ -69,7 +39,7 @@ export default function IdeaDetailSidebar({ idea }: IdeaDetailSidebarProps) {
             <div>
               <div className="font-medium">Current Stage</div>
               <div className="text-sm text-muted-foreground">
-                {stage ? stageInfo[stage].label : "Not specified"} - {stage ? stageInfo[stage].description : ""}
+                {stage ? STAGE_CONFIG[STAGE_CONFIG.findIndex((s) => s.value === stage)].label : "Not specified"} - {stage ? STAGE_CONFIG[STAGE_CONFIG.findIndex((s) => s.value === stage)].description : ""}
               </div>
             </div>
           </div>
@@ -98,13 +68,16 @@ export default function IdeaDetailSidebar({ idea }: IdeaDetailSidebarProps) {
           <div className="text-center space-y-2">
             <h3 className="font-semibold">Have a similar idea?</h3>
             <p className="text-sm text-muted-foreground">Share your own version or collaborate with the creator</p>
-            <Button variant="outline" className="mt-2 w-full">
-              Share Your Idea
-            </Button>
+            <Link href="/share-idea" prefetch={true}>
+              <Button variant="outline" className="mt-2 w-full">
+                Share Your Idea
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>
     </div>
   );
-}
+};
 
+export default memo(IdeaDetailSidebar);

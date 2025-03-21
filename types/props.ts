@@ -42,3 +42,7 @@ export type IdeaDetailHeaderProps = {
 export type IdeaCommentsProps = {
     ideaId: string;
 };
+
+export type IdeaDetailSidebarProps = {
+    idea: IIdea;
+};

@@ -93,11 +93,6 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
       }
 
       likeComment({ ideaId, commentId }, {
-        onSuccess: () => {
-          toast({
-            title: "Comment liked successfully",
-          });
-        },
         onError: () => {
           if (existingLikeIndex !== undefined && existingLikeIndex >= 0) {
             comment.likes?.push(newLike);
@@ -106,7 +101,7 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
           }
           toast({
             title: "Error liking comment",
-            description: "Failed to update like status",
+            description: "Failed to like comment",
             variant: "destructive",
           });
         },

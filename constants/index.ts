@@ -1,5 +1,5 @@
 import { BusinessModel, StageConfig } from "@/types";
-import { Home, Lightbulb, Info, Rocket, FlaskConical, Target, Flag, TrendingUp, Clock, ThumbsUp, List, Calendar } from "lucide-react";
+import { Home, Lightbulb, Info, Rocket, FlaskConical, Target, Flag, TrendingUp, Clock, ThumbsUp, List, Calendar, BarChart } from "lucide-react";
 
 export const APP_NAME = "Idea4Start";
 export const APPLICATION_URL = "https://idea4startup.vercel.app";
@@ -73,35 +73,35 @@ export const STAGE_CONFIG: StageConfig[] = [
     value: 'idea',
     label: 'Idea',
     icon: Lightbulb,
-    description: 'Initial concept phase',
+    description: 'Initial concept without validation',
     color: 'text-yellow-500'
   },
   {
     value: 'validation',
     label: 'Validation',
-    icon: Target,
-    description: 'Market research & validation',
+    icon: BarChart,
+    description: 'Testing market demand and feasibility',
     color: 'text-blue-500'
   },
   {
     value: 'prototype',
     label: 'Prototype',
     icon: FlaskConical,
-    description: 'Building & testing phase',
+    description: 'Working model to demonstrate functionality',
     color: 'text-purple-500'
   },
   {
     value: 'mvp',
     label: 'MVP',
     icon: Rocket,
-    description: 'Minimum viable product',
+    description: 'Minimum viable product with core features',
     color: 'text-orange-500'
   },
   {
     value: 'launched',
     label: 'Launched',
     icon: Flag,
-    description: 'Live in production',
+    description: 'Product is live and available to users',
     color: 'text-green-500'
   },
   {
@@ -112,6 +112,7 @@ export const STAGE_CONFIG: StageConfig[] = [
     color: 'text-gray-500'
   }
 ];
+
 
 export const BUSINESS_MODEL = [
   { id: BusinessModel.saas, label: "SaaS" },
