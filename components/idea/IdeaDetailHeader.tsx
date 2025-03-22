@@ -7,7 +7,6 @@ import {
   Flag,
   Coffee,
   MoreHorizontal,
-  Trash,
   Pencil,
 } from "lucide-react";
 import Link from "next/link";
@@ -24,39 +23,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import useDeleteIdea from "@/hooks/api/useDeleteIdea";
-import { toast } from "@/hooks/useToast";
 import { useRouter } from "next/navigation";
-
+import ConfirmDeleteIdeaModel from "@/components/idea/ConfirmDeleteIdeaModel";
 
 const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
   const { title, user, userBuyMeACoffeeUrl, createdAt, stage } = idea;
   const { data: session } = useSession();
-  const { mutate: deleteIdea, isPending: isDeleting } = useDeleteIdea();
   const router = useRouter();
-
 
   const timeAgo = formatDistanceToNow(new Date(createdAt), {
     addSuffix: true,
   });
-
-  const handleDelete = () => {
-    deleteIdea(idea._id, {
-      onSuccess: () => {
-        toast({
-          title: "Idea deleted successfully",
-        });
-        router.push("/ideas");
-      },
-      onError: () => {
-        toast({
-          title: "Failed to delete idea",
-          description: "Please try again",
-          variant: "destructive",
-        });
-      },
-    });
-  };
 
   const handleEdit = () => {
     console.log("Edit idea");
@@ -128,16 +105,11 @@ const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
                   >
                     <Pencil className="h-4 w-4" /> Edit
                   </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={handleDelete}
-                    disabled={isDeleting}
-                    className="cursor-pointer text-red-500 hover:bg-muted gap-2 text-sm"
-                  >
-                    <Trash className="h-4 w-4" /> Delete
-                  </DropdownMenuItem>
+                  <ConfirmDeleteIdeaModel idea={idea} />
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
+
           </div>
         </div>
       </div>

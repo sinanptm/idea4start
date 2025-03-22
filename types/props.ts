@@ -12,7 +12,6 @@ export type ContainerProps = {
     children: ReactNode;
 };
 
-
 export type CreateIdeaModelProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -27,7 +26,6 @@ export type GetIdeasProps = {
     industry?: string;
     search?: string;
 };
-
 
 export type VoteProps = {
     votes: IVote[];
@@ -73,4 +71,8 @@ export type GetSuggestionProps = {
     value: string;
     inputName: InputName;
     relativeFields?: RelativeField[];
+};
+
+export type ConfirmDeleteIdeaModelProps = {
+    idea: IIdea;
 };

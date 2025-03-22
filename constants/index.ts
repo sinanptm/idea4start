@@ -1,5 +1,5 @@
 import { BusinessModel, StageConfig } from "@/types";
-import { Home, Lightbulb, Info, Rocket, FlaskConical, Target, Flag, TrendingUp, Clock, ThumbsUp, List, Calendar, BarChart } from "lucide-react";
+import { Home, Lightbulb, Info, Rocket, FlaskConical, Target, Flag, TrendingUp, Clock, ThumbsUp, List, BarChart } from "lucide-react";
 
 export const APP_NAME = "Idea4Start";
 export const APPLICATION_URL = "https://idea4startup.vercel.app";
@@ -137,7 +137,6 @@ export const BUSINESS_MODEL = [
   { id: BusinessModel.bundling, label: "Bundling" },
   { id: BusinessModel.franchise, label: "Franchise" },
   { id: BusinessModel.peerToPeer, label: "Peer-to-Peer" },
-  { id: BusinessModel.cooperative, label: "Cooperative" },
   { id: BusinessModel.sponsorship, label: "Sponsorship" },
   { id: BusinessModel.other, label: "Other" }
 ];
