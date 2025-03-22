@@ -12,11 +12,11 @@ import {
 } from "@/components/ui/command";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CheckIcon, ChevronDownIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon, AlertTriangle } from "lucide-react";
 import { useId, useState } from "react";
 
 type SelectWithSearchProps = {
-  options: { label: string; value: string }[];
+  options: { label: string; value: string; }[];
   value: string;
   onChange: (value: string) => void;
   label: string;
@@ -82,9 +82,12 @@ const SelectWithSearch = ({ options, value, onChange, label, placeholder, error,
           </Command>
         </PopoverContent>
       </Popover>
-      {error && <p className="text-destructive text-sm" role="alert">{error}</p>}
+      {error && <p className="text-destructive text-sm flex items-center gap-1" role="alert">
+        <AlertTriangle size={12} />
+        {error}
+      </p>}
     </div>
   );
-}
+};
 
 export default SelectWithSearch;

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { ComponentProps, useId } from "react";
 import { Label } from "./label";
-import { ArrowRightIcon, SearchIcon } from "lucide-react";
+import { ArrowRightIcon, SearchIcon, AlertTriangle } from "lucide-react";
 
 function Input({ className, type, ...props }: ComponentProps<"input">) {
   return (
@@ -29,25 +29,26 @@ const LabeledInput = ({ label, error, ...props }: { label: string; error?: strin
         <Input id={id} {...props} />
         {error && (
           <p
-            className="text-destructive mt-2 text-xs"
+            className="text-destructive mt-2 text-xs flex items-center gap-1"
             role="alert"
             aria-live="polite"
           >
+            <AlertTriangle size={12} />
             {error}
           </p>
         )}
       </div>
     </>
   );
-}
+};
 
 
-const SearchInput = ({ 
-  placeholder = "Search...", 
+const SearchInput = ({
+  placeholder = "Search...",
   onSearch,
   onInputChange,
-  defaultValue = "", 
-  error, 
+  defaultValue = "",
+  error,
   disabled,
   className,
   label,
@@ -62,14 +63,14 @@ const SearchInput = ({
     <div className="*:not-first:mt-2 relative">
       <Label htmlFor={id}>{label}</Label>
       <div className="relative">
-        <Input 
-          id={id} 
+        <Input
+          id={id}
           className={cn(
             "peer ps-9 pe-9",
             error ? 'border-red-500 focus-visible:ring-red-300' : '',
             className
           )}
-          placeholder={placeholder} 
+          placeholder={placeholder}
           type="search"
           value={value}
           defaultValue={defaultValue}
@@ -119,16 +120,17 @@ const SearchInput = ({
       )}
 
       {error && (
-        <p 
-          id={`${id}-error`} 
-          className="text-sm text-red-500 mt-1"
+        <p
+          id={`${id}-error`}
+          className="text-sm text-red-500 mt-1 flex items-center gap-1"
         >
+          <AlertTriangle size={12} />
           {error}
         </p>
       )}
     </div>
   );
-}
+};
 
 
 

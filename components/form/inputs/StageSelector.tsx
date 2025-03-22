@@ -7,7 +7,7 @@ import { FieldErrors, UseFormSetValue } from "react-hook-form";
 import { memo } from "react";
 import { STAGE_CONFIG } from "@/constants";
 import { useIsMobile } from "@/hooks/useMobile";
-
+import { AlertTriangle } from "lucide-react";
 interface StageSelectorProps {
   currentStage: StageConfig['value'];
   setValue: UseFormSetValue<CreateIdeaInput>;
@@ -100,7 +100,8 @@ const StageSelector = ({ currentStage, setValue, errors }: StageSelectorProps) =
       </div>
 
       {errors.stage && (
-        <p className="text-destructive text-xs sm:text-sm mt-2 animate-in slide-in-from-top-1">
+        <p className="text-destructive text-xs sm:text-sm mt-2 animate-in slide-in-from-top-1 flex items-center gap-1">
+          <AlertTriangle size={12} />
           {errors.stage.message}
         </p>
       )}

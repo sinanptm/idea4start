@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LabeledInput } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { LabeledTextarea } from "@/components/ui/textarea";
 import { HashIcon } from "lucide-react";
 import { BusinessModel } from "@/types";
 import SelectWithSearch from "@/components/ui/select";
@@ -18,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { createIdea } from "@/app/(server)/actions";
 import { useToast } from "@/hooks/useToast";
 import { useQueryClient } from "@tanstack/react-query";
+import TextAreaWithAiSuggestion from "@/components/form/inputs/TextAreaWithAiSuggestion";
 
 const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
   const [tags, setTags] = useState<string[]>([]);
@@ -31,9 +31,11 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
     setValue,
     watch,
     reset,
+    setError,
   } = useForm<CreateIdeaInput>({
     resolver: zodResolver(createIdeaSchema),
   });
+
 
   const onSubmit = async (data: CreateIdeaInput) => {
     try {
@@ -76,32 +78,54 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
     }
   };
 
+  // TODO: Remove this after testing  and add the actual api call
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getAiSuggestion = async (value: string, inputName: string) => {
+    return new Promise<{ data: string; }>((resolve) => {
+      setTimeout(() => {
+        if (inputName === "title") {
+          resolve({ data: "AI Suggestion: An InnovativAI SAI Suggestion: An Innovative Platform for Remote Team BuildingAI Suggestion: An Innovative Platform for Remote Team BuildingAI Suggestion: An Innovative Platform for Remote Team Buildinguggestion: An Innovative Platform for Remote Team Buildinge Platform for Remote Team Building" });
+        } else if (inputName === "description") {
+          resolve({ data: "AI Suggestion: A revolutionary platform that helps remote teams build stronger connections through interactive virtual experiences and AI-powered team activities..." });
+        } else {
+          resolve({ data: "AI has no suggestion for this field" });
+        }
+      }, 1000);
+    });
+  };
+
   return (
     <Card className="border-none">
       <CardContent className="p-3 sm:p-6">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
           <div className="space-y-4 sm:space-y-6">
             <h3 className="text-base sm:text-lg font-semibold text-gray-200">Basic Information</h3>
-            <LabeledTextarea
+
+            <TextAreaWithAiSuggestion
               label="Title *"
               placeholder="Enter a catchy title for your idea"
-              {...register("title")}
-              error={errors.title?.message}
-              draggable={false}
-              className="bg-gray-950 border-gray-800 text-sm sm:text-base max-h-12"
+              name="title"
+              apiCall={getAiSuggestion}
+              errors={errors}
+              setError={(name, message) => setError(name as any, { message })}
+              onChange={(value) => setValue("title", value)}
+              value={watch("title")}
             />
 
-            <LabeledTextarea
+            <TextAreaWithAiSuggestion
               label="Description *"
               placeholder="Provide a brief overview of your startup idea..."
-              {...register("description")}
-              error={errors.description?.message}
-              className="bg-gray-950 border-gray-800 text-sm sm:text-base min-h-[100px] sm:min-h-16"
+              apiCall={getAiSuggestion}
+              name="description"
+              onChange={(value) => setValue("description", value)}
+              errors={errors}
+              value={watch("description")}
             />
 
             <IndustrySelector
               onSelect={(industries) => setValue("industries", industries)}
               error={errors.industries?.message}
+              defaultValue={watch("industries")}
             />
 
             <div className="space-y-2 sm:space-y-3">
@@ -152,20 +176,24 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
           <div className="space-y-4 sm:space-y-6">
             <h3 className="text-base sm:text-lg font-semibold text-gray-200">Detailed Information</h3>
 
-            <LabeledTextarea
+            <TextAreaWithAiSuggestion
               label="Problem Statement *"
               placeholder="What specific problem does your startup solve? Who experiences this problem?"
-              {...register("problemStatement")}
-              error={errors.problemStatement?.message}
-              className="bg-gray-950 border-gray-800 text-sm sm:text-base min-h-[100px] sm:min-h-16"
+              errors={errors}
+              value={watch("problemStatement")}
+              apiCall={getAiSuggestion}
+              name="problemStatement"
+              onChange={(value) => setValue("problemStatement", value)}
             />
 
-            <LabeledTextarea
+            <TextAreaWithAiSuggestion
               label="Unique Value Proposition *"
               placeholder="What makes your solution unique? Why would customers choose your solution over alternatives?"
-              {...register("uniqueValue")}
-              error={errors.uniqueValue?.message}
-              className="bg-gray-950 border-gray-800 text-sm sm:text-base min-h-[100px] sm:min-h-16"
+              errors={errors}
+              value={watch("uniqueValue")}
+              apiCall={getAiSuggestion}
+              name="uniqueValue"
+              onChange={(value) => setValue("uniqueValue", value)}
             />
 
             <RelatedUrlSelector
@@ -183,14 +211,18 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               label="Business Model *"
               onChange={(value) => setValue("businessModel", [value])}
               error={errors.businessModel?.message}
+              className="mb-12"
             />
 
-            <LabeledTextarea
+
+            <TextAreaWithAiSuggestion
               label="Risks "
               placeholder="What are the risks associated with your startup idea? How can you mitigate them?"
-              {...register("risks")}
-              error={errors.risks?.message}
-              className="bg-gray-950 border-gray-800 text-sm sm:text-base min-h-[100px] sm:min-h-16"
+              errors={errors}
+              value={watch("risks")}
+              apiCall={getAiSuggestion}
+              name="risks"
+              onChange={(value) => setValue("risks", value)}
             />
 
             <StageSelector currentStage={watch("stage")} setValue={setValue} errors={errors} />

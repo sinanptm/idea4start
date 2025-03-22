@@ -4,6 +4,7 @@ import { memo, useEffect, useState } from 'react';
 import { Label } from '@/components/ui/label';
 import MultipleSelector, { Option } from '@/components/ui/multiselect';
 import { INDUSTRIES } from '@/constants';
+import { AlertTriangle } from 'lucide-react';
 
 interface IndustrySelectorProps {
   onSelect: (industries: string[]) => void;
@@ -30,8 +31,8 @@ const IndustrySelector = ({ onSelect, error, defaultValue }: IndustrySelectorPro
         commandProps={{
           label: "Select industries",
         }}
-        value={selectedIndustries} 
-        defaultOptions={INDUSTRIES.map(el=>({value:el.label}))}
+        value={selectedIndustries}
+        defaultOptions={INDUSTRIES.map(el => ({ value: el.label }))}
         placeholder="Select industries"
         hideClearAllButton={false}
         hidePlaceholderWhenSelected
@@ -39,7 +40,8 @@ const IndustrySelector = ({ onSelect, error, defaultValue }: IndustrySelectorPro
         emptyIndicator={<p className="text-center text-sm">No industries found</p>}
       />
       {error && (
-        <p className="text-destructive text-sm" role="alert">
+        <p className="text-destructive text-sm flex items-center gap-1" role="alert">
+          <AlertTriangle size={12} />
           {error}
         </p>
       )}

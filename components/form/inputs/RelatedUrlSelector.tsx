@@ -3,6 +3,7 @@
 import { memo, useState } from 'react';
 import { Label } from '@/components/ui/label';
 import MultipleSelector, { Option } from '@/components/ui/multiselect';
+import { AlertTriangle } from 'lucide-react';
 
 interface RelatedUrlSelectorProps {
   onSelect: (urls: string[]) => void;
@@ -44,7 +45,8 @@ const RelatedUrlSelector = ({ onSelect, error, defaultValue }: RelatedUrlSelecto
         creatable
       />
       {error && (
-        <p className="text-destructive text-sm" role="alert">
+        <p className="text-destructive text-sm flex items-center gap-1" role="alert">
+          <AlertTriangle size={12} />
           {error}
         </p>
       )}
