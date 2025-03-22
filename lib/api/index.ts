@@ -18,7 +18,6 @@ export const getSuggestion = async (value: string, inputName: InputName) => {
     return response.data;
 };
 
-
 export const createComment = async (ideaId: string, content: string) => {
     const response = await instance.post(`/api/idea/${ideaId}/comment`, { content });
     return response.data;

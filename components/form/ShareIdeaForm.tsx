@@ -78,21 +78,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
     }
   };
 
-  // TODO: Remove this after testing  and add the actual api call
-  const getAiSuggestion = async (value: string, inputName: string) => {
-    return new Promise<{ data: string; }>((resolve) => {
-      setTimeout(() => {
-        if (inputName === "title") {
-          resolve({ data: "AI Suggestion: An InnovativAI SAI Suggestion: An Innovative Platform for Remote Team BuildingAI Suggestion: An Innovative Platform for Remote Team BuildingAI Suggestion: An Innovative Platform for Remote Team Buildinguggestion: An Innovative Platform for Remote Team Buildinge Platform for Remote Team Building" });
-        } else if (inputName === "description") {
-          resolve({ data: "AI Suggestion: A revolutionary platform that helps remote teams build stronger connections through interactive virtual experiences and AI-powered team activities..." });
-        } else {
-          resolve({ data: "AI has no suggestion for this field" });
-        }
-      }, 1000);
-    });
-  };
-
   return (
     <Card className="border-none">
       <CardContent className="p-3 sm:p-6">
@@ -104,7 +89,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               label="Title *"
               placeholder="Enter a catchy title for your idea"
               name="title"
-              apiCall={getAiSuggestion}
               errors={errors}
               setError={(name, message) => setError(name as keyof CreateIdeaInput, { message })}
               onChange={(value) => setValue("title", value)}
@@ -114,7 +98,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
             <TextAreaWithAiSuggestion
               label="Description *"
               placeholder="Provide a brief overview of your startup idea..."
-              apiCall={getAiSuggestion}
               name="description"
               onChange={(value) => setValue("description", value)}
               errors={errors}
@@ -180,7 +163,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               placeholder="What specific problem does your startup solve? Who experiences this problem?"
               errors={errors}
               value={watch("problemStatement")}
-              apiCall={getAiSuggestion}
               name="problemStatement"
               onChange={(value) => setValue("problemStatement", value)}
             />
@@ -190,7 +172,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               placeholder="What makes your solution unique? Why would customers choose your solution over alternatives?"
               errors={errors}
               value={watch("uniqueValue")}
-              apiCall={getAiSuggestion}
               name="uniqueValue"
               onChange={(value) => setValue("uniqueValue", value)}
             />
@@ -219,7 +200,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               placeholder="What are the risks associated with your startup idea? How can you mitigate them?"
               errors={errors}
               value={watch("risks")}
-              apiCall={getAiSuggestion}
               name="risks"
               onChange={(value) => setValue("risks", value)}
             />

@@ -1,31 +1,19 @@
 'use client';
 import { Label } from '@radix-ui/react-label';
-import { FieldValues, FieldErrors } from 'react-hook-form';
-import { useId, useState, useCallback } from 'react';
-import { memo } from 'react';
+import { useId, useState, useCallback, memo } from 'react';
 import { cn } from '@/lib/utils';
 import { Sparkles, Check, X, AlertTriangle } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { toast } from '@/hooks/useToast';
-type TextAreaWithAiSuggestionProps = {
-    errors: FieldErrors<FieldValues>;
-    label: string;
-    name: string;
-    placeholder: string;
-    apiCall: (value: string, inputName: string) => Promise<{ data: string; }>;
-    onChange?: (value: string) => void;
-    value?: string;
-    setError?: (name: string, message: string | undefined) => void;
-    disabled?: boolean;
-    className?: string;
-};
+import useGetSuggestion from '@/hooks/api/useGetSuggestion';
+import { InputName } from '@/types';
+import { TextAreaWithAiSuggestionProps } from '@/types/props';
 
 const TextAreaWithAiSuggestion = ({
     errors,
     label,
     name,
     placeholder,
-    apiCall,
     onChange,
     value = '',
     setError,
@@ -39,6 +27,8 @@ const TextAreaWithAiSuggestion = ({
     const [showingSuggestion, setShowingSuggestion] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const { mutate: getSuggestion, isPending: isGettingSuggestion } = useGetSuggestion();
 
     // Handle getting AI suggestion
     const handleGetSuggestion = async () => {
@@ -70,14 +60,22 @@ const TextAreaWithAiSuggestion = ({
         try {
             if (!showingSuggestion) {
                 setOriginalText(value);
-                const result = await apiCall(value, name);
-
-                if (result?.data) {
-                    onChange?.(result.data);
-                    setShowingSuggestion(true);
-                } else {
-                    throw new Error("No suggestion received");
-                }
+                getSuggestion({ value, inputName: name as InputName }, {
+                    onSuccess: (data) => {
+                        onChange?.(data);
+                        setShowingSuggestion(true);
+                    },
+                    onError: (error) => {
+                        console.error("Error getting AI suggestion:", error);
+                        setError?.(name, "Failed to get suggestion. Please try again.");
+                        setErrorMessage("Failed to get suggestion. Please try again.");
+                        toast({
+                            title: "Error 🚫",
+                            description: "Failed to get suggestion. Please try again. 🔄",
+                            variant: "destructive",
+                        });
+                    }
+                });
             }
         } catch (error) {
             console.error("Error getting AI suggestion:", error);

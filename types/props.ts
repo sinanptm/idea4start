@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import { IVote, IIdea } from "./interface";
+import { FieldErrors } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 
 export type RootLayoutProps = {
     children: ReactNode;
@@ -45,4 +47,16 @@ export type IdeaCommentsProps = {
 
 export type IdeaDetailSidebarProps = {
     idea: IIdea;
+};
+
+export type TextAreaWithAiSuggestionProps = {
+    errors: FieldErrors<FieldValues>;
+    label: string;
+    name: string;
+    placeholder: string;
+    onChange?: (value: string) => void;
+    value?: string;
+    setError?: (name: string, message: string | undefined) => void;
+    disabled?: boolean;
+    className?: string;
 };
