@@ -14,7 +14,7 @@ import {
 import { ShareIdeaButtonProps } from "@/types/props";
 import { cn } from "@/lib/utils";
 
-const ShareIdeaButton = ({ link = window.location.href, title = "Check this out!", className }: ShareIdeaButtonProps) => {
+const ShareIdeaButton = ({ link, title = "Check this out!", className }: ShareIdeaButtonProps) => {
     const [copied, setCopied] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -91,6 +91,7 @@ const ShareIdeaButton = ({ link = window.location.href, title = "Check this out!
 
         setIsOpen(false);
     };
+
 
     // Close popover when clicking outside
     useEffect(() => {
