@@ -17,7 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { createIdea } from "@/app/(server)/actions";
 import { useToast } from "@/hooks/useToast";
 import { useQueryClient } from "@tanstack/react-query";
-import TextAreaWithAiSuggestion from "@/components/form/inputs/TextAreaWithAiSuggestion";
+import TextAreaWithAiSuggestion from "@/components/TextAreaWithAiSuggestion";
 
 const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
   const [tags, setTags] = useState<string[]>([]);

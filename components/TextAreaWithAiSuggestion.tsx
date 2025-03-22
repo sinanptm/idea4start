@@ -5,7 +5,8 @@ import { useId, useState, useCallback } from 'react';
 import { memo } from 'react';
 import { cn } from '@/lib/utils';
 import { Sparkles, Check, X, AlertTriangle } from 'lucide-react';
-
+import { useSession } from 'next-auth/react';
+import { toast } from '@/hooks/useToast';
 type TextAreaWithAiSuggestionProps = {
     errors: FieldErrors<FieldValues>;
     label: string;
@@ -33,6 +34,7 @@ const TextAreaWithAiSuggestion = ({
     ...props
 }: TextAreaWithAiSuggestionProps) => {
     const id = useId();
+    const { data: session } = useSession();
     const [originalText, setOriginalText] = useState(value);
     const [showingSuggestion, setShowingSuggestion] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +42,14 @@ const TextAreaWithAiSuggestion = ({
 
     // Handle getting AI suggestion
     const handleGetSuggestion = async () => {
+        if (!session) {
+            toast({
+                title: "Error 🚫",
+                description: "You must be logged in to get a suggestion 🔒",
+                variant: "destructive",
+            });
+            return;
+        }
         setIsLoading(true);
         setErrorMessage(null);
         setError?.(name, undefined);
@@ -48,6 +58,11 @@ const TextAreaWithAiSuggestion = ({
             const message = "This field is required";
             setError?.(name, message);
             setErrorMessage(message);
+            toast({
+                title: "Error 🚫",
+                description: message,
+                variant: "destructive",
+            });
             setIsLoading(false);
             return;
         }
@@ -69,6 +84,11 @@ const TextAreaWithAiSuggestion = ({
             const message = "Failed to get suggestion. Please try again.";
             setError?.(name, message);
             setErrorMessage(message);
+            toast({
+                title: "Error 🚫",
+                description: "Failed to get suggestion. Please try again. 🔄",
+                variant: "destructive",
+            });
         } finally {
             setIsLoading(false);
         }

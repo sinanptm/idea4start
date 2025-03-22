@@ -1,8 +1,6 @@
 {
   "rules": [
     {
-      "name": "Initial Prompt Execution",
-      "description": "Execute all setup requirements and generate the complete initial codebase before proceeding.",
       "sequential": true,
       "steps": [
         "Execute all setup requirements as specified in .initial-prompt.",
@@ -12,7 +10,8 @@
         "Log completion status before proceeding to .features.",
         "always use memo for components",
         "always use useQuery for fetching data ",
-        "always use arrow functions and export the function in the last line of the file if possible as default export"
+        "always use arrow functions and export the function in the last line of the file if possible as default export",
+        "use Emoji's in error message toast if possible"
       ]
     },
     {
@@ -53,4 +52,3 @@
     }
   ]
 }
-
