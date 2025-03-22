@@ -24,25 +24,38 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useDeleteIdea from "@/hooks/api/useDeleteIdea";
+import { toast } from "@/hooks/useToast";
+import { useRouter } from "next/navigation";
+
 
 const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
   const { title, user, userBuyMeACoffeeUrl, createdAt, stage } = idea;
   const { data: session } = useSession();
+  const { mutate: deleteIdea, isPending: isDeleting } = useDeleteIdea();
+  const router = useRouter();
 
-  const initials = user?.name
-    ? user.name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-    : "?";
 
   const timeAgo = formatDistanceToNow(new Date(createdAt), {
     addSuffix: true,
   });
 
   const handleDelete = () => {
-    console.log("Delete idea");
+    deleteIdea(idea._id, {
+      onSuccess: () => {
+        toast({
+          title: "Idea deleted successfully",
+        });
+        router.push("/ideas");
+      },
+      onError: () => {
+        toast({
+          title: "Failed to delete idea",
+          description: "Please try again",
+          variant: "destructive",
+        });
+      },
+    });
   };
 
   const handleEdit = () => {
@@ -70,8 +83,8 @@ const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
         <div className="mt-3 sm:mt-4 flex flex-wrap items-center justify-between gap-y-2 sm:gap-y-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
-              <AvatarImage src={`https://avatar.vercel.sh/${user?.name}`} alt={user?.name} />
-              <AvatarFallback>{initials}</AvatarFallback>
+              <AvatarImage src={user?.image} alt={user?.name} />
+              <AvatarFallback>{user?.name?.[0]}</AvatarFallback>
             </Avatar>
 
             <div className="text-sm sm:text-base">
@@ -117,6 +130,7 @@ const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={handleDelete}
+                    disabled={isDeleting}
                     className="cursor-pointer text-red-500 hover:bg-muted gap-2 text-sm"
                   >
                     <Trash className="h-4 w-4" /> Delete

@@ -12,7 +12,9 @@ export function serializeData<T>(data: T): T {
 }
 
 
+//eslint-disable-next-line
 export const withErrorHandler = (handler: Function) => {
+  //eslint-disable-next-line
   return async (request: NextRequest, context: any) => {
     try {
       return await handler(request, context);

@@ -14,16 +14,11 @@ import {
 import { ShareIdeaButtonProps } from "@/types/props";
 import { cn } from "@/lib/utils";
 
-const ShareIdeaButton = ({ link, title = "Check this out!", className }: ShareIdeaButtonProps) => {
+const ShareIdeaButton = ({ link = window.location.href, title = "Check this out!", className }: ShareIdeaButtonProps) => {
     const [copied, setCopied] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
 
-    useEffect(() => {
-        if (!link) {
-            link = window.location.href;
-        }
-    }, [link]);
 
     const handleCopyLink = async () => {
         try {
@@ -34,6 +29,7 @@ const ShareIdeaButton = ({ link, title = "Check this out!", className }: ShareId
                 description: "The link has been copied to your clipboard",
             });
             setTimeout(() => setCopied(false), 2000);
+            //eslint-disable-next-line
         } catch (err) {
             toast({
                 title: "Failed to copy",

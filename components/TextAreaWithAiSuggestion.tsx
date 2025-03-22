@@ -28,7 +28,8 @@ const TextAreaWithAiSuggestion = ({
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const { mutate: getSuggestion, isPending: isGettingSuggestion } = useGetSuggestion();
+    const { mutate: getSuggestion } = useGetSuggestion();
+
 
     // Handle getting AI suggestion
     const handleGetSuggestion = async () => {

@@ -59,5 +59,9 @@ export const updateComment = async (ideaId: string, commentId: string, content: 
     return response.data;
 };
 
+export const deleteIdea = async (ideaId: string) => {
+    const response = await instance.delete(`/api/idea/${ideaId}`);
+    return response.data;
+};
 
 export default instance;
