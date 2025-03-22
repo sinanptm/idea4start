@@ -2,14 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowLeft, Share2, Flag, Coffee } from "lucide-react";
+import { ArrowLeft, Flag, Coffee } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import StageBadge from "@/components/idea/StageBadge";
 import Vote from "@/components/idea/Vote";
 import { IdeaDetailHeaderProps } from "@/types/props";
+import { memo } from "react";
+import ShareButton from "@/components/ShareButton";
 
-export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
+
+const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
   const { title, user, userBuyMeACoffeeUrl, createdAt, stage } = idea;
 
   const initials = user?.name
@@ -61,9 +64,7 @@ export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
               </Button>
             )}
 
-            <Button variant="outline" size="icon">
-              <Share2 className="h-4 w-4" />
-            </Button>
+            <ShareButton title={title} />
 
             <Button variant="outline" size="icon">
               <Flag className="h-4 w-4" />
@@ -75,5 +76,7 @@ export default function IdeaDetailHeader({ idea }: IdeaDetailHeaderProps) {
       <Vote votes={idea.votes || []} ideaId={idea._id} />
     </div>
   );
-}
+};
+
+export default memo(IdeaDetailHeader);
 

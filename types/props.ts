@@ -60,3 +60,8 @@ export type TextAreaWithAiSuggestionProps = {
     disabled?: boolean;
     className?: string;
 };
+
+export type ShareIdeaButtonProps = {
+    link?: string;
+    title?: string;
+};
