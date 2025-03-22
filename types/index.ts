@@ -27,6 +27,14 @@ export enum BusinessModel {
     other = 'other',
 }
 
+export enum InputName {
+    Title = "title",
+    Description = "description",
+    UniqueValue = "uniqueValue",
+    ProblemStatement = "problemStatement",
+    Risks = "risks"
+}
+
 export enum StatusCode {
     Created = 201,
     BadRequest = 400,
