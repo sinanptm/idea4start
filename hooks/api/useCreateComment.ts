@@ -1,13 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-
-const createComment = async (ideaId: string, content: string) => {
-    const response = await fetch(`/api/idea/${ideaId}/comment`, {
-        method: "POST",
-        body: JSON.stringify({ content }),
-    });
-
-    return response.json();
-};
+import { createComment } from "@/lib/api";
 
 const useCreateComment = () => {
     return useMutation({

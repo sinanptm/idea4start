@@ -1,21 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useIdeasFilter from "../useIdeasFilter";
+import { createVote } from "@/lib/api";
 
-const createVote = async (ideaId: string, voteType: "up" | "down") => {
-    const response = await fetch(`/api/idea/${ideaId}/like`, {
-        method: "PATCH",
-        body: JSON.stringify({ voteType }),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
 
-    if (!response.ok) {
-        throw new Error("Failed to create vote");
-    }
-
-    return response.json();
-};
 
 const useCreateVote = () => {
     const queryClient = useQueryClient();
