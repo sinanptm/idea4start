@@ -42,13 +42,17 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
     createComment(
       { ideaId, content },
       {
-        onSuccess: () => {
+        onSuccess: ({ comment }: { comment: IComment; }) => {
           toast({
             title: "Comment created successfully",
             description: "Your comment has been created successfully",
             variant: "success",
           });
           setContent("");
+          console.log(comment);
+
+          comments.pop();
+          comments.push(comment);
         },
         onError: () => {
           toast({

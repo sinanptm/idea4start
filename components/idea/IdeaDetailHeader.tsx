@@ -23,13 +23,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useRouter } from "next/navigation";
 import ConfirmDeleteIdeaModel from "@/components/idea/ConfirmDeleteIdeaModel";
 
 const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
   const { title, user, userBuyMeACoffeeUrl, createdAt, stage } = idea;
   const { data: session } = useSession();
-  const router = useRouter();
 
   const timeAgo = formatDistanceToNow(new Date(createdAt), {
     addSuffix: true,

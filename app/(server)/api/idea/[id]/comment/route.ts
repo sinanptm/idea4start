@@ -80,7 +80,7 @@ export const POST = withErrorHandler(async (request: NextRequest, { params }: { 
 
     const comment = await Comment.create({ ideaId: id, userId: user?._id, content });
 
-    return NextResponse.json({ comment }, { status: StatusCode.Created });
+    return NextResponse.json({ comment: comment.toJSON() }, { status: StatusCode.Created });
 });
 
 
