@@ -22,7 +22,6 @@ export enum BusinessModel {
     bundling = 'bundling',
     franchise = 'franchise',
     peerToPeer = 'peerToPeer',
-    cooperative = 'cooperative',
     sponsorship = 'sponsorship',
     other = 'other',
 }
@@ -32,7 +31,10 @@ export enum InputName {
     Description = "description",
     UniqueValue = "uniqueValue",
     ProblemStatement = "problemStatement",
-    Risks = "risks"
+    Risks = "risks",
+    BusinessModel = "businessModel",
+    Industries = "industries",
+    Tags = "tags",
 }
 
 export enum StatusCode {
@@ -58,3 +60,8 @@ export interface Pagination {
     totalPages: number;
     totalItems: number;
 }
+
+export type RelativeField = {
+    name: InputName;
+    value: string;
+};

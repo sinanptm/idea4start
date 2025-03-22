@@ -10,14 +10,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LabeledInput } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { HashIcon } from "lucide-react";
-import { BusinessModel } from "@/types";
+import { BusinessModel, InputName } from "@/types";
 import SelectWithSearch from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { createIdea } from "@/app/(server)/actions";
 import { useToast } from "@/hooks/useToast";
 import { useQueryClient } from "@tanstack/react-query";
-import TextAreaWithAiSuggestion from "@/components/TextAreaWithAiSuggestion";
+import TextAreaWithAiSuggestion from "@/components/TextAreaWithSuggestion";
 
 const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
   const [tags, setTags] = useState<string[]>([]);
@@ -93,6 +93,15 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               setError={(name, message) => setError(name as keyof CreateIdeaInput, { message })}
               onChange={(value) => setValue("title", value)}
               value={watch("title")}
+              relativeFields={[
+                { name: InputName.Description, value: watch("description") },
+                { name: InputName.BusinessModel, value: watch("businessModel")?.[0] || "" },
+                { name: InputName.Industries, value: watch("industries")?.[0] || "" },
+                { name: InputName.Tags, value: watch("tags")?.join(",") || "" },
+                { name: InputName.ProblemStatement, value: watch("problemStatement") },
+                { name: InputName.UniqueValue, value: watch("uniqueValue")! },
+                { name: InputName.Risks, value: watch("risks")! },
+              ]}
             />
 
             <TextAreaWithAiSuggestion
@@ -102,6 +111,15 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               onChange={(value) => setValue("description", value)}
               errors={errors}
               value={watch("description")}
+              relativeFields={[
+                { name: InputName.Title, value: watch("title") },
+                { name: InputName.BusinessModel, value: watch("businessModel")?.[0] || "" },
+                { name: InputName.Industries, value: watch("industries")?.[0] || "" },
+                { name: InputName.Tags, value: watch("tags")?.join(",") || "" },
+                { name: InputName.ProblemStatement, value: watch("problemStatement") },
+                { name: InputName.UniqueValue, value: watch("uniqueValue")! },
+                { name: InputName.Risks, value: watch("risks")! },
+              ]}
             />
 
             <IndustrySelector
@@ -165,6 +183,15 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               value={watch("problemStatement")}
               name="problemStatement"
               onChange={(value) => setValue("problemStatement", value)}
+              relativeFields={[
+                { name: InputName.Title, value: watch("title") },
+                { name: InputName.Description, value: watch("description") },
+                { name: InputName.BusinessModel, value: watch("businessModel")?.[0] || "" },
+                { name: InputName.Industries, value: watch("industries")?.[0] || "" },
+                { name: InputName.Tags, value: watch("tags")?.join(",") || "" },
+                { name: InputName.UniqueValue, value: watch("uniqueValue")! },
+                { name: InputName.Risks, value: watch("risks")! },
+              ]}
             />
 
             <TextAreaWithAiSuggestion
@@ -174,6 +201,15 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               value={watch("uniqueValue")}
               name="uniqueValue"
               onChange={(value) => setValue("uniqueValue", value)}
+              relativeFields={[
+                { name: InputName.Title, value: watch("title") },
+                { name: InputName.Description, value: watch("description") },
+                { name: InputName.BusinessModel, value: watch("businessModel")?.[0] || "" },
+                { name: InputName.Industries, value: watch("industries")?.[0] || "" },
+                { name: InputName.Tags, value: watch("tags")?.join(",") || "" },
+                { name: InputName.ProblemStatement, value: watch("problemStatement") },
+                { name: InputName.Risks, value: watch("risks")! },
+              ]}
             />
 
             <RelatedUrlSelector
@@ -202,6 +238,15 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               value={watch("risks")}
               name="risks"
               onChange={(value) => setValue("risks", value)}
+              relativeFields={[
+                { name: InputName.Title, value: watch("title") },
+                { name: InputName.Description, value: watch("description") },
+                { name: InputName.BusinessModel, value: watch("businessModel")?.[0] || "" },
+                { name: InputName.Industries, value: watch("industries")?.[0] || "" },
+                { name: InputName.Tags, value: watch("tags")?.join(",") || "" },
+                { name: InputName.ProblemStatement, value: watch("problemStatement") },
+                { name: InputName.UniqueValue, value: watch("uniqueValue")! },
+              ]}
             />
 
             <StageSelector currentStage={watch("stage")} setValue={setValue} errors={errors} />

@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { IVote, IIdea } from "./interface";
 import { FieldErrors } from "react-hook-form";
 import { FieldValues } from "react-hook-form";
+import { InputName, RelativeField } from "@/types";
 
 export type RootLayoutProps = {
     children: ReactNode;
@@ -49,7 +50,7 @@ export type IdeaDetailSidebarProps = {
     idea: IIdea;
 };
 
-export type TextAreaWithAiSuggestionProps = {
+export type TextAreaWithSuggestionProps = {
     errors: FieldErrors<FieldValues>;
     label: string;
     name: string;
@@ -59,10 +60,17 @@ export type TextAreaWithAiSuggestionProps = {
     setError?: (name: string, message: string | undefined) => void;
     disabled?: boolean;
     className?: string;
+    relativeFields?: RelativeField[];
 };
 
 export type ShareIdeaButtonProps = {
     link?: string;
     title?: string;
     className?: string;
+};
+
+export type GetSuggestionProps = {
+    value: string;
+    inputName: InputName;
+    relativeFields?: RelativeField[];
 };

@@ -13,8 +13,8 @@ const instance = axios.create({
 });
 
 
-export const getSuggestion = async (value: string, inputName: InputName) => {
-    const response = await instance.post("/api/suggestions", { value, inputName });
+export const getSuggestion = async (value: string, inputName: InputName, relativeFields?: { name: InputName, value: string; }[]) => {
+    const response = await instance.post("/api/suggestions", { value, inputName, relativeFields });
     return response.data;
 };
 
