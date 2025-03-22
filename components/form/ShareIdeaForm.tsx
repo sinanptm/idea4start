@@ -79,7 +79,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
   };
 
   // TODO: Remove this after testing  and add the actual api call
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getAiSuggestion = async (value: string, inputName: string) => {
     return new Promise<{ data: string; }>((resolve) => {
       setTimeout(() => {
@@ -107,7 +106,7 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
               name="title"
               apiCall={getAiSuggestion}
               errors={errors}
-              setError={(name, message) => setError(name as any, { message })}
+              setError={(name, message) => setError(name as keyof CreateIdeaInput, { message })}
               onChange={(value) => setValue("title", value)}
               value={watch("title")}
             />

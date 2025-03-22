@@ -1,3 +1,4 @@
+'use client';
 import { Label } from '@radix-ui/react-label';
 import { FieldValues, FieldErrors } from 'react-hook-form';
 import { useId, useState, useCallback } from 'react';
