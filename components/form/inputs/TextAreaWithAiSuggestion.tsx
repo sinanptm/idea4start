@@ -1,6 +1,6 @@
 import { Label } from '@radix-ui/react-label';
 import { FieldValues, FieldErrors } from 'react-hook-form';
-import { useId, useState } from 'react';
+import { useId, useState, useCallback } from 'react';
 import { memo } from 'react';
 import { cn } from '@/lib/utils';
 import { Sparkles, Check, X, AlertTriangle } from 'lucide-react';
@@ -13,7 +13,7 @@ type TextAreaWithAiSuggestionProps = {
     apiCall: (value: string, inputName: string) => Promise<{ data: string; }>;
     onChange?: (value: string) => void;
     value?: string;
-    setError?: (name: string, message: string) => void;
+    setError?: (name: string, message: string | undefined) => void;
     disabled?: boolean;
     className?: string;
 };
@@ -41,6 +41,7 @@ const TextAreaWithAiSuggestion = ({
     const handleGetSuggestion = async () => {
         setIsLoading(true);
         setErrorMessage(null);
+        setError?.(name, undefined);
 
         if (!value?.trim()) {
             const message = "This field is required";
@@ -73,15 +74,16 @@ const TextAreaWithAiSuggestion = ({
     };
 
     // Handle accepting the suggestion
-    const handleAcceptSuggestion = () => {
+    const handleAcceptSuggestion = useCallback(() => {
+        onChange?.(value);
         setShowingSuggestion(false);
-    };
+    }, [onChange, value]);
 
     // Handle rejecting the suggestion
-    const handleRejectSuggestion = () => {
+    const handleRejectSuggestion = useCallback(() => {
         onChange?.(originalText);
         setShowingSuggestion(false);
-    };
+    }, [onChange, originalText]);
 
     // Determine if there's an error to display
     const errorToShow = errorMessage || (errors[name]?.message as string);
@@ -100,7 +102,7 @@ const TextAreaWithAiSuggestion = ({
                                 aria-label="Accept suggestion"
                                 disabled={disabled}
                             >
-                                <Check size={16} />
+                                <Check aria-hidden="true" size={16} />
                                 Accept
                             </button>
                             <button
@@ -110,7 +112,7 @@ const TextAreaWithAiSuggestion = ({
                                 aria-label="Reject suggestion"
                                 disabled={disabled}
                             >
-                                <X size={16} />
+                                <X aria-hidden="true" size={16} />
                                 Reject
                             </button>
                         </>
@@ -126,8 +128,10 @@ const TextAreaWithAiSuggestion = ({
                         )}
                         disabled={isLoading || disabled}
                         aria-label="Get AI suggestion"
+                        title="Get AI suggestion"
+                        aria-busy={isLoading}
                     >
-                        <Sparkles size={18} />
+                        <Sparkles aria-hidden="true" size={18} />
                     </button>
                 </div>
             </div>
