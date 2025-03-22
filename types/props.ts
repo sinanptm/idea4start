@@ -64,4 +64,5 @@ export type TextAreaWithAiSuggestionProps = {
 export type ShareIdeaButtonProps = {
     link?: string;
     title?: string;
+    className?: string;
 };

@@ -12,8 +12,9 @@ import {
     RedoDotIcon as RedditIcon,
 } from "lucide-react";
 import { ShareIdeaButtonProps } from "@/types/props";
+import { cn } from "@/lib/utils";
 
-const ShareIdeaButton = ({ link, title = "Check this out!" }: ShareIdeaButtonProps) => {
+const ShareIdeaButton = ({ link, title = "Check this out!", className }: ShareIdeaButtonProps) => {
     const [copied, setCopied] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -129,7 +130,7 @@ const ShareIdeaButton = ({ link, title = "Check this out!" }: ShareIdeaButtonPro
                     variant="outline"
                     size="icon"
                     onClick={() => setIsOpen(true)}
-                    className="r hover:bg-zinc-800"
+                    className={cn(" hover:bg-zinc-800", className)}
                 >
                     <Share2 className="h-4 w-4" />
                 </Button>

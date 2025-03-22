@@ -4,8 +4,9 @@ import validateSessionData from "@/lib/validateSessionData";
 import { StatusCode } from "@/types";
 import { isValidObjectId, Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+import { withErrorHandler } from "@/lib/utils";
 
-export const GET = async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
+export const GET = withErrorHandler(async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
     const { id } = await params;
 
     if (!isValidObjectId(id)) {
@@ -60,10 +61,10 @@ export const GET = async (request: NextRequest, { params }: { params: Promise<{ 
     ]);
 
     return NextResponse.json({ comments: commentsWithLikes }, { status: StatusCode.Ok });
-};
+});
 
 // comment create
-export const POST = async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
+export const POST = withErrorHandler(async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
     const { id } = await params;
     const { content } = await request.json();
 
@@ -80,11 +81,11 @@ export const POST = async (request: NextRequest, { params }: { params: Promise<{
     const comment = await Comment.create({ ideaId: id, userId: user?._id, content });
 
     return NextResponse.json({ comment }, { status: StatusCode.Created });
-};
+});
 
 
 // comment like
-export const PATCH = async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
+export const PATCH = withErrorHandler(async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
     const { id } = await params;
     const { commentId } = await request.json();
 
@@ -117,10 +118,10 @@ export const PATCH = async (request: NextRequest, { params }: { params: Promise<
     }
 
     return NextResponse.json({ message: "Comment like processed successfully" }, { status: StatusCode.Ok });
-};
+});
 
 // comment delete
-export const DELETE = async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
+export const DELETE = withErrorHandler(async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
     const { id } = await params;
     const { commentId } = await request.json();
 
@@ -149,10 +150,10 @@ export const DELETE = async (request: NextRequest, { params }: { params: Promise
     await CommentLike.deleteMany({ commentId });
 
     return NextResponse.json({ message: "Comment deleted successfully" }, { status: StatusCode.Ok });
-};
+});
 
 // comment update
-export const PUT = async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
+export const PUT = withErrorHandler(async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
     const { id } = await params;
     const { commentId, content } = await request.json();
 
@@ -181,4 +182,4 @@ export const PUT = async (request: NextRequest, { params }: { params: Promise<{ 
     await comment.save();
 
     return NextResponse.json({ comment }, { status: StatusCode.Ok });
-};
+});

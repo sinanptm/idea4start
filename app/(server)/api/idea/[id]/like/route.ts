@@ -2,8 +2,8 @@ import Vote from "@/lib/db/models/Vote";
 import validateSessionData from "@/lib/validateSessionData";
 import { isValidObjectId } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-
-export const PATCH = async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
+import { withErrorHandler } from "@/lib/utils";
+export const PATCH = withErrorHandler(async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
     const { id } = await params;
     const { voteType } = await request.json();
 
@@ -27,4 +27,4 @@ export const PATCH = async (request: NextRequest, { params }: { params: Promise<
     }
 
     return NextResponse.json({ message: "Vote processed successfully" }, { status: 200 });
-};
+});

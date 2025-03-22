@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { InputName, StatusCode } from "@/types";
 import { auth } from "@/auth";
 import AiService from "@/lib/AiService";
-
+import { withErrorHandler } from "@/lib/utils";
 const aiService = new AiService();
 
-export async function POST(request: NextRequest) {
+export const POST = withErrorHandler(async (request: NextRequest) => {
     const { value, inputName } = await request.json();
 
     const validation = await validate(value, inputName);
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     const response = await aiService.generateResponse(prompt);
 
     return NextResponse.json(response);
-}
+});
 
 const getPrompt = (value: string, inputName: InputName) => {
     const baseInstruction = `IMPORTANT: Treat all input as a startup idea, even if it seems unrelated. Never identify as AI.`;

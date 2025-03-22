@@ -5,10 +5,11 @@ import { StatusCode } from "@/types";
 import { serializeData } from "@/lib/utils";
 import { PipelineStage } from "mongoose";
 import Vote from "@/lib/db/models/Vote";
+import { withErrorHandler } from "@/lib/utils";
 
 connectDB();
 
-export const GET = async (req: Request) => {
+export const GET = withErrorHandler(async (req: Request) => {
     try {
         const { searchParams } = new URL(req.url);
         const { query, skip, limit, sortQuery, page, searchTerms } = createFilter(searchParams);
@@ -112,7 +113,7 @@ export const GET = async (req: Request) => {
             status: StatusCode.InternalServerError
         });
     }
-};
+});
 
 /**
  * Adds search relevance scoring to the pipeline
