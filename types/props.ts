@@ -24,6 +24,7 @@ export type GetIdeasProps = {
     stage?: string;
     businessModel?: string;
     industry?: string;
+    timePeriod?: string;
     search?: string;
 };
 

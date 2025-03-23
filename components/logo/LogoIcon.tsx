@@ -10,6 +10,7 @@ const LogoIcon = ({ className }: { className?: string; }) => {
         src="/assets/logo.png"
         alt={`${APP_NAME} Logo`}
         width={32}
+        className='w-full h-full'
         height={32}
       />
     </span>

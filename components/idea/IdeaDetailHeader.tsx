@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   ArrowLeft,
   Flag,
@@ -24,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ConfirmDeleteIdeaModel from "@/components/idea/ConfirmDeleteIdeaModel";
+import UserAvatar from "@/components/idea/UserAvatar";
 
 const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
   const { title, user, userBuyMeACoffeeUrl, createdAt, stage } = idea;
@@ -57,10 +57,7 @@ const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
 
         <div className="mt-3 sm:mt-4 flex flex-wrap items-center justify-between gap-y-2 sm:gap-y-4">
           <div className="flex items-center gap-2 sm:gap-3">
-            <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
-              <AvatarImage src={user?.image} alt={user?.name} />
-              <AvatarFallback>{user?.name?.[0]}</AvatarFallback>
-            </Avatar>
+            <UserAvatar name={user?.name} url={user?.image} className="h-8 w-8 sm:h-10 sm:w-10" />
 
             <div className="text-sm sm:text-base">
               <div className="font-medium text-white">{user?.name}</div>

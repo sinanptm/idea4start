@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import IdeaCard from "@/components/idea/IdeaCard"
-import IdeaListPagination from "@/components/idea/IdeaListPagination"
-import IdeasListSkeleton from "@/components/skeleton/IdeaListSkeleton"
-import useIdeasFilter from "@/hooks/useIdeasFilter"
-import useGetIdeas from "@/hooks/api/useGetIdeas"
-import { AlertCircle, Search, RefreshCw } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import IdeaCard from "@/components/idea/IdeaCard";
+import IdeaListPagination from "@/components/idea/IdeaListPagination";
+import IdeasListSkeleton from "@/components/skeleton/IdeaListSkeleton";
+import useIdeasFilter from "@/hooks/useIdeasFilter";
+import useGetIdeas from "@/hooks/api/useGetIdeas";
+import { AlertCircle, Search, RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const IdeasList = () => {
-  const { page, sort, stage, businessModel, industry, search } = useIdeasFilter()
+  const { page, sort, stage, businessModel, industry, search, timePeriod } = useIdeasFilter();
   const { data, isLoading, error, refetch } = useGetIdeas({
     page,
     sort,
@@ -18,11 +18,12 @@ const IdeasList = () => {
     businessModel: businessModel!,
     industry: industry!,
     search: search!,
+    timePeriod: timePeriod!,
     limit: 7
-  })
-  
+  });
+
   if (isLoading) {
-    return <IdeasListSkeleton />
+    return <IdeasListSkeleton />;
   }
 
   // Error state
@@ -39,7 +40,7 @@ const IdeasList = () => {
           </Button>
         </AlertDescription>
       </Alert>
-    )
+    );
   }
 
   // No ideas found state
@@ -57,7 +58,7 @@ const IdeasList = () => {
           Clear all filters
         </Button>
       </div>
-    )
+    );
   }
 
   return (
@@ -68,8 +69,8 @@ const IdeasList = () => {
 
       <IdeaListPagination currentPage={page} totalPages={data.pagination.totalPages} />
     </div>
-  )
-}
+  );
+};
 
 export default IdeasList
 

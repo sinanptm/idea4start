@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MessageSquare, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -10,9 +9,10 @@ import { formatDistanceToNow } from "date-fns";
 import StageBadge from "@/components/idea/StageBadge";
 import Vote from "@/components/idea/Vote";
 import { IdeaCardProps } from "@/types/props";
+import UserAvatar from "@/components/idea/UserAvatar";
+import { memo } from "react";
 
-
-export default function IdeaCard({ idea }: IdeaCardProps) {
+const IdeaCard = ({ idea }: IdeaCardProps) => {
   const {
     _id,
     title,
@@ -23,15 +23,6 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
     businessModel,
     votes
   } = idea;
-
-  // Get initials for avatar fallback
-  const initials = idea.user?.name
-    ? idea.user.name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-    : "?";
 
   // Format date
   const timeAgo = formatDistanceToNow(new Date(createdAt), { addSuffix: true });
@@ -58,10 +49,7 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
 
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
             <div className="flex items-center gap-1.5" >
-              <Avatar className="h-5 w-5">
-                <AvatarImage src={idea.user?.image} alt={idea.user?.name} />
-                <AvatarFallback className="text-xs">{initials}</AvatarFallback>
-              </Avatar>
+              <UserAvatar name={idea.user?.name} url={idea.user?.image} className="h-5 w-5" />
               <span>{idea.user?.name}</span>
             </div>
             <span>•</span>
@@ -116,4 +104,6 @@ export default function IdeaCard({ idea }: IdeaCardProps) {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default memo(IdeaCard);
