@@ -13,7 +13,7 @@ const FeaturedIdeas = () => {
     const { data, isLoading } = useGetIdeas({ limit: 3, sort: "trending", timePeriod: "week" });
 
     return (
-        <div className="space-y-6 py-12 border-t border-gray-800">
+        <div className="space-y-6 py-12 border-gray-800">
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold tracking-tight">Featured Ideas</h2>
                 <Button variant="ghost" asChild className="gap-1">

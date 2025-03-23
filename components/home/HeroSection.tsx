@@ -7,7 +7,7 @@ import ShareIdeaButton from '@/components/ShareIdeaButton';
 
 const HeroSection = () => {
     return (
-        <div className="flex flex-col items-center text-center space-y-6 pb-12">
+        <div className="flex flex-col items-center text-center space-y-6 ">
             <LogoIcon className="h-20 w-20" />
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
                 Idea4Start

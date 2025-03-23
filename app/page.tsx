@@ -5,6 +5,7 @@ import FeaturedIdeas from "@/components/home/FeaturedIdeas";
 import CTASection from "@/components/home/CTASection";
 import HowItWorks from "@/components/home/HowItWorks";
 import AiSection from "@/components/home/AiSection";
+
 const HomePage = () => {
   return (
     <Container>

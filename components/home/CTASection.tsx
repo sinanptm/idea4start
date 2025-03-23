@@ -5,7 +5,7 @@ import ShareIdeaButton from "../ShareIdeaButton";
 
 const CTASection = () => {
     return (
-        <div className="py-12 border-t border-gray-800">
+        <div className="py-12">
             <Card className="bg-primary/5 border-primary/20">
                 <CardContent className="p-8 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="space-y-4 text-center md:text-left">

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const AiSection = () => {
     return (
-        <div className="space-y-6 py-12 border-t border-gray-800">
+        <div className="space-y-6 py-12  border-gray-800">
             <div className="text-center">
                 <h2 className="text-2xl font-bold tracking-tight">AI-Powered Idea Validation</h2>
                 <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">

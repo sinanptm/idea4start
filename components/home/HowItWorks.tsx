@@ -23,7 +23,7 @@ const ThisIsHowItWorks = [
 
 const HowItWorks = () => {
     return (
-        <div className="space-y-8 py-12 border-t border-gray-800">
+        <div className="space-y-8 py-12">
             <div className="text-center">
                 <h2 className="text-2xl font-bold tracking-tight">How It Works</h2>
                 <p className="text-muted-foreground mt-2">Join our community and start your entrepreneurial journey</p>
