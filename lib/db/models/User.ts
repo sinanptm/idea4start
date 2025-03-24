@@ -6,11 +6,28 @@ const UserSchema = new Schema<IUser>({
     type: String,
     required: true,
     unique: true,
+    index: true,
   },
   name: String,
-  image: String
+  image: String,
+  designations: String,
+  company: String,
+  location: String,
+  bio: String,
+  website: String,
+  twitter: String,
+  buyMeACoffee: String,
+  linkedin: String,
+  github: String,
+  phoneNumber: String,
+  role: {
+    type: String,
+    enum: ['user', 'admin', 'moderator'],
+    default: 'user',
+  },
+  languages: [String],
 }, {
-  timestamps: false,
+  timestamps: true,
   versionKey: false
 });
 
