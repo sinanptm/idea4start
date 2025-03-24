@@ -33,6 +33,10 @@ export type VoteProps = {
     ideaId: string;
 };
 
+export type LoginDialogProps = {
+    trigger?: React.ReactNode;
+};
+
 export type IdeaCardProps = {
     idea: IIdea;
 };
