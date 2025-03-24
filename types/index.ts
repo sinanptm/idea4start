@@ -1,3 +1,5 @@
+import { IIdea } from "./interface";
+
 export type Stage = 'idea' | 'validation' | 'prototype' | 'mvp' | 'launched';
 export enum BusinessModel {
     saas = 'saas',
@@ -25,6 +27,12 @@ export enum BusinessModel {
     sponsorship = 'sponsorship',
     other = 'other',
 }
+
+export type HomePageStatics = {
+    totalUsers: number;
+    totalIdeas: number;
+    trendingIdeas: IIdea[];
+};
 
 export enum InputName {
     Title = "title",

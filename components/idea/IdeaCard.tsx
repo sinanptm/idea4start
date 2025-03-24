@@ -6,7 +6,7 @@ import { MessageSquare, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
-import StageBadge from "@/components/idea/StageBadge";
+import StageBadge from "@/components/StageBadge";
 import Vote from "@/components/idea/Vote";
 import { IdeaCardProps } from "@/types/props";
 import UserAvatar from "@/components/idea/UserAvatar";
