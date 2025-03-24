@@ -64,4 +64,9 @@ export const deleteIdea = async (ideaId: string) => {
     return response.data;
 };
 
+export const getHomePageStatics = async () => {
+    const response = await instance.get("/api/");
+    return response.data;
+};
+
 export default instance;

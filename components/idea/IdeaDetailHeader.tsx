@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
-import StageBadge from "@/components/idea/StageBadge";
+import StageBadge from "@/components/StageBadge";
 import Vote from "@/components/idea/Vote";
 import { IdeaDetailHeaderProps } from "@/types/props";
 import { memo } from "react";

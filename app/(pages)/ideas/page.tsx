@@ -3,7 +3,7 @@ import IdeaHeader from "@/components/idea/IdeaHeader";
 import IdeaList from "@/components/idea/IdeaList";
 import Container from "@/components/Container";
 import { memo, Suspense } from "react";
-import IdeaCardSkeleton from "@/components/home/IdeaCardSkeleton";
+import IdeaCardSkeleton from "@/components/home/FeaturedIdeaSkeleton";
 import IdeaFilterSkeleton from "@/components/skeleton/IdeaFilterSkeleton";
 
 const IdeasPage = async () => {
@@ -28,7 +28,7 @@ const IdeasPage = async () => {
                     </div>
                 </div>
             </div>
-        </Container >
+        </Container>
     );
 };
 

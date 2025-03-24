@@ -20,6 +20,11 @@ export interface IIdea {
     user?: IUser;
     uniqueValue?: string;
     votes?: IVote[];
+    trendingScore?: number;
+    upVoteCount?: number;
+    downVoteCount?: number;
+    commentCount?: number;
+    userLiked?: boolean;
 }
 
 export interface IVote {

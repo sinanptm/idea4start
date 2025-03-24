@@ -1,69 +1,86 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import Link from 'next/link';
-import useGetIdeas from '@/hooks/api/useGetIdeas';
-import { memo } from 'react';
-import StageBadge from '../idea/StageBadge';
-import IdeaCardSkeleton from './IdeaCardSkeleton';
-
+import { memo } from "react";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Heart } from "lucide-react";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useGetHomePageStatics from "@/hooks/api/useGetHomePageStatics";
+import FeaturedIdeaSkeleton from "./FeaturedIdeaSkeleton";
+import StageBadge from "@/components/StageBadge";
 const FeaturedIdeas = () => {
-    const { data, isLoading } = useGetIdeas({ limit: 3, sort: "trending", timePeriod: "week" });
+    const { data, isLoading } = useGetHomePageStatics();
 
     return (
-        <div className="space-y-6 py-12 border-gray-800">
+        <div className="space-y-8">
             <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold tracking-tight">Featured Ideas</h2>
-                <Button variant="ghost" asChild className="gap-1">
-                    <Link href="/ideas" prefetch={false}>
-                        View All
-                        <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                <div>
+                    <h2 className="text-2xl font-bold tracking-tight">Featured Ideas</h2>
+                    <p className="text-muted-foreground mt-1">Discover trending startup concepts of this week from our community</p>
+                </div>
+                <Button variant="ghost" asChild className="hidden sm:flex">
+                    <Link href="/ideas">
+                        View all ideas <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                 </Button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {isLoading ? (
-                    <IdeaCardSkeleton />
+                    <FeaturedIdeaSkeleton />
                 ) : (
-                    data?.ideas.map((idea) => (
-                        <Card key={idea._id} className="bg-card border-gray-800 hover:border-primary/50 transition-colors">
-                            <CardContent className="p-6 space-y-4">
+                    data?.trendingIdeas.map((idea) => (
+                        <Card
+                            key={idea._id}
+                            className="bg-card border-gray-800 hover:border-primary/50 transition-all flex flex-col h-full"
+                        >
+                            <CardHeader className="pb-4">
                                 <div className="flex justify-between items-start">
                                     <StageBadge stage={idea.stage} />
-                                    <div className="flex items-center gap-1 text-sm">
-                                        <span>{idea.businessModel}</span>
+                                    <Badge variant="secondary" className="flex items-center gap-1">
+                                        {idea.businessModel}
+                                    </Badge>
+                                </div>
+                                <CardTitle className="text-xl mt-3 line-clamp-2">{idea.title}</CardTitle>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                                <p className="text-muted-foreground line-clamp-3">{idea.description}</p>
+                            </CardContent>
+                            <CardFooter className="flex flex-col space-y-4 pt-2">
+                                <div className="flex justify-between items-center w-full">
+                                    <div className="flex items-center gap-1 text-muted-foreground text-sm">
+                                        <Heart className={`h-4 w-4 ${idea.userLiked ? 'text-red-500 fill-red-500' : ''}`} />
+                                        {idea.upVoteCount}
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Avatar className="h-6 w-6">
+                                            <AvatarImage src={idea.user?.image || 'https://github.com/shadcn.png'} alt={idea.user?.name || ''} />
+                                            <AvatarFallback>{idea.user?.name.charAt(0)}</AvatarFallback>
+                                        </Avatar>
+                                        <span className="text-sm">{idea.user?.name}</span>
                                     </div>
                                 </div>
-                                <div>
-                                    <h3 className="text-lg font-semibold">{idea.title}</h3>
-                                    <p className="text-sm text-muted-foreground mt-1">
-                                        {idea.description}
-                                    </p>
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {idea.tags?.map((tag) => (
-                                        <span key={tag} className="bg-muted px-2 py-1 rounded-full text-xs">{tag}</span>
-                                    ))}
-                                    {idea.tags && idea.tags.length > 3 && (
-                                        <span className="bg-muted px-2 py-1 rounded-full text-xs">+{idea.tags.length - 3}</span>
-                                    )}
-                                </div>
-                                <Button variant="ghost" asChild className="w-full justify-between">
-                                    <Link prefetch={false} href={`/ideas/${idea._id}`}>
-                                        View Details
-                                        <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                                    </Link>
+                                <Button variant="outline" asChild className="w-full">
+                                    <Link href={`/ideas/${idea._id}`}>View Details</Link>
                                 </Button>
-                            </CardContent>
+                            </CardFooter>
                         </Card>
                     ))
                 )}
+            </div>
+
+            <div className="flex justify-center sm:hidden">
+                <Button variant="outline" asChild>
+                    <Link href="/ideas">
+                        View all ideas <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                </Button>
             </div>
         </div>
     );
 };
 
-export default memo(FeaturedIdeas);
+export default memo(FeaturedIdeas)
+

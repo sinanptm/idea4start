@@ -91,7 +91,9 @@ export const GET = withErrorHandler(async (req: Request) => {
         ]);
 
         const ideasWithVotes = await Promise.all(ideas.map(async (idea) => {
-            const votes = await Vote.find({ ideaId: idea._id });
+            const [votes] = await Promise.all([
+                Vote.find({ ideaId: idea._id }),
+            ]);
             return { ...idea, votes };
         }));
 
