@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import { LogIn, LogOut, User } from "lucide-react"
-import { memo } from "react"
-import { signIn, signOut } from "next-auth/react"
-import Image from "next/image"
-import { SidebarMenuButton } from "@/components/ui/sidebar"
+import { LogOut, User } from "lucide-react";
+import { memo } from "react";
+import { signOut } from "next-auth/react";
+import Image from "next/image";
+import { SidebarMenuButton } from "@/components/ui/sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Session } from "next-auth";
-
-const AuthButton = ({ session }: { session: Session }) => {
+import LoginDialog from "./LoginDialog";
+const AuthButton = ({ session }: { session: Session; }) => {
   if (session && session?.user) {
     return (
       <DropdownMenu>
@@ -59,21 +59,15 @@ const AuthButton = ({ session }: { session: Session }) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    )
+    );
   }
 
   return (
-    <SidebarMenuButton size="lg" onClick={() => signIn("google")} className="hover:bg-sidebar-accent">
-      <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-green-500 text-white">
-        <LogIn className="size-4" />
-      </div>
-      <div className="grid flex-1 text-left text-sm leading-tight">
-        <span className="truncate font-semibold">Login</span>
-        <span className="truncate text-xs">Sign in to your account</span>
-      </div>
+    <SidebarMenuButton size="lg" className="hover:bg-sidebar-accent">
+      <LoginDialog />
     </SidebarMenuButton>
-  )
-}
+  );
+};
 
 export default memo(AuthButton)
 
