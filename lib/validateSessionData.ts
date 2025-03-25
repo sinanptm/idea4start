@@ -1,8 +1,12 @@
 import { auth } from "@/auth";
 import User from "./db/models/User";
+import connectDB from "./db/connect";
+
+connectDB();
 
 const validateSessionData = async () => {
     const session = await auth();
+
     if (!session) {
         return {
             success: false,

@@ -2,6 +2,7 @@ import { memo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Globe, Mail, MapPin, Phone, Building, User } from "lucide-react";
 import { IUser } from "@/types/interface";
+import Link from "next/link";
 
 interface ProfileInfoProps {
     user: IUser;
@@ -18,15 +19,15 @@ const ProfileInfo = ({ user }: ProfileInfoProps) => {
     };
 
     const socialLinks = [
-        { name: "Website", value: user.website, icon: Globe, url: user.website },
-        { name: "GitHub", value: user.github, icon: User, url: `https://github.com/${user.github}` },
-        { name: "Twitter", value: user.twitter, icon: User, url: `https://twitter.com/${user.twitter}` },
-        { name: "LinkedIn", value: user.linkedin, icon: User, url: `https://linkedin.com/in/${user.linkedin}` },
+        { name: "Website", value: user.website || "N/A", icon: Globe, url: user.website ? user.website : null },
+        { name: "GitHub", value: user.github || "N/A", icon: User, url: user.github ? `https://github.com/${user.github}` : null },
+        { name: "Twitter", value: user.twitter || "N/A", icon: User, url: user.twitter ? `https://twitter.com/${user.twitter}` : null },
+        { name: "LinkedIn", value: user.linkedin || "N/A", icon: User, url: user.linkedin ? `https://linkedin.com/in/${user.linkedin}` : null },
         {
             name: "Buy Me A Coffee",
-            value: user.buyMeACoffee,
+            value: user.buyMeACoffee || "N/A",
             icon: User,
-            url: `https://buymeacoffee.com/${user.buyMeACoffee}`,
+            url: user.buyMeACoffee ? `https://buymeacoffee.com/${user.buyMeACoffee}` : null,
         },
     ];
 
@@ -99,16 +100,17 @@ const ProfileInfo = ({ user }: ProfileInfoProps) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {socialLinks.map((link, index) =>
                         link.value ? (
-                            <a
+                            <Link
                                 key={index}
-                                href={link.url}
+                                href={link.url || ""}
+                                prefetch={false}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
                             >
                                 <link.icon className="h-4 w-4" />
                                 <span className="font-medium">{link.name}:</span> {link.value}
-                            </a>
+                            </Link>
                         ) : null,
                     )}
                 </div>

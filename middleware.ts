@@ -6,6 +6,9 @@ export async function middleware(request: NextRequest) {
   const session = await auth();
 
   if (!session?.user) {
+    if (request.nextUrl.pathname.startsWith('/profile')) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
     return NextResponse.next();
   }
 
@@ -17,5 +20,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/login'],
+  matcher: ['/login', "/profile", "/api/profile"],
 };

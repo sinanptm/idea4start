@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { IVote, IIdea } from "./interface";
+import { IVote, IIdea, IUser } from "./interface";
 import { FieldErrors } from "react-hook-form";
 import { FieldValues } from "react-hook-form";
 import { InputName, RelativeField } from "@/types";
@@ -81,3 +81,7 @@ export type GetSuggestionProps = {
 export type ConfirmDeleteIdeaModelProps = {
     idea: IIdea;
 };
+
+export type ProfileTabsProps = {
+    user: IUser;
+};   

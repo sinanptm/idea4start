@@ -5,6 +5,7 @@ import connectDB from "@/lib/db/connect";
 import { serializeData } from "@/lib/utils";
 import { withErrorHandler } from "@/lib/utils";
 import validateSessionData from "@/lib/validateSessionData";
+import { StatusCode } from "@/types";
 
 connectDB();
 
@@ -143,6 +144,6 @@ export const GET = withErrorHandler(async () => {
           totalUsers,
           totalIdeas,
           trendingIdeas: serializeData(trendingIdeas),
-          status: 200,
+          status: StatusCode.Ok,
      });
 });

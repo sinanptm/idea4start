@@ -2,14 +2,15 @@ import axios from "axios";
 import { NEXT_PUBLIC_APP_URL } from "@/config";
 import { InputName } from "@/types";
 import { GetIdeasProps } from "@/types/props";
-
+import { IUser } from "@/types/interface";
 const instance = axios.create({
     baseURL: NEXT_PUBLIC_APP_URL,
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
     },
-    timeout: 10000
+    timeout: 10000,
+    withCredentials: true,
 });
 
 
@@ -42,6 +43,11 @@ export const getComments = async (ideaId: string) => {
     return response.data;
 };
 
+export const getIdea = async (id: string) => {
+    const response = await instance.get(`/api/idea/${id}`);
+    return response.data;
+};
+
 export const getIdeas = async ({ limit = 10, page = 1, sort = "trending", stage = "all", businessModel = "all", industry = "all", search = "" }: GetIdeasProps) => {
     const response = await instance.get(`/api/idea`, {
         params: { limit, page, sort, stage, businessModel, industry, search }
@@ -66,6 +72,17 @@ export const deleteIdea = async (ideaId: string) => {
 
 export const getHomePageStatics = async () => {
     const response = await instance.get("/api/");
+    return response.data;
+};
+
+
+export const getProfile = async () => {
+    const response = await instance.get(`/api/profile`);
+    return response.data;
+};
+
+export const updateProfile = async (data: Partial<IUser>) => {
+    const response = await instance.put(`/api/profile`, data);
     return response.data;
 };
 
