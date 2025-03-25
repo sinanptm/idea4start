@@ -15,6 +15,7 @@ import useLikeComment from "@/hooks/api/useLikeComment";
 import { cn } from "@/lib/utils";
 import { IdeaCommentsProps } from "@/types/props";
 import { toast } from "@/hooks/useToast";
+import LoginDialog from "../auth/LoginDialog";
 
 const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
   const { data: session } = useSession();
@@ -194,19 +195,32 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
                   </div>
                   <p className="mt-2 break-words">{comment.content}</p>
                   <div className="mt-3 flex items-center gap-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className={cn(
-                        "h-8 px-2",
-                        isCommentLiked(comment) ? "text-red-500" : "text-muted-foreground"
-                      )}
-                      onClick={() => handleLikeComment(comment._id)}
-                      disabled={isLiking || !session}
-                    >
-                      <ThumbsUp className="h-4 w-4 mr-1" />
-                      <span className="text-muted-foreground">{getLikeCount(comment)}</span>
-                    </Button>
+                    {session?.user ? (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={cn(
+                          "h-8 px-2",
+                          isCommentLiked(comment) ? "text-red-500" : "text-muted-foreground"
+                        )}
+                        onClick={() => handleLikeComment(comment._id)}
+                        disabled={isLiking || !session}
+                      >
+                        <ThumbsUp className="h-4 w-4 mr-1" />
+                        <span className="text-muted-foreground">{getLikeCount(comment)}</span>
+                      </Button>
+                    ) : (
+                      <LoginDialog trigger={
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 px-2 text-muted-foreground"
+                        >
+                          <ThumbsUp className="h-4 w-4 mr-1" />
+                          <span className="text-muted-foreground">{getLikeCount(comment)}</span>
+                        </Button>
+                      } />
+                    )}
                     <Button
                       variant="ghost"
                       size="sm"

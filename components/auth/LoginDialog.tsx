@@ -1,4 +1,5 @@
 "use client";
+
 import { memo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +14,6 @@ import { signIn } from "next-auth/react";
 import LogoIcon from "@/components/logo/LogoIcon";
 import { Github, LogIn } from "lucide-react";
 import { LoginDialogProps } from "@/types/props";
-
 
 const LoginDialog = ({ trigger }: LoginDialogProps) => {
     const [open, setOpen] = useState(false);

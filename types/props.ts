@@ -84,4 +84,9 @@ export type ConfirmDeleteIdeaModelProps = {
 
 export type ProfileTabsProps = {
     user: IUser;
-};   
+};
+
+export type ConfirmLogoutModalProps = {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+};
