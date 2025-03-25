@@ -1,31 +1,57 @@
 "use client";
 
-import type React from "react";
-
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { IUser } from "@/types/interface";
 import { useForm } from "react-hook-form";
-import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
-
-interface ProfileFormProps {
-    user: IUser;
-    onSubmit: (data: Partial<IUser>) => void;
-    onCancel: () => void;
-}
-
+import profileSchema, { ProfileInput } from "@/lib/validations/profile.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LabeledInput } from "../ui/input";
+import { LabeledTextarea } from "../ui/textarea";
+import MultipleSelector from "../ui/multiselect";
+import { ProfileFormProps } from "@/types/props";
+import { Option } from "../ui/multiselect";
+import ButtonWithLoader from "../ButtonWithLoader";
 const ProfileForm = ({ user, onSubmit, onCancel }: ProfileFormProps) => {
+    const [languagesOptions, setLanguagesOptions] = useState<Option[]>([]);
+
+    const getLanguages = async () => {
+        const languages = new Set<string>();
+        const response = await fetch('https://restcountries.com/v3.1/all', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            cache: 'force-cache',
+            next: {
+                revalidate: 60 * 60 * 24 * 5, // 5 days
+            },
+        });
+        const data = await response.json();
+
+        data.forEach((country: any) => {
+            for (let language in country.languages) {
+                languages.add(country.languages[language]);
+            }
+        });
+
+        const options = Array.from(languages).map(language => ({
+            value: language,
+        }));
+
+        setLanguagesOptions(options); // Set state after fetch
+    };
+
+    useEffect(() => {
+        getLanguages();
+    }, []);
+
     const {
         register,
         handleSubmit,
         setValue,
         watch,
-        formState: { errors },
-    } = useForm<Partial<IUser>>({
+        formState: { errors, isSubmitting },
+    } = useForm<ProfileInput>({
+        resolver: zodResolver(profileSchema),
         defaultValues: {
             name: user.name,
             designation: user.designation,
@@ -34,7 +60,6 @@ const ProfileForm = ({ user, onSubmit, onCancel }: ProfileFormProps) => {
             bio: user.bio,
             website: user.website,
             twitter: user.twitter,
-            buyMeACoffee: user.buyMeACoffee,
             linkedin: user.linkedin,
             github: user.github,
             phoneNumber: user.phoneNumber,
@@ -42,139 +67,115 @@ const ProfileForm = ({ user, onSubmit, onCancel }: ProfileFormProps) => {
         },
     });
 
-    const languages = watch("languages") || [];
-
-    const handleAddLanguage = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && e.currentTarget.value.trim()) {
-            e.preventDefault();
-            const newLanguage = e.currentTarget.value.trim();
-            if (!languages.includes(newLanguage)) {
-                setValue("languages", [...languages, newLanguage]);
-            }
-            e.currentTarget.value = "";
-        }
-    };
-
-    const handleRemoveLanguage = (language: string) => {
-        setValue(
-            "languages",
-            languages.filter((l) => l !== language),
-        );
-    };
-
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                        id="name"
-                        {...register("name", { required: "Name is required" })}
-                        className="bg-sidebar border-gray-700"
-                    />
-                    {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-                </div>
+                <LabeledInput
+                    label="Name *"
+                    placeholder="Enter your name"
+                    error={errors.name?.message}
+                    {...register("name")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="email">Email (Read-only)</Label>
-                    <Input id="email" value={user.email} disabled className="bg-sidebar border-gray-700 opacity-70" />
-                </div>
+                <LabeledInput
+                    label="Designation"
+                    placeholder="Enter your designation"
+                    error={errors.designation?.message}
+                    {...register("designation")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="designation">Designation</Label>
-                    <Input id="designation" {...register("designation")} className="bg-sidebar border-gray-700" />
-                </div>
+                <LabeledInput
+                    label="Company"
+                    placeholder="Enter your company"
+                    error={errors.company?.message}
+                    {...register("company")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="company">Company</Label>
-                    <Input id="company" {...register("company")} className="bg-sidebar border-gray-700" />
-                </div>
+                <LabeledInput
+                    label="Location"
+                    placeholder="Enter your location"
+                    error={errors.location?.message}
+                    {...register("location")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="location">Location</Label>
-                    <Input id="location" {...register("location")} className="bg-sidebar border-gray-700" />
-                </div>
+                <LabeledTextarea
+                    label="Bio"
+                    placeholder="Enter your bio"
+                    error={errors.bio?.message}
+                    {...register("bio")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="phoneNumber">Phone Number</Label>
-                    <Input id="phoneNumber" {...register("phoneNumber")} className="bg-sidebar border-gray-700" />
-                </div>
+                <LabeledInput
+                    label="Phone Number"
+                    placeholder="Enter your phone number"
+                    error={errors.phoneNumber?.message}
+                    {...register("phoneNumber")}
+                />
 
-                <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="bio">Bio</Label>
-                    <Textarea id="bio" {...register("bio")} className="bg-sidebar border-gray-700 min-h-[100px]" />
-                </div>
             </div>
 
             <div className="space-y-4">
                 <h3 className="text-lg font-medium">Social Links</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <Label htmlFor="website">Website</Label>
-                        <Input id="website" {...register("website")} className="bg-sidebar border-gray-700" />
-                    </div>
+                    <LabeledInput
+                        label="Website"
+                        placeholder="Enter your website"
+                        error={errors.website?.message}
+                        {...register("website")}
+                    />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="github">GitHub</Label>
-                        <Input id="github" {...register("github")} className="bg-sidebar border-gray-700" />
-                    </div>
+                    <LabeledInput
+                        label="GitHub"
+                        placeholder="Enter your GitHub"
+                        error={errors.github?.message}
+                        {...register("github")}
+                    />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="twitter">Twitter</Label>
-                        <Input id="twitter" {...register("twitter")} className="bg-sidebar border-gray-700" />
-                    </div>
+                    <LabeledInput
+                        label="Twitter"
+                        placeholder="Enter your Twitter"
+                        error={errors.twitter?.message}
+                        {...register("twitter")}
+                    />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="linkedin">LinkedIn</Label>
-                        <Input id="linkedin" {...register("linkedin")} className="bg-sidebar border-gray-700" />
-                    </div>
+                    <LabeledInput
+                        label="Buy Me A Coffee"
+                        placeholder="Enter your Buy Me A Coffee"
+                        error={errors.buyMeACoffee?.message}
+                        {...register("buyMeACoffee")}
+                    />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="buyMeACoffee">Buy Me A Coffee</Label>
-                        <Input id="buyMeACoffee" {...register("buyMeACoffee")} className="bg-sidebar border-gray-700" />
-                    </div>
                 </div>
             </div>
 
             <div className="space-y-4">
-                <h3 className="text-lg font-medium">Skills & Languages</h3>
-                <div className="space-y-2">
-                    <Label htmlFor="newLanguage">Add Language/Skill (Press Enter to add)</Label>
-                    <Input
-                        id="newLanguage"
-                        onKeyDown={handleAddLanguage}
-                        className="bg-sidebar border-gray-700"
-                        placeholder="e.g. JavaScript, Python, React"
-                    />
-                </div>
+                <MultipleSelector
+                    label="Languages That You Speak"
+                    options={languagesOptions}
+                    creatable
+                    placeholder="Enter your languages"
+                    onChange={(options) => setValue("languages", options.map((option) => option.value))}
+                    value={watch("languages")?.map((language) => ({ value: language })) || []}
+                />
+                {errors.languages && <p className="text-red-500">{errors.languages.message}</p>}
 
-                <div className="flex flex-wrap gap-2">
-                    {languages.map((language, index) => (
-                        <Badge key={index} variant="secondary" className="flex items-center gap-1 bg-sidebar">
-                            {language}
-                            <button
-                                type="button"
-                                onClick={() => handleRemoveLanguage(language)}
-                                className="ml-1 rounded-full hover:bg-gray-700 p-0.5"
-                            >
-                                <X className="h-3 w-3" />
-                            </button>
-                        </Badge>
-                    ))}
-                </div>
             </div>
-
             <div className="flex justify-end gap-4 pt-4">
                 <Button type="button" variant="outline" onClick={onCancel}>
                     Cancel
                 </Button>
-                <Button type="submit" className="bg-sidebar border-yellow-300/20 hover:bg-sidebar/80 transition-all">
+                <ButtonWithLoader
+                    type="submit"
+                    variant={"outline"}
+                    className="bg-sidebar border-yellow-300/20 hover:bg-sidebar/80 transition-all min-w-[140px]"
+                    disabled={isSubmitting}
+                    isLoading={isSubmitting}
+                >
                     Save Changes
-                </Button>
+                </ButtonWithLoader>
             </div>
         </form>
     );
 };
 
-export default memo(ProfileForm)
-
+export default memo(ProfileForm);

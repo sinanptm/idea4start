@@ -18,6 +18,7 @@ import { createIdea } from "@/app/(server)/actions";
 import { useToast } from "@/hooks/useToast";
 import { useQueryClient } from "@tanstack/react-query";
 import TextAreaWithAiSuggestion from "@/components/TextAreaWithSuggestion";
+import ButtonWithLoader from "../ButtonWithLoader";
 
 const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
   const [tags, setTags] = useState<string[]>([]);
@@ -253,13 +254,15 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
           </div>
 
           <div className="pt-4 sm:pt-6 flex justify-end">
-            <Button
+            <ButtonWithLoader
               type="submit"
+              variant={"outline"}
+              className="bg-sidebar border-yellow-300/20 hover:bg-sidebar/80 transition-all"
               disabled={isSubmitting}
-              className="bg-blue-600 hover:bg-blue-500 text-white px-4 sm:px-8 text-sm sm:text-base w-full sm:w-auto"
+              isLoading={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit Idea"}
-            </Button>
+              Submit Idea
+            </ButtonWithLoader>
           </div>
         </form>
       </CardContent>

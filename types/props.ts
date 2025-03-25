@@ -3,6 +3,8 @@ import { IVote, IIdea, IUser } from "./interface";
 import { FieldErrors } from "react-hook-form";
 import { FieldValues } from "react-hook-form";
 import { InputName, RelativeField } from "@/types";
+import { ProfileInput } from "@/lib/validations/profile.schema";
+import { ButtonProps } from "@/components/ui/button";
 
 export type RootLayoutProps = {
     children: ReactNode;
@@ -89,4 +91,15 @@ export type ProfileTabsProps = {
 export type ConfirmLogoutModalProps = {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
+};
+
+
+export interface ProfileFormProps {
+    user: IUser;
+    onSubmit: (data: ProfileInput) => void;
+    onCancel: () => void;
+}
+
+export type ButtonWithLoaderProps = ButtonProps & {
+    isLoading: boolean;
 };

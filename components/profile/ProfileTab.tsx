@@ -7,7 +7,7 @@ import ProfileForm from "../form/ProfileForm";
 import ProfileInfo from "./ProfileInfo";
 import useProfile, { ProfileState } from "@/hooks/useProfile";
 import { TabsContent } from '../ui/tabs';
-import ProfileFormSkeleton from './ProfileFormSkeleton';
+import ProfileFormSkeleton from '../skeleton/ProfileFormSkeleton';
 
 const Profile = () => {
     const isEditing = useProfile((state: ProfileState) => state.isEditing);

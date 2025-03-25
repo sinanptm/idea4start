@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 import { cn } from "@/lib/utils";
 import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
+import { Label } from "@/components/ui/label";
 
 export interface Option {
   value: string;
@@ -26,6 +27,7 @@ interface MultipleSelectorProps {
   /** manually controlled options */
   options?: Option[];
   placeholder?: string;
+  label?: string;
   /** Loading component. */
   loadingIndicator?: React.ReactNode;
   /** Empty component. */
@@ -181,6 +183,7 @@ const MultipleSelector = ({
   commandProps,
   inputProps,
   hideClearAllButton = false,
+  label,
 }: MultipleSelectorProps) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
@@ -414,6 +417,7 @@ const MultipleSelector = ({
       } // When onSearch is provided, we don&lsquo;t want to filter the options. You can still override it.
       filter={commandFilter()}
     >
+      {label && <Label className="text-white mb-3">{label}</Label>}
       <div
         className={cn(
           "border-input focus-within:border-ring focus-within:ring-ring/50 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40 has-aria-invalid:border-destructive relative min-h-[38px] rounded-md border text-sm transition-[color,box-shadow] outline-none focus-within:ring-[3px] has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50",
@@ -507,7 +511,7 @@ const MultipleSelector = ({
                 disabled ||
                 selected.length < 1 ||
                 selected.filter((s) => s.fixed).length === selected.length) &&
-                "hidden",
+              "hidden",
             )}
             aria-label="Clear all"
           >
@@ -570,7 +574,7 @@ const MultipleSelector = ({
                               className={cn(
                                 "cursor-pointer",
                                 option.disable &&
-                                  "pointer-events-none cursor-not-allowed opacity-50",
+                                "pointer-events-none cursor-not-allowed opacity-50",
                               )}
                             >
                               {option.value}

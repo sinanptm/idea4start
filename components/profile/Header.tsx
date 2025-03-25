@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { memo, useEffect } from "react";
 import useProfile, { ProfileState } from "@/hooks/useProfile";
 import useGetProfile from "@/hooks/api/useGetProfile";
-import HeaderSkeleton from "./HeaderSkeleton";
+import HeaderSkeleton from "../skeleton/HeaderSkeleton";
 
 const Header = () => {
     const isEditing = useProfile((state: ProfileState) => state.isEditing);

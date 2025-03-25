@@ -12,15 +12,3 @@ export const GET = withErrorHandler(async () => {
 
     return NextResponse.json(user, { status: StatusCode.Ok });
 });
-
-export const PUT = withErrorHandler(async (request: Request) => {
-    const { user, success, message } = await validateSessionData();
-
-    if (!success) return NextResponse.json({ message }, { status: StatusCode.Unauthorized });
-
-    const { name, designation, website, github, linkedin, buyMeACoffee, twitter } = await request.json();
-
-    console.log(name, designation, website, github, linkedin, buyMeACoffee, twitter);
-
-    return NextResponse.json({ user }, { status: StatusCode.Ok });
-});
