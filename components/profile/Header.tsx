@@ -18,7 +18,7 @@ const Header = () => {
         if (user) {
             setUser(user);
         }
-    }, [user]);
+    }, [user, setUser]);
 
     if (isLoading) {
         return <HeaderSkeleton />;
