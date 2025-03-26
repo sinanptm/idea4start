@@ -5,7 +5,7 @@
   </picture>
 
   # 🚀 Idea4Start
-  ## **Where Great Startups Begin**
+  ## Where Great Startups Begin
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
   [![Next.js](https://img.shields.io/badge/Next.js-15.x-black?style=flat-square)](https://nextjs.org/)
@@ -44,16 +44,6 @@ We are committed to creating a supportive environment that guides entrepreneurs 
 | 🤝 Collaborative Platform | Global network of entrepreneurs and industry experts |
 | 🔬 Iterative Refinement | Structured feedback loops to evolve and improve ideas |
 | 🚀 Growth Resources | Comprehensive guides and templates for startup success |
-
-## 🛠️ Tech Stack
-
-| Category | Technologies |
-|:---------|:-------------|
-| Frontend | Next.js 15, React 19, TailwindCSS 4 |
-| Backend | Next.js API Routes, MongoDB, Mongoose |
-| Authentication | NextAuth.js |
-| AI Integration | Google Generative AI |
-| State Management | Zustand, React Query |
 
 ## 🚀 Quick Start Guide
 
