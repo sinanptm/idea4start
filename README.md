@@ -94,6 +94,5 @@ We welcome passionate contributors from all backgrounds. Whether you're a develo
 **Built with 💖 by Passionate Entrepreneurs**
 
 [![GitHub stars](https://img.shields.io/github/stars/sinanptm/idea4start?style=social)](https://github.com/sinanptm/idea4start)
-[![Twitter Follow](https://img.shields.io/twitter/follow/idea4start?style=social)](https://twitter.com/idea4start)
 
 </div>
