@@ -35,29 +35,31 @@ const testimonials = [
 
 const TestimonialSection = () => {
     return (
-        <div className="space-y-8 py-8">
+        <div className="space-y-6 md:space-y-8 py-6 md:py-8 px-4">
             <div className="text-center">
-                <h2 className="text-2xl font-bold tracking-tight">Success Stories</h2>
-                <p className="text-muted-foreground mt-2">Hear from entrepreneurs who turned their ideas into reality</p>
+                <h2 className="text-xl md:text-2xl font-bold tracking-tight">Success Stories</h2>
+                <p className="text-sm md:text-base text-muted-foreground mt-1 md:mt-2">
+                    Hear from entrepreneurs who turned their ideas into reality
+                </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {testimonials.map((testimonial, index) => (
                     <Card key={index} className="bg-card/50 border-gray-800 hover:border-primary/30 transition-all">
-                        <CardContent className="p-6 space-y-4">
-                            <Quote className="h-8 w-8 text-primary/40" />
+                        <CardContent className="p-4 md:p-6 space-y-3 md:space-y-4">
+                            <Quote className="h-6 w-6 md:h-8 md:w-8 text-primary/40" />
 
-                            <p className="italic text-muted-foreground">&quot;{testimonial.quote}&quot;</p>
+                            <p className="italic text-sm md:text-base text-muted-foreground">&quot;{testimonial.quote}&quot;</p>
 
-                            <div className="flex items-center gap-3 pt-2">
-                                <Avatar>
+                            <div className="flex items-center gap-2 md:gap-3 pt-1 md:pt-2">
+                                <Avatar className="h-8 w-8 md:h-10 md:w-10">
                                     <AvatarImage src={testimonial.author.avatar} alt={testimonial.author.name} />
                                     <AvatarFallback>{testimonial.author.name.charAt(0)}</AvatarFallback>
                                 </Avatar>
 
                                 <div>
-                                    <h4 className="font-medium">{testimonial.author.name}</h4>
-                                    <p className="text-sm text-muted-foreground">{testimonial.author.role}</p>
+                                    <h4 className="text-sm md:text-base font-medium">{testimonial.author.name}</h4>
+                                    <p className="text-xs md:text-sm text-muted-foreground">{testimonial.author.role}</p>
                                 </div>
                             </div>
                         </CardContent>

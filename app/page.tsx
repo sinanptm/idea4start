@@ -11,7 +11,7 @@ import CTASection from "@/components/home/CTASection";
 const HomePage = () => {
   return (
     <Container>
-      <div className="px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+      <div className="space-y-12 md:space-y-16 lg:space-y-20 py-6 md:py-8">
         <HeroSection />
         <FeaturedIdeas />
         <HowItWorks />
