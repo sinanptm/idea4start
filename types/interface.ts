@@ -9,7 +9,6 @@ export interface IIdea {
     updatedAt: Date;
     isPublic: boolean;
     userId?: string;
-    userBuyMeACoffeeUrl?: string;
     industry?: string[];
     tags?: string[];
     problemStatement?: string;

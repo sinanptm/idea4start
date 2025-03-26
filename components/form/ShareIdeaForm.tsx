@@ -161,15 +161,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
                 </div>
               )}
             </div>
-
-
-            <LabeledInput
-              label="Your Buy Me a Coffee URL "
-              placeholder="https://www.buymeacoffee.com/johnwick"
-              {...register("userBuyMeACoffeeUrl")}
-              error={errors.userBuyMeACoffeeUrl?.message}
-              className="bg-gray-950 border-gray-800 text-sm sm:text-base"
-            />
           </div>
 
           <Separator className="border-gray-800" />

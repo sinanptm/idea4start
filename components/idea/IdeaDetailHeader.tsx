@@ -26,8 +26,10 @@ import ConfirmDeleteIdeaModel from "@/components/idea/ConfirmDeleteIdeaModel";
 import UserAvatar from "@/components/idea/UserAvatar";
 
 const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
-  const { title, user, userBuyMeACoffeeUrl, createdAt, stage } = idea;
+  const { title, user, createdAt, stage } = idea;
   const { data: session } = useSession();
+  const buyMeACoffeeUrl = `https://www.buymeacoffee.com/${idea.user?.buyMeACoffee}`;
+  console.log(idea);
 
   const timeAgo = formatDistanceToNow(new Date(createdAt), {
     addSuffix: true,
@@ -66,15 +68,20 @@ const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
           </div>
 
           <div className="flex items-center gap-1 sm:gap-2">
-            {userBuyMeACoffeeUrl && (
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-1.5 text-white border-white text-xs sm:text-sm"
+            {idea.user?.buyMeACoffee && (
+              <Link
+                href={buyMeACoffeeUrl}
+                target="_blank"
+                prefetch={false}
               >
-                <Coffee className="h-4 w-4" />
-                <span>Support</span>
-              </Button>
+                <Button
+                  variant="outline"
+                  className="gap-1.5 text-white border-white text-xs sm:text-sm"
+                >
+                  <Coffee className="h-4 w-4" />
+                  <span>Support</span>
+                </Button>
+              </Link>
             )}
 
             <ShareButton

@@ -20,10 +20,6 @@ const ideaSchema = new Schema<IIdea>({
         ref: "User",
         required: true
     },
-    userBuyMeACoffeeUrl: {
-        type: String,
-        trim: true
-    },
     industry: [{
         type: String,
         trim: true

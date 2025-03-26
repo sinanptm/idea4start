@@ -15,7 +15,6 @@ export const createIdeaSchema = z.object({
   tags: z.array(z.string()).min(1, "Add at least one tag"),
   uniqueValue: z.string().optional(),
   relatedUrls: z.array(z.string()).optional(),
-  userBuyMeACoffeeUrl: z.string().optional(),
   risks: z.string().optional(),
   businessModel: z.array(z.string()).min(1, "Select at least one business model")
 });

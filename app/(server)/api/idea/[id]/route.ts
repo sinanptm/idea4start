@@ -7,7 +7,7 @@ import Vote from "@/lib/db/models/Vote";
 import connectDB from "@/lib/db/connect";
 import CommentLike from "@/lib/db/models/CommentLike";
 import { withErrorHandler } from "@/lib/utils";
-
+import { IIdea } from "@/types/interface";
 connectDB();
 
 export const GET = withErrorHandler(async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {
@@ -36,15 +36,39 @@ export const GET = withErrorHandler(async (request: NextRequest, { params }: { p
                 path: "$user",
                 preserveNullAndEmptyArrays: true
             }
+        }, {
+            $project: {
+                _id: 1,
+                title: 1,
+                description: 1,
+                createdAt: 1,
+                updatedAt: 1,
+                isPublic: 1,
+                industry: 1,
+                tags: 1,
+                problemStatement: 1,
+                relatedUrls: 1,
+                stage: 1,
+                risks: 1,
+                businessModel: 1,
+                uniqueValue: 1,
+                user: {
+                    _id: "$user._id",
+                    name: "$user.name",
+                    image: "$user.image",
+                    buyMeACoffee: "$user.buyMeACoffee"
+                }
+            }
         }
     ]);
 
-
-    idea = idea[0];
+    // @ts-ignore
+    idea = idea[0] as IIdea;
 
     if (!idea) {
         return NextResponse.json({ error: "Idea not found" }, { status: 404 });
     }
+
 
     return NextResponse.json(idea);
 
