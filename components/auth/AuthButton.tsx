@@ -31,7 +31,7 @@ const AuthButton = ({ session }: { session: Session; }) => {
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg overflow-hidden">
                 {session.user.image ? (
                   <Image
-                    src={session.user.image || "/placeholder.svg"}
+                    src={session.user.image || "https://github.com/shadcn.png"}
                     alt={session.user.name || "User profile"}
                     width={32}
                     height={32}
