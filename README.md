@@ -4,8 +4,7 @@
     <img src="https://github.com/user-attachments/assets/b3e4f587-d759-4590-a603-dcc6522a57cd" alt="Idea4Start Logo" width="200">
   </picture>
 
-  ## 🚀 Idea4Start
-
+  # 🚀 Idea4Start <br/> 
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
   [![Next.js](https://img.shields.io/badge/Next.js-15.x-black?style=flat-square)](https://nextjs.org/)
   [![React](https://img.shields.io/badge/React-19.x-blue?style=flat-square)](https://react.dev/)
