@@ -1,8 +1,7 @@
 <div align="center">
   <img src="https://github.com/user-attachments/assets/b3e4f587-d759-4590-a603-dcc6522a57cd" alt="Idea4Start Logo" width="250" height="250">
   
-  # 🚀 Idea4Start
-
+  ## 🚀 Idea4Start
   ### **Where Great Startups Begin**
 
   <p>
