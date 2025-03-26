@@ -1,7 +1,14 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, NEXT_PUBLIC_APP_URL, AUTH_SECRET, GITHUB_CLIENT_SECRET, GITHUB_CLIENT_ID } from "@/config";
+import {
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  NEXT_PUBLIC_APP_URL,
+  AUTH_SECRET,
+  GITHUB_CLIENT_SECRET,
+  GITHUB_CLIENT_ID,
+} from "@/config";
 
 export const authOptions = {
   providers: [
