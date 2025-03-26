@@ -1,31 +1,71 @@
 "use client";
 
-import type React from "react";
-
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { IUser } from "@/types/interface";
 import { useForm } from "react-hook-form";
-import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
+import profileSchema, { ProfileInput } from "@/lib/validations/profile.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LabeledInput } from "../ui/input";
+import { LabeledTextarea } from "../ui/textarea";
+import MultipleSelector from "../ui/multiselect";
+import { ProfileFormProps } from "@/types/props";
+import ButtonWithLoader from "../ButtonWithLoader";
+import useProfile, { ProfileState } from "@/hooks/useProfile";
+import { toast } from "@/hooks/useToast";
+import { editProfile } from "@/app/(server)/actions";
+import { LANGUAGES } from "@/constants";
 
-interface ProfileFormProps {
-    user: IUser;
-    onSubmit: (data: Partial<IUser>) => void;
-    onCancel: () => void;
-}
+const ProfileForm = ({ user }: ProfileFormProps) => {
+    const setIsEditing = useProfile((state: ProfileState) => state.setIsEditing);
 
-const ProfileForm = ({ user, onSubmit, onCancel }: ProfileFormProps) => {
+    const onSubmit = async (data: ProfileInput) => {
+        const { success, message } = await editProfile(data);
+        if (!success) {
+            toast({
+                title: "❌ Failed to update profile",
+                description: message,
+                variant: "destructive"
+            });
+        } else {
+            toast({
+                title: "✅ Profile updated successfully",
+                description: message,
+                variant: "success"
+            });
+        }
+    };
+
+    const onChangeUrl = (url: string, platform: 'linkedin' | 'github' | 'twitter' | 'buyMeACoffee') => {
+        const patterns = {
+            linkedin: /^(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/([^/]+)/,
+            github: /^(?:https?:\/\/)?(?:www\.)?github\.com\/([^/]+)/,
+            twitter: /^(?:https?:\/\/)?(?:www\.)?(?:twitter|x)\.com\/([^/]+)/,
+            buyMeACoffee: /^(?:https?:\/\/)?(?:www\.)?buymeacoffee\.com\/([^/]+)/
+        };
+
+        const match = patterns[platform].exec(url);
+        if (match) {
+            // Return just the username if full URL provided
+            setValue(platform, match[1]);
+            return match[1];
+        }
+
+        // If just username provided, return as is
+        if (!url.includes('https://') && !url.includes('http://')) {
+            return url;
+        }
+
+        return url;
+    };
+
     const {
         register,
         handleSubmit,
         setValue,
         watch,
-        formState: { errors },
-    } = useForm<Partial<IUser>>({
+        formState: { errors, isSubmitting },
+    } = useForm<ProfileInput>({
+        resolver: zodResolver(profileSchema),
         defaultValues: {
             name: user.name,
             designation: user.designation,
@@ -34,147 +74,133 @@ const ProfileForm = ({ user, onSubmit, onCancel }: ProfileFormProps) => {
             bio: user.bio,
             website: user.website,
             twitter: user.twitter,
-            buyMeACoffee: user.buyMeACoffee,
             linkedin: user.linkedin,
             github: user.github,
             phoneNumber: user.phoneNumber,
             languages: user.languages,
+            buyMeACoffee: user.buyMeACoffee,
         },
     });
-
-    const languages = watch("languages") || [];
-
-    const handleAddLanguage = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && e.currentTarget.value.trim()) {
-            e.preventDefault();
-            const newLanguage = e.currentTarget.value.trim();
-            if (!languages.includes(newLanguage)) {
-                setValue("languages", [...languages, newLanguage]);
-            }
-            e.currentTarget.value = "";
-        }
-    };
-
-    const handleRemoveLanguage = (language: string) => {
-        setValue(
-            "languages",
-            languages.filter((l) => l !== language),
-        );
-    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                        id="name"
-                        {...register("name", { required: "Name is required" })}
-                        className="bg-sidebar border-gray-700"
-                    />
-                    {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-                </div>
+                <LabeledInput
+                    label="Name *"
+                    placeholder="Enter your name"
+                    error={errors.name?.message}
+                    {...register("name")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="email">Email (Read-only)</Label>
-                    <Input id="email" value={user.email} disabled className="bg-sidebar border-gray-700 opacity-70" />
-                </div>
+                <LabeledInput
+                    label="Designation"
+                    placeholder="Enter your designation"
+                    error={errors.designation?.message}
+                    {...register("designation")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="designation">Designation</Label>
-                    <Input id="designation" {...register("designation")} className="bg-sidebar border-gray-700" />
-                </div>
+                <LabeledInput
+                    label="Company"
+                    placeholder="Enter your company"
+                    error={errors.company?.message}
+                    {...register("company")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="company">Company</Label>
-                    <Input id="company" {...register("company")} className="bg-sidebar border-gray-700" />
-                </div>
+                <LabeledInput
+                    label="Location"
+                    placeholder="Enter your location"
+                    error={errors.location?.message}
+                    {...register("location")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="location">Location</Label>
-                    <Input id="location" {...register("location")} className="bg-sidebar border-gray-700" />
-                </div>
+                <LabeledTextarea
+                    label="Bio"
+                    placeholder="Enter your bio"
+                    error={errors.bio?.message}
+                    {...register("bio")}
+                />
 
-                <div className="space-y-2">
-                    <Label htmlFor="phoneNumber">Phone Number</Label>
-                    <Input id="phoneNumber" {...register("phoneNumber")} className="bg-sidebar border-gray-700" />
-                </div>
+                <LabeledInput
+                    label="Phone Number"
+                    placeholder="Enter your phone number"
+                    error={errors.phoneNumber?.message}
+                    {...register("phoneNumber")}
+                />
 
-                <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="bio">Bio</Label>
-                    <Textarea id="bio" {...register("bio")} className="bg-sidebar border-gray-700 min-h-[100px]" />
-                </div>
             </div>
 
             <div className="space-y-4">
-                <h3 className="text-lg font-medium">Social Links</h3>
+                <h3 className="text-lg font-medium">Social Usernames</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <Label htmlFor="website">Website</Label>
-                        <Input id="website" {...register("website")} className="bg-sidebar border-gray-700" />
-                    </div>
+                    <LabeledInput
+                        label="Website url"
+                        placeholder="Enter your website url"
+                        error={errors.website?.message}
+                        {...register("website")}
+                    />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="github">GitHub</Label>
-                        <Input id="github" {...register("github")} className="bg-sidebar border-gray-700" />
-                    </div>
+                    <LabeledInput
+                        label="GitHub Username"
+                        placeholder="Enter your GitHub username"
+                        error={errors.github?.message}
+                        {...register("github")}
+                        onChange={(e) => onChangeUrl(e.target.value, "github")}
+                    />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="twitter">Twitter</Label>
-                        <Input id="twitter" {...register("twitter")} className="bg-sidebar border-gray-700" />
-                    </div>
+                    <LabeledInput
+                        label="Twitter Username"
+                        placeholder="Enter your Twitter username"
+                        error={errors.twitter?.message}
+                        {...register("twitter")}
+                        onChange={(e) => onChangeUrl(e.target.value, "twitter")}
+                    />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="linkedin">LinkedIn</Label>
-                        <Input id="linkedin" {...register("linkedin")} className="bg-sidebar border-gray-700" />
-                    </div>
+                    <LabeledInput
+                        label="Buy Me A Coffee Username"
+                        placeholder="Enter your Buy Me A Coffee username"
+                        error={errors.buyMeACoffee?.message}
+                        {...register("buyMeACoffee")}
+                        onChange={(e) => onChangeUrl(e.target.value, "buyMeACoffee")}
+                    />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="buyMeACoffee">Buy Me A Coffee</Label>
-                        <Input id="buyMeACoffee" {...register("buyMeACoffee")} className="bg-sidebar border-gray-700" />
-                    </div>
+                    <LabeledInput
+                        label="LinkedIn Username"
+                        placeholder="Enter your LinkedIn username"
+                        error={errors.linkedin?.message}
+                        {...register("linkedin")}
+                        onChange={(e) => onChangeUrl(e.target.value, "linkedin")}
+                    />
                 </div>
             </div>
 
             <div className="space-y-4">
-                <h3 className="text-lg font-medium">Skills & Languages</h3>
-                <div className="space-y-2">
-                    <Label htmlFor="newLanguage">Add Language/Skill (Press Enter to add)</Label>
-                    <Input
-                        id="newLanguage"
-                        onKeyDown={handleAddLanguage}
-                        className="bg-sidebar border-gray-700"
-                        placeholder="e.g. JavaScript, Python, React"
-                    />
-                </div>
+                <MultipleSelector
+                    label="Languages That You Speak"
+                    options={LANGUAGES}
+                    creatable
+                    placeholder="Enter your languages"
+                    onChange={(options) => setValue("languages", options.map((option) => option.value))}
+                    value={watch("languages")?.map((language) => ({ value: language })) || []}
+                />
+                {errors.languages && <p className="text-red-500">{errors.languages.message}</p>}
 
-                <div className="flex flex-wrap gap-2">
-                    {languages.map((language, index) => (
-                        <Badge key={index} variant="secondary" className="flex items-center gap-1 bg-sidebar">
-                            {language}
-                            <button
-                                type="button"
-                                onClick={() => handleRemoveLanguage(language)}
-                                className="ml-1 rounded-full hover:bg-gray-700 p-0.5"
-                            >
-                                <X className="h-3 w-3" />
-                            </button>
-                        </Badge>
-                    ))}
-                </div>
             </div>
-
             <div className="flex justify-end gap-4 pt-4">
-                <Button type="button" variant="outline" onClick={onCancel}>
+                <Button type="button" variant="outline" onClick={() => setIsEditing(false)}>
                     Cancel
                 </Button>
-                <Button type="submit" className="bg-sidebar border-yellow-300/20 hover:bg-sidebar/80 transition-all">
+                <ButtonWithLoader
+                    type="submit"
+                    variant={"outline"}
+                    className="bg-sidebar border-yellow-300/20 hover:bg-sidebar/80 transition-all min-w-[140px]"
+                    disabled={isSubmitting}
+                    isLoading={isSubmitting}
+                >
                     Save Changes
-                </Button>
+                </ButtonWithLoader>
             </div>
         </form>
     );
 };
 
-export default memo(ProfileForm)
-
+export default memo(ProfileForm);

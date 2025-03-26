@@ -10,7 +10,7 @@ const UserSchema = new Schema<IUser>({
   },
   name: String,
   image: String,
-  designations: String,
+  designation: String,
   company: String,
   location: String,
   bio: String,

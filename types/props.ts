@@ -1,8 +1,10 @@
 import { ReactNode } from "react";
-import { IVote, IIdea } from "./interface";
+import { IVote, IIdea, IUser } from "./interface";
 import { FieldErrors } from "react-hook-form";
 import { FieldValues } from "react-hook-form";
 import { InputName, RelativeField } from "@/types";
+import { ProfileInput } from "@/lib/validations/profile.schema";
+import { ButtonProps } from "@/components/ui/button";
 
 export type RootLayoutProps = {
     children: ReactNode;
@@ -80,4 +82,22 @@ export type GetSuggestionProps = {
 
 export type ConfirmDeleteIdeaModelProps = {
     idea: IIdea;
+};
+
+export type ProfileTabsProps = {
+    user: IUser;
+};
+
+export type ConfirmLogoutModalProps = {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+};
+
+
+export interface ProfileFormProps {
+    user: IUser;
+}
+
+export type ButtonWithLoaderProps = ButtonProps & {
+    isLoading: boolean;
 };

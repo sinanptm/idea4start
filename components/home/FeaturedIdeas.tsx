@@ -4,7 +4,7 @@ import { memo } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Heart } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useGetHomePageStatics from "@/hooks/api/useGetHomePageStatics";

@@ -1,26 +1,14 @@
 import Container from "@/components/Container";
-import { IIdea } from "@/types/interface";
 import IdeaDetailHeader from "@/components/idea/IdeaDetailHeader";
 import IdeaDetailContent from "@/components/idea/IdeaDetailContent";
 import IdeaDetailSidebar from "@/components/idea/IdeaDetailSideBar";
 import IdeaComments from "@/components/idea/IdeaComments";
 import { notFound } from "next/navigation";
-import { NEXT_PUBLIC_APP_URL } from "@/config";
+import { getIdea } from "@/lib/api";
 
-const getMockIdea = async (id: string): Promise<IIdea | undefined> => {
-  const response = await fetch(`${NEXT_PUBLIC_APP_URL}/api/idea/${id}`);
-  const data = await response.json();
-
-  if (!response.ok) {
-    console.log(response);
-    notFound();
-  }
-
-  return data;
-};
 
 const IdeaDetailPage = async ({ params }: { params: Promise<{ id: string; }>; }) => {
-  const idea = await getMockIdea((await params).id);
+  const idea = await getIdea((await params).id);
 
   if (!idea) {
     notFound();

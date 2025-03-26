@@ -1,7 +1,8 @@
 import { memo } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Globe, Mail, MapPin, Phone, Building, User } from "lucide-react";
+import { Calendar, Globe, Mail, MapPin, Phone, Building, User, Github, Twitter, Linkedin, Coffee } from "lucide-react";
 import { IUser } from "@/types/interface";
+import Link from "next/link";
 
 interface ProfileInfoProps {
     user: IUser;
@@ -18,14 +19,14 @@ const ProfileInfo = ({ user }: ProfileInfoProps) => {
     };
 
     const socialLinks = [
-        { name: "Website", value: user.website, icon: Globe, url: user.website },
-        { name: "GitHub", value: user.github, icon: User, url: `https://github.com/${user.github}` },
-        { name: "Twitter", value: user.twitter, icon: User, url: `https://twitter.com/${user.twitter}` },
-        { name: "LinkedIn", value: user.linkedin, icon: User, url: `https://linkedin.com/in/${user.linkedin}` },
+        { name: "Website", value: user.website || "N/A", icon: Globe, url: user.website ? user.website : null },
+        { name: "GitHub", value: `https://github.com/${user.github}` || "N/A", icon: Github, url: `https://github.com/${user.github}` },
+        { name: "Twitter", value: `https://twitter.com/${user.twitter}` || "N/A", icon: Twitter, url: `https://twitter.com/${user.twitter}` },
+        { name: "LinkedIn", value: `https://linkedin.com/in/${user.linkedin}` || "N/A", icon: Linkedin, url: `https://linkedin.com/in/${user.linkedin}` },
         {
             name: "Buy Me A Coffee",
-            value: user.buyMeACoffee,
-            icon: User,
+            value: `https://buymeacoffee.com/${user.buyMeACoffee}` || "N/A",
+            icon: Coffee,
             url: `https://buymeacoffee.com/${user.buyMeACoffee}`,
         },
     ];
@@ -83,7 +84,7 @@ const ProfileInfo = ({ user }: ProfileInfoProps) => {
 
             {user.languages && user.languages.length > 0 && (
                 <div className="space-y-2">
-                    <h3 className="text-lg font-medium">Skills & Languages</h3>
+                    <h3 className="text-lg font-medium">Languages</h3>
                     <div className="flex flex-wrap gap-2">
                         {user.languages.map((language, index) => (
                             <Badge key={index} variant="secondary" className="bg-sidebar">
@@ -99,16 +100,17 @@ const ProfileInfo = ({ user }: ProfileInfoProps) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {socialLinks.map((link, index) =>
                         link.value ? (
-                            <a
+                            <Link
                                 key={index}
-                                href={link.url}
+                                href={link.url || ""}
+                                prefetch={false}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
                             >
                                 <link.icon className="h-4 w-4" />
                                 <span className="font-medium">{link.name}:</span> {link.value}
-                            </a>
+                            </Link>
                         ) : null,
                     )}
                 </div>
