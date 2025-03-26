@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Globe, Mail, MapPin, Phone, Building, User } from "lucide-react";
+import { Calendar, Globe, Mail, MapPin, Phone, Building, User, Github, Twitter, Linkedin, Coffee } from "lucide-react";
 import { IUser } from "@/types/interface";
 import Link from "next/link";
 
@@ -20,14 +20,14 @@ const ProfileInfo = ({ user }: ProfileInfoProps) => {
 
     const socialLinks = [
         { name: "Website", value: user.website || "N/A", icon: Globe, url: user.website ? user.website : null },
-        { name: "GitHub", value: user.github || "N/A", icon: User, url: user.github ? `https://github.com/${user.github}` : null },
-        { name: "Twitter", value: user.twitter || "N/A", icon: User, url: user.twitter ? `https://twitter.com/${user.twitter}` : null },
-        { name: "LinkedIn", value: user.linkedin || "N/A", icon: User, url: user.linkedin ? `https://linkedin.com/in/${user.linkedin}` : null },
+        { name: "GitHub", value: `https://github.com/${user.github}` || "N/A", icon: Github, url: `https://github.com/${user.github}` },
+        { name: "Twitter", value: `https://twitter.com/${user.twitter}` || "N/A", icon: Twitter, url: `https://twitter.com/${user.twitter}` },
+        { name: "LinkedIn", value: `https://linkedin.com/in/${user.linkedin}` || "N/A", icon: Linkedin, url: `https://linkedin.com/in/${user.linkedin}` },
         {
             name: "Buy Me A Coffee",
-            value: user.buyMeACoffee || "N/A",
-            icon: User,
-            url: user.buyMeACoffee ? `https://buymeacoffee.com/${user.buyMeACoffee}` : null,
+            value: `https://buymeacoffee.com/${user.buyMeACoffee}` || "N/A",
+            icon: Coffee,
+            url: `https://buymeacoffee.com/${user.buyMeACoffee}`,
         },
     ];
 
@@ -84,7 +84,7 @@ const ProfileInfo = ({ user }: ProfileInfoProps) => {
 
             {user.languages && user.languages.length > 0 && (
                 <div className="space-y-2">
-                    <h3 className="text-lg font-medium">Skills & Languages</h3>
+                    <h3 className="text-lg font-medium">Languages</h3>
                     <div className="flex flex-wrap gap-2">
                         {user.languages.map((language, index) => (
                             <Badge key={index} variant="secondary" className="bg-sidebar">

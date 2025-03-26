@@ -11,38 +11,53 @@ import MultipleSelector from "../ui/multiselect";
 import { ProfileFormProps } from "@/types/props";
 import { Option } from "../ui/multiselect";
 import ButtonWithLoader from "../ButtonWithLoader";
-const ProfileForm = ({ user, onSubmit, onCancel }: ProfileFormProps) => {
-    const [languagesOptions, setLanguagesOptions] = useState<Option[]>([]);
+import useProfile, { ProfileState } from "@/hooks/useProfile";
+import { toast } from "@/hooks/useToast";
+import { editProfile } from "@/app/(server)/actions";
+import { LANGUAGES } from "@/constants";
 
-    const getLanguages = async () => {
-        const languages = new Set<string>();
-        const response = await fetch('https://restcountries.com/v3.1/all', {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            cache: 'force-cache',
-            next: {
-                revalidate: 60 * 60 * 24 * 5, // 5 days
-            },
-        });
-        const data = await response.json();
+const ProfileForm = ({ user }: ProfileFormProps) => {
+    const setIsEditing = useProfile((state: ProfileState) => state.setIsEditing);
 
-        data.forEach((country: any) => {
-            for (let language in country.languages) {
-                languages.add(country.languages[language]);
-            }
-        });
-
-        const options = Array.from(languages).map(language => ({
-            value: language,
-        }));
-
-        setLanguagesOptions(options); // Set state after fetch
+    const onSubmit = async (data: ProfileInput) => {
+        const { success, message } = await editProfile(data);
+        if (!success) {
+            toast({
+                title: "❌ Failed to update profile",
+                description: message,
+                variant: "destructive"
+            });
+        } else {
+            toast({
+                title: "✅ Profile updated successfully",
+                description: message,
+                variant: "success"
+            });
+        }
     };
 
-    useEffect(() => {
-        getLanguages();
-    }, []);
+    const onChangeUrl = (url: string, platform: 'linkedin' | 'github' | 'twitter' | 'buyMeACoffee') => {
+        const patterns = {
+            linkedin: /^(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/([^/]+)/,
+            github: /^(?:https?:\/\/)?(?:www\.)?github\.com\/([^/]+)/,
+            twitter: /^(?:https?:\/\/)?(?:www\.)?(?:twitter|x)\.com\/([^/]+)/,
+            buyMeACoffee: /^(?:https?:\/\/)?(?:www\.)?buymeacoffee\.com\/([^/]+)/
+        };
+
+        const match = patterns[platform].exec(url);
+        if (match) {
+            // Return just the username if full URL provided
+            setValue(platform, match[1]);
+            return match[1];
+        }
+
+        // If just username provided, return as is
+        if (!url.includes('https://') && !url.includes('http://')) {
+            return url;
+        }
+
+        return url;
+    };
 
     const {
         register,
@@ -64,6 +79,7 @@ const ProfileForm = ({ user, onSubmit, onCancel }: ProfileFormProps) => {
             github: user.github,
             phoneNumber: user.phoneNumber,
             languages: user.languages,
+            buyMeACoffee: user.buyMeACoffee,
         },
     });
 
@@ -115,43 +131,53 @@ const ProfileForm = ({ user, onSubmit, onCancel }: ProfileFormProps) => {
             </div>
 
             <div className="space-y-4">
-                <h3 className="text-lg font-medium">Social Links</h3>
+                <h3 className="text-lg font-medium">Social Usernames</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <LabeledInput
-                        label="Website"
-                        placeholder="Enter your website"
+                        label="Website url"
+                        placeholder="Enter your website url"
                         error={errors.website?.message}
                         {...register("website")}
                     />
 
                     <LabeledInput
-                        label="GitHub"
-                        placeholder="Enter your GitHub"
+                        label="GitHub Username"
+                        placeholder="Enter your GitHub username"
                         error={errors.github?.message}
                         {...register("github")}
+                        onChange={(e) => onChangeUrl(e.target.value, "github")}
                     />
 
                     <LabeledInput
-                        label="Twitter"
-                        placeholder="Enter your Twitter"
+                        label="Twitter Username"
+                        placeholder="Enter your Twitter username"
                         error={errors.twitter?.message}
                         {...register("twitter")}
+                        onChange={(e) => onChangeUrl(e.target.value, "twitter")}
                     />
 
                     <LabeledInput
-                        label="Buy Me A Coffee"
-                        placeholder="Enter your Buy Me A Coffee"
+                        label="Buy Me A Coffee Username"
+                        placeholder="Enter your Buy Me A Coffee username"
                         error={errors.buyMeACoffee?.message}
                         {...register("buyMeACoffee")}
+                        onChange={(e) => onChangeUrl(e.target.value, "buyMeACoffee")}
                     />
 
+                    <LabeledInput
+                        label="LinkedIn Username"
+                        placeholder="Enter your LinkedIn username"
+                        error={errors.linkedin?.message}
+                        {...register("linkedin")}
+                        onChange={(e) => onChangeUrl(e.target.value, "linkedin")}
+                    />
                 </div>
             </div>
 
             <div className="space-y-4">
                 <MultipleSelector
                     label="Languages That You Speak"
-                    options={languagesOptions}
+                    options={LANGUAGES}
                     creatable
                     placeholder="Enter your languages"
                     onChange={(options) => setValue("languages", options.map((option) => option.value))}
@@ -161,7 +187,7 @@ const ProfileForm = ({ user, onSubmit, onCancel }: ProfileFormProps) => {
 
             </div>
             <div className="flex justify-end gap-4 pt-4">
-                <Button type="button" variant="outline" onClick={onCancel}>
+                <Button type="button" variant="outline" onClick={() => setIsEditing(false)}>
                     Cancel
                 </Button>
                 <ButtonWithLoader

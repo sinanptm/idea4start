@@ -11,15 +11,8 @@ import ProfileFormSkeleton from '../skeleton/ProfileFormSkeleton';
 
 const Profile = () => {
     const isEditing = useProfile((state: ProfileState) => state.isEditing);
-    const setIsEditing = useProfile((state: ProfileState) => state.setIsEditing);
     const user = useProfile((state: ProfileState) => state.user);
     const isLoading = useProfile((state: ProfileState) => state.isLoading);
-
-    const handleUpdateUser = (data: Partial<IUser>) => {
-        console.log(data);
-    };
-    console.log(user);
-
 
     return (
         <TabsContent value="profile" className="mt-6">
@@ -37,8 +30,6 @@ const Profile = () => {
                         isEditing ? (
                             <ProfileForm
                                 user={user!}
-                                onSubmit={handleUpdateUser}
-                                onCancel={() => setIsEditing(false)}
                             />
                         ) : (
                             <ProfileInfo user={user || {} as IUser} />

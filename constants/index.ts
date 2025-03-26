@@ -195,3 +195,471 @@ export const INDUSTRIES = [
   { id: "wasteManagement", label: "Waste Management" },
   { id: "other", label: "Other" },
 ];
+
+export const LANGUAGES = [
+  {
+    "value": "English"
+  },
+  {
+    "value": "French"
+  },
+  {
+    "value": "Swiss German"
+  },
+  {
+    "value": "Italian"
+  },
+  {
+    "value": "Romansh"
+  },
+  {
+    "value": "Hungarian"
+  },
+  {
+    "value": "Chinese"
+  },
+  {
+    "value": "Arabic"
+  },
+  {
+    "value": "Indonesian"
+  },
+  {
+    "value": "Portuguese"
+  },
+  {
+    "value": "Lao"
+  },
+  {
+    "value": "Dutch"
+  },
+  {
+    "value": "Papiamento"
+  },
+  {
+    "value": "Swahili"
+  },
+  {
+    "value": "Catalan"
+  },
+  {
+    "value": "Kirundi"
+  },
+  {
+    "value": "Afrikaans"
+  },
+  {
+    "value": "Southern Ndebele"
+  },
+  {
+    "value": "Northern Sotho"
+  },
+  {
+    "value": "Southern Sotho"
+  },
+  {
+    "value": "Swazi"
+  },
+  {
+    "value": "Tswana"
+  },
+  {
+    "value": "Tsonga"
+  },
+  {
+    "value": "Venda"
+  },
+  {
+    "value": "Xhosa"
+  },
+  {
+    "value": "Zulu"
+  },
+  {
+    "value": "Spanish"
+  },
+  {
+    "value": "Carolinian"
+  },
+  {
+    "value": "Chamorro"
+  },
+  {
+    "value": "Macedonian"
+  },
+  {
+    "value": "Guernésiais"
+  },
+  {
+    "value": "Norwegian"
+  },
+  {
+    "value": "Danish"
+  },
+  {
+    "value": "Faroese"
+  },
+  {
+    "value": "Russian"
+  },
+  {
+    "value": "Uzbek"
+  },
+  {
+    "value": "Sinhala"
+  },
+  {
+    "value": "Tamil"
+  },
+  {
+    "value": "Bengali"
+  },
+  {
+    "value": "Aymara"
+  },
+  {
+    "value": "Quechua"
+  },
+  {
+    "value": "Malay"
+  },
+  {
+    "value": "Turkish"
+  },
+  {
+    "value": "Dari"
+  },
+  {
+    "value": "Pashto"
+  },
+  {
+    "value": "Turkmen"
+  },
+  {
+    "value": "Cook Islands Māori"
+  },
+  {
+    "value": "Finnish"
+  },
+  {
+    "value": "Swedish"
+  },
+  {
+    "value": "Samoan"
+  },
+  {
+    "value": "Tokelauan"
+  },
+  {
+    "value": "Upper Guinea Creole"
+  },
+  {
+    "value": "Azerbaijani"
+  },
+  {
+    "value": "Korean"
+  },
+  {
+    "value": "Mauritian Creole"
+  },
+  {
+    "value": "Greek"
+  },
+  {
+    "value": "Croatian"
+  },
+  {
+    "value": "Berber"
+  },
+  {
+    "value": "Fijian"
+  },
+  {
+    "value": "Fiji Hindi"
+  },
+  {
+    "value": "German"
+  },
+  {
+    "value": "Nepali"
+  },
+  {
+    "value": "Georgian"
+  },
+  {
+    "value": "Urdu"
+  },
+  {
+    "value": "Hiri Motu"
+  },
+  {
+    "value": "Tok Pisin"
+  },
+  {
+    "value": "Norfuk"
+  },
+  {
+    "value": "Malagasy"
+  },
+  {
+    "value": "Hindi"
+  },
+  {
+    "value": "Montenegrin"
+  },
+  {
+    "value": "Guaraní"
+  },
+  {
+    "value": "Ukrainian"
+  },
+  {
+    "value": "Manx"
+  },
+  {
+    "value": "Herero"
+  },
+  {
+    "value": "Khoekhoe"
+  },
+  {
+    "value": "Kwangali"
+  },
+  {
+    "value": "Lozi"
+  },
+  {
+    "value": "Ndonga"
+  },
+  {
+    "value": "Bulgarian"
+  },
+  {
+    "value": "Greenlandic"
+  },
+  {
+    "value": "Khmer"
+  },
+  {
+    "value": "Aramaic"
+  },
+  {
+    "value": "Sorani"
+  },
+  {
+    "value": "Kyrgyz"
+  },
+  {
+    "value": "Chewa"
+  },
+  {
+    "value": "Bosnian"
+  },
+  {
+    "value": "Serbian"
+  },
+  {
+    "value": "Amharic"
+  },
+  {
+    "value": "Basque"
+  },
+  {
+    "value": "Galician"
+  },
+  {
+    "value": "Slovene"
+  },
+  {
+    "value": "Sotho"
+  },
+  {
+    "value": "Marshallese"
+  },
+  {
+    "value": "Icelandic"
+  },
+  {
+    "value": "Luxembourgish"
+  },
+  {
+    "value": "Nauru"
+  },
+  {
+    "value": "Hassaniya"
+  },
+  {
+    "value": "Thai"
+  },
+  {
+    "value": "Haitian Creole"
+  },
+  {
+    "value": "Tuvaluan"
+  },
+  {
+    "value": "Belarusian"
+  },
+  {
+    "value": "Latvian"
+  },
+  {
+    "value": "Palauan"
+  },
+  {
+    "value": "Filipino"
+  },
+  {
+    "value": "Kikongo"
+  },
+  {
+    "value": "Lingala"
+  },
+  {
+    "value": "Tshiluba"
+  },
+  {
+    "value": "Somali"
+  },
+  {
+    "value": "Czech"
+  },
+  {
+    "value": "Slovak"
+  },
+  {
+    "value": "Bislama"
+  },
+  {
+    "value": "Niuean"
+  },
+  {
+    "value": "Kinyarwanda"
+  },
+  {
+    "value": "Estonian"
+  },
+  {
+    "value": "Romanian"
+  },
+  {
+    "value": "Tetum"
+  },
+  {
+    "value": "Vietnamese"
+  },
+  {
+    "value": "Latin"
+  },
+  {
+    "value": "Irish"
+  },
+  {
+    "value": "Norwegian Nynorsk"
+  },
+  {
+    "value": "Norwegian Bokmål"
+  },
+  {
+    "value": "Sami"
+  },
+  {
+    "value": "Sango"
+  },
+  {
+    "value": "Tigrinya"
+  },
+  {
+    "value": "Lithuanian"
+  },
+  {
+    "value": "Kazakh"
+  },
+  {
+    "value": "Armenian"
+  },
+  {
+    "value": "Jèrriais"
+  },
+  {
+    "value": "Japanese"
+  },
+  {
+    "value": "Seychellois Creole"
+  },
+  {
+    "value": "Tajik"
+  },
+  {
+    "value": "Maltese"
+  },
+  {
+    "value": "Albanian"
+  },
+  {
+    "value": "Maldivian"
+  },
+  {
+    "value": "Persian (Farsi)"
+  },
+  {
+    "value": "Belizean Creole"
+  },
+  {
+    "value": "Burmese"
+  },
+  {
+    "value": "Dzongkha"
+  },
+  {
+    "value": "Jamaican Patois"
+  },
+  {
+    "value": "Polish"
+  },
+  {
+    "value": "Comorian"
+  },
+  {
+    "value": "Tongan"
+  },
+  {
+    "value": "Gilbertese"
+  },
+  {
+    "value": "Chibarwe"
+  },
+  {
+    "value": "Kalanga"
+  },
+  {
+    "value": "Khoisan"
+  },
+  {
+    "value": "Ndau"
+  },
+  {
+    "value": "Northern Ndebele"
+  },
+  {
+    "value": "Shona"
+  },
+  {
+    "value": "Tonga"
+  },
+  {
+    "value": "Zimbabwean Sign Language"
+  },
+  {
+    "value": "Mongolian"
+  },
+  {
+    "value": "Hebrew"
+  },
+  {
+    "value": "Māori"
+  },
+  {
+    "value": "New Zealand Sign Language"
+  }
+];

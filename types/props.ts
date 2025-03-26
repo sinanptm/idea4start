@@ -96,8 +96,6 @@ export type ConfirmLogoutModalProps = {
 
 export interface ProfileFormProps {
     user: IUser;
-    onSubmit: (data: ProfileInput) => void;
-    onCancel: () => void;
 }
 
 export type ButtonWithLoaderProps = ButtonProps & {
