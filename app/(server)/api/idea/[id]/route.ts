@@ -7,7 +7,7 @@ import Vote from "@/lib/db/models/Vote";
 import connectDB from "@/lib/db/connect";
 import CommentLike from "@/lib/db/models/CommentLike";
 import { withErrorHandler } from "@/lib/utils";
-import { IIdea } from "@/types/interface";
+
 connectDB();
 
 export const GET = withErrorHandler(async (request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) => {

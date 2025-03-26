@@ -62,7 +62,7 @@ cd idea4start
 pnpm install
 
 # Set up environment variables
-cp .env.example .env.local
+cp env.example .env.local
 
 # Run development server
 pnpm dev
