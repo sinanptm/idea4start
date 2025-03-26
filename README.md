@@ -1,6 +1,6 @@
 # 🚀 Idea4Start
 
-![Idea4Start Logo](https://idea4start.vercel.app/favicon.ico)
+![Idea4Start Logo](https://github.com/user-attachments/assets/b3e4f587-d759-4590-a603-dcc6522a57cd)
 
 **Where Great Startups Begin**
 
