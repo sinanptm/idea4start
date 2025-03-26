@@ -5,7 +5,6 @@
   </picture>
 
   # 🚀 Idea4Start
-  # Where Great Startups Begin
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
   [![Next.js](https://img.shields.io/badge/Next.js-15.x-black?style=flat-square)](https://nextjs.org/)
