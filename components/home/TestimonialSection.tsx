@@ -10,7 +10,7 @@ const testimonials = [
         author: {
             name: "Jessica Wong",
             role: "Founder, TaskFlow",
-            avatar: "/placeholder.svg?height=48&width=48",
+            avatar: "https://github.com/shadcn.png",
         },
     },
     {
@@ -19,7 +19,7 @@ const testimonials = [
         author: {
             name: "Marcus Chen",
             role: "CEO, GreenDelivery",
-            avatar: "/placeholder.svg?height=48&width=48",
+            avatar: "https://github.com/shadcn.png",
         },
     },
     {
@@ -28,7 +28,7 @@ const testimonials = [
         author: {
             name: "Sophia Rodriguez",
             role: "Founder, EdTech Solutions",
-            avatar: "/placeholder.svg?height=48&width=48",
+            avatar: "https://github.com/shadcn.png",
         },
     },
 ];
