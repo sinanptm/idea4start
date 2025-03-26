@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import profileSchema, { ProfileInput } from "@/lib/validations/profile.schema";
@@ -9,7 +9,6 @@ import { LabeledInput } from "../ui/input";
 import { LabeledTextarea } from "../ui/textarea";
 import MultipleSelector from "../ui/multiselect";
 import { ProfileFormProps } from "@/types/props";
-import { Option } from "../ui/multiselect";
 import ButtonWithLoader from "../ButtonWithLoader";
 import useProfile, { ProfileState } from "@/hooks/useProfile";
 import { toast } from "@/hooks/useToast";

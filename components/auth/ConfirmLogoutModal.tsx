@@ -17,12 +17,12 @@ import { LogOut } from "lucide-react";
 import { ConfirmLogoutModalProps } from "@/types/props";
 
 const ConfirmLogoutModal = ({ isOpen, setIsOpen }: ConfirmLogoutModalProps) => {
-    const handleLogout = (e: React.MouseEvent) => {
+    const handleLogout = () => {
         signOut();
         setIsOpen(false);
     };
 
-    const handleCancel = (e: React.MouseEvent) => {
+    const handleCancel = () => {
         setIsOpen(false);
     };
 
