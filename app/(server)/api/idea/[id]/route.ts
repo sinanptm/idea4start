@@ -62,8 +62,7 @@ export const GET = withErrorHandler(async (request: NextRequest, { params }: { p
         }
     ]);
 
-    // @ts-ignore
-    idea = idea[0] as IIdea;
+    idea = idea[0];
 
     if (!idea) {
         return NextResponse.json({ error: "Idea not found" }, { status: 404 });

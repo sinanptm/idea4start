@@ -26,7 +26,6 @@ const ShareIdeaForm = ({ onSuccess }: { onSuccess: () => void; }) => {
   const queryClient = useQueryClient();
 
   const {
-    register,
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
