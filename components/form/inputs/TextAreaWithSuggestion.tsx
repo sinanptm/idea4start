@@ -3,7 +3,7 @@
 import { Label } from '@radix-ui/react-label';
 import { useId, useState, useCallback, memo } from 'react';
 import { cn } from '@/lib/utils';
-import { Sparkles, Check, X, AlertTriangle, Loader2 } from 'lucide-react';
+import { Sparkles, Undo, AlertTriangle, Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { toast } from '@/hooks/useToast';
 import useGetSuggestion from '@/hooks/api/useGetSuggestion';
@@ -98,12 +98,7 @@ const TextAreaWithSuggestion = ({
         }
     };
 
-    const handleAcceptSuggestion = useCallback(() => {
-        onChange?.(value);
-        setShowingSuggestion(false);
-    }, [onChange, value]);
-
-    const handleRejectSuggestion = useCallback(() => {
+    const handleRevertSuggestion = useCallback(() => {
         onChange?.(originalText);
         setShowingSuggestion(false);
     }, [onChange, originalText]);
@@ -117,28 +112,16 @@ const TextAreaWithSuggestion = ({
                 <Label htmlFor={id}>{label}</Label>
                 <div className="flex items-center gap-2">
                     {showingSuggestion && (
-                        <>
-                            <button
-                                type="button"
-                                onClick={handleAcceptSuggestion}
-                                className="flex items-center gap-1 text-xs text-green-500 hover:text-green-400 transition-colors"
-                                aria-label="Accept suggestion"
-                                disabled={isDisabled}
-                            >
-                                <Check aria-hidden="true" size={16} />
-                                Accept
-                            </button>
-                            <button
-                                type="button"
-                                onClick={handleRejectSuggestion}
-                                className="flex items-center gap-1 text-xs text-red-500 hover:text-red-400 transition-colors"
-                                aria-label="Reject suggestion"
-                                disabled={isDisabled}
-                            >
-                                <X aria-hidden="true" size={16} />
-                                Reject
-                            </button>
-                        </>
+                        <button
+                            type="button"
+                            onClick={handleRevertSuggestion}
+                            className="flex items-center gap-1 text-xs text-red-500 hover:text-red-400 transition-colors"
+                            aria-label="Revert to original"
+                            disabled={isDisabled}
+                        >
+                            <Undo aria-hidden="true" size={16} />
+                            Revert
+                        </button>
                     )}
                     <button
                         type="button"
