@@ -115,30 +115,30 @@ export const STAGE_CONFIG: StageConfig[] = [
 
 
 export const BUSINESS_MODEL = [
-  { id: BusinessModel.saas, label: "SaaS" },
-  { id: BusinessModel.physicalProduct, label: "Physical Product" },
-  { id: BusinessModel.subscription, label: "Subscription" },
   { id: BusinessModel.adModel, label: "Ad Model" },
-  { id: BusinessModel.membership, label: "Membership" },
-  { id: BusinessModel.freemium, label: "Freemium" },
-  { id: BusinessModel.marketplace, label: "Marketplace" },
-  { id: BusinessModel.licensing, label: "Licensing" },
-  { id: BusinessModel.oneTimePurchase, label: "One-Time Purchase" },
-  { id: BusinessModel.transactionFee, label: "Transaction Fee" },
   { id: BusinessModel.affiliateMarketing, label: "Affiliate Marketing" },
+  { id: BusinessModel.blockchainBased, label: "Blockchain-Based" },
+  { id: BusinessModel.bundling, label: "Bundling" },
   { id: BusinessModel.consulting, label: "Consulting" },
   { id: BusinessModel.crowdsourcing, label: "Crowdsourcing" },
-  { id: BusinessModel.payPerUse, label: "Pay Per Use" },
   { id: BusinessModel.dataMonetization, label: "Data Monetization" },
-  { id: BusinessModel.hardwarePlusSoftware, label: "Hardware + Software" },
-  { id: BusinessModel.platformAsAService, label: "Platform as a Service (PaaS)" },
-  { id: BusinessModel.blockchainBased, label: "Blockchain-Based" },
   { id: BusinessModel.donationBased, label: "Donation-Based" },
-  { id: BusinessModel.bundling, label: "Bundling" },
   { id: BusinessModel.franchise, label: "Franchise" },
+  { id: BusinessModel.freemium, label: "Freemium" },
+  { id: BusinessModel.hardwarePlusSoftware, label: "Hardware + Software" },
+  { id: BusinessModel.licensing, label: "Licensing" },
+  { id: BusinessModel.marketplace, label: "Marketplace" },
+  { id: BusinessModel.membership, label: "Membership" },
+  { id: BusinessModel.oneTimePurchase, label: "One-Time Purchase" },
+  { id: BusinessModel.other, label: "Other" },
+  { id: BusinessModel.payPerUse, label: "Pay Per Use" },
   { id: BusinessModel.peerToPeer, label: "Peer-to-Peer" },
+  { id: BusinessModel.physicalProduct, label: "Physical Product" },
+  { id: BusinessModel.platformAsAService, label: "Platform as a Service (PaaS)" },
+  { id: BusinessModel.saas, label: "SaaS" },
   { id: BusinessModel.sponsorship, label: "Sponsorship" },
-  { id: BusinessModel.other, label: "Other" }
+  { id: BusinessModel.subscription, label: "Subscription" },
+  { id: BusinessModel.transactionFee, label: "Transaction Fee" }
 ];
 
 

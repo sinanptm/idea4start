@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Search, Filter, X, ChevronDown, ChevronUp } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { useIsMobile } from "@/hooks/useMobile"
-import { memo, useEffect, useState } from "react"
-import { BUSINESS_MODEL, INDUSTRIES } from "@/constants"
-import { useDebounce } from "@/hooks/useDebounce"
-import useIdeasFilter from "@/hooks/useIdeasFilter"
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Search, Filter, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useIsMobile } from "@/hooks/useMobile";
+import { memo, useEffect, useState } from "react";
+import { BUSINESS_MODEL, INDUSTRIES } from "@/constants";
+import { useDebounce } from "@/hooks/useDebounce";
+import useIdeasFilter from "@/hooks/useIdeasFilter";
 
 const IdeasFilters = () => {
   const isMobile = useIsMobile();
@@ -61,8 +61,8 @@ const IdeasFilters = () => {
 
   const FilterContent = () => (
     <>
-      <Accordion 
-        type="multiple" 
+      <Accordion
+        type="multiple"
         defaultValue={defaultAccordionValues}
         className="transition-all duration-200"
       >
@@ -74,10 +74,10 @@ const IdeasFilters = () => {
             <div className="space-y-2 pt-1 max-h-[200px] overflow-y-auto pr-2">
               {BUSINESS_MODEL.map((model) => (
                 <div key={model.id} className="flex items-center space-x-2">
-                  <Checkbox 
+                  <Checkbox
                     id={`model-${model.id}`}
                     checked={businessModel === model.id}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       handleBusinessModelChange(model.id, checked as boolean)
                     }
                   />
@@ -101,10 +101,10 @@ const IdeasFilters = () => {
             <div className="space-y-2 pt-1 max-h-[200px] overflow-y-auto pr-2">
               {INDUSTRIES.map((ind) => (
                 <div key={ind.id} className="flex items-center space-x-2">
-                  <Checkbox 
+                  <Checkbox
                     id={`industry-${ind.id}`}
                     checked={industry === ind.id}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       handleIndustryChange(ind.id, checked as boolean)
                     }
                   />
@@ -121,9 +121,9 @@ const IdeasFilters = () => {
         </AccordionItem>
       </Accordion>
 
-      <Button 
-        variant="outline" 
-        size="sm" 
+      <Button
+        variant="outline"
+        size="sm"
         className="w-full flex items-center gap-2"
         onClick={resetFilters}
         disabled={!hasActiveFilters}
@@ -143,8 +143,8 @@ const IdeasFilters = () => {
             <h3 className="font-medium">Search</h3>
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input 
-                placeholder="Search ideas..." 
+              <Input
+                placeholder="Search ideas..."
                 className="pl-8"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
@@ -159,7 +159,7 @@ const IdeasFilters = () => {
               )}
             </div>
           </div>
-          
+
           {hasActiveFilters && (
             <div className="flex items-center justify-between px-2 py-1 rounded-md bg-muted/50">
               <div className="text-sm flex gap-1 flex-wrap">
@@ -174,8 +174,8 @@ const IdeasFilters = () => {
                   </span>
                 )}
               </div>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 size="sm"
                 onClick={resetFilters}
                 className="h-6 text-xs"
@@ -185,10 +185,10 @@ const IdeasFilters = () => {
               </Button>
             </div>
           )}
-          
-          <Button 
-            variant="outline" 
-            size="sm" 
+
+          <Button
+            variant="outline"
+            size="sm"
             className="w-full flex items-center gap-2 justify-between"
             onClick={toggleFilters}
           >
@@ -203,7 +203,7 @@ const IdeasFilters = () => {
             )}
           </Button>
         </div>
-        
+
         {filtersExpanded && (
           <div className="p-4 pt-0 border-t space-y-4">
             <FilterContent />
@@ -220,8 +220,8 @@ const IdeasFilters = () => {
         <h3 className="font-medium">Search</h3>
         <div className="relative">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search ideas..." 
+          <Input
+            placeholder="Search ideas..."
             className="pl-8"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -236,7 +236,7 @@ const IdeasFilters = () => {
           )}
         </div>
       </div>
-      
+
       <FilterContent />
     </div>
   );

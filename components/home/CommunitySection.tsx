@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageSquare, Users } from 'lucide-react';
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import LoginDialog from "../auth/LoginDialog";
 
 const communityMembers = [
     {
@@ -129,12 +130,12 @@ const CommunitySection = () => {
                         </div>
                     </div>
 
-                    <Button asChild size="lg" className="mt-2 w-full sm:w-auto">
-                        <Link href="/register">
+                    <LoginDialog trigger={
+                        <Button size="lg" className="mt-2 w-full sm:w-auto">
                             Join Our Community
                             <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                    </Button>
+                        </Button>
+                    } />
                 </div>
 
                 <div>
@@ -172,6 +173,7 @@ const CommunitySection = () => {
                     <div className="mt-4 md:mt-6 text-center">
                         <Link
                             href="/community"
+                            prefetch={false}
                             className="text-primary hover:underline text-xs md:text-sm font-medium inline-flex items-center"
                         >
                             View all community members

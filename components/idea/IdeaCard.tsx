@@ -21,7 +21,8 @@ const IdeaCard = ({ idea }: IdeaCardProps) => {
     tags,
     stage,
     businessModel,
-    votes
+    votes,
+    commentCount
   } = idea;
 
   // Format date
@@ -30,8 +31,7 @@ const IdeaCard = ({ idea }: IdeaCardProps) => {
   // Truncate description
   const truncatedDescription = description.length > 120 ? `${description.substring(0, 120)}...` : description;
 
-  // Calculate engagement metrics
-  const commentCount = Math.floor(Math.random() * 10); // Placeholder for actual comment count
+
 
   return (
     <Card className="overflow-hidden hover:border-primary/50 transition-colors">

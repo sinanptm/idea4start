@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import LoginDialog from "@/components/auth/LoginDialog";
 
 const AboutPage = () => {
     return (
@@ -133,12 +134,12 @@ const AboutPage = () => {
                             </div>
 
                             <div className="flex flex-col sm:flex-row gap-4 pt-2 w-full sm:w-auto">
-                                <Button asChild size="lg" className="group w-full sm:w-auto">
-                                    <Link href="/register">
+                                <LoginDialog trigger={
+                                    <Button size="lg" className="group w-full sm:w-auto">
                                         Create Account
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                } />
                                 <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
                                     <Link href="/ideas">Explore Ideas</Link>
                                 </Button>

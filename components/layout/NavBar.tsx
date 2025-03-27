@@ -1,6 +1,6 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useState } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -10,6 +10,7 @@ import { useSidebar } from "../ui/sidebar";
 
 const NavBar = ({ Footer }: { Footer: React.ReactNode; }) => {
     const { isMobile } = useSidebar();
+    const [isOpen, setIsOpen] = useState(false);
 
     if (!isMobile) {
         return (
@@ -23,7 +24,7 @@ const NavBar = ({ Footer }: { Footer: React.ReactNode; }) => {
                 <div className="flex items-center gap-2">
                     <Logo />
                 </div>
-                <Sheet>
+                <Sheet open={isOpen} onOpenChange={setIsOpen}>
                     <SheetTrigger asChild>
                         <Button
                             variant="ghost"
@@ -44,7 +45,7 @@ const NavBar = ({ Footer }: { Footer: React.ReactNode; }) => {
                             </div>
                         </SheetTitle>
                         <div className="flex-1 overflow-y-auto py-4">
-                            <NavMain />
+                            <NavMain setSheetOpen={setIsOpen} />
                         </div>
                         <div className="border-t p-4">
                             {Footer}
