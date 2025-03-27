@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from "react";
-import { SidebarGroup, SidebarMenu, SidebarMenuItem, SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
+import { SidebarGroup, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
 import { NAV_MAIN_ITEMS } from "@/constants";
 import Link from "next/link";
 
