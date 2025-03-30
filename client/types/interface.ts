@@ -1,5 +1,4 @@
-import { Stage } from ".";
-import { BusinessModel } from ".";
+import { Stage, BusinessModel } from ".";
 
 export interface IIdea {
     _id: string;
