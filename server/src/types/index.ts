@@ -11,3 +11,19 @@ export enum StatusCode {
     GATEWAY_TIMEOUT = 504,
     NOT_IMPLEMENTED = 501,
 }
+
+export enum InputName {
+    Title = "title",
+    Description = "description",
+    UniqueValue = "uniqueValue",
+    ProblemStatement = "problemStatement",
+    Risks = "risks",
+    BusinessModel = "businessModel",
+    Industries = "industries",
+    Tags = "tags",
+}
+
+export type RelativeField = {
+    name: InputName;
+    value: string;
+};

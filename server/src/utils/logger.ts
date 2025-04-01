@@ -15,7 +15,7 @@ const consoleFormat = format.printf(({ timestamp, level, message, stack, locatio
     const dataInfo = data ? ` | Data: ${JSON.stringify(data)}` : "";
     // const metaInfo = Object.keys(meta).length ? ` | Meta: ${JSON.stringify(meta, null, 2)}` : "";
 
-    return `${timestamp} ${logLevel} [${message}] \n \x1b[36m${locationInfo}\x1b[0m${statusCodeInfo}:  ${stack ? `\nStack: ${stack}` : ""}${urlInfo}${dataInfo}`;
+    return `${timestamp} ${logLevel} [${message}] \n \x1b[36m${locationInfo}\x1b[0m${statusCodeInfo}  ${stack ? `\nStack: ${stack}` : ""}${urlInfo}${dataInfo}`;
 });
 
 // Logger setup with daily file rotation
