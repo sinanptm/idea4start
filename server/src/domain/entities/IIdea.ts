@@ -16,6 +16,7 @@ interface IIdea {
     stage?: Stage;
     risks?: string[];
     businessModel?: BusinessModel;
+    uniqueValue?: string;
 }
 
 export interface IIdeaWithRelations extends IIdea {
