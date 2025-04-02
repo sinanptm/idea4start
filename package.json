@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"pnpm prefix client run dev\" \"pnpm prefix server run dev\""
+    "dev": "concurrently \"pnpm --filter client dev\" \"pnpm --filter server dev\""
   },
   "keywords": [],
   "author": "",
