@@ -4,7 +4,8 @@ import { ideaController } from "../di/controllers";
 const router = Router();
 
 
-router.get('/', ideaController.getIdeas.bind(ideaController));
+// idea routes
+router.get("/ideas", ideaController.getIdeas.bind(ideaController));
 
 
 export default router;

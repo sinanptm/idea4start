@@ -7,7 +7,7 @@ interface GetSuggestionsQuery {
     value: string;
     inputName: InputName;
     relativeFields: RelativeField[];
-    userId: string;
+    userId?: string;
 }
 
 export default class GetSuggestionsUseCase {
@@ -40,7 +40,7 @@ export default class GetSuggestionsUseCase {
             throw new ValidationError("Invalid value or inputName", "GetSuggestionsUseCase");
         }
 
-        const user = await this.userRepository.findById(userId);
+        const user = await this.userRepository.findById(userId!);
         if (!user) {
             throw new UnauthorizedError("Invalid user", "GetSuggestionsUseCase");
         }

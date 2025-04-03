@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 export enum StatusCode {
     OK = 200,
     CREATED = 201,
@@ -27,3 +29,10 @@ export type RelativeField = {
     name: InputName;
     value: string;
 };
+
+export interface CustomRequest extends Request {
+    user?: {
+        id: string;
+        [key: string]: any;
+    };
+}
