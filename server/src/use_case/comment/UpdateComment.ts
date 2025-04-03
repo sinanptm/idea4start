@@ -1,5 +1,5 @@
 import IComment from "@/domain/entities/IComment";
-import { ICommentRepository } from "@/domain/repositories/IComment";
+import ICommentRepository from "@/domain/repositories/IComment";
 
 interface UpdateCommentQuery {
     commentId: string;

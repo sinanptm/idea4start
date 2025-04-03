@@ -1,5 +1,5 @@
 import Idea from "@/infrastructure/models/Idea";
-import { IIdeaRepository } from "@/domain/repositories/IIdeaRepository";
+import IIdeaRepository from "@/domain/repositories/IIdeaRepository";
 import IIdea from "@/domain/entities/IIdea";
 import { PipelineStage } from "mongoose";
 

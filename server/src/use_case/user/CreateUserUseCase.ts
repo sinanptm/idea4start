@@ -1,5 +1,4 @@
-import { IUserRepository } from "@/domain/repositories/IUserRepository";
-import IUser from "@/domain/entities/IUser";
+import IUserRepository from "@/domain/repositories/IUserRepository";
 
 interface CreateUserQuery {
     email: string;

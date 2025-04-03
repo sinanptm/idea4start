@@ -1,4 +1,4 @@
 import ICommentLike from "../entities/ICommentLike";
-import { BaseRepository } from "./BaseRepository";
+import BaseRepository from "./BaseRepository";
 
-export interface ICommentLikeRepository extends BaseRepository<ICommentLike> { }
+export default interface ICommentLikeRepository extends BaseRepository<ICommentLike> { }

@@ -1,5 +1,5 @@
 import Vote from "@/infrastructure/models/Vote";
-import { IVoteRepository } from "@/domain/repositories/IVoteRepository";
+import IVoteRepository from "@/domain/repositories/IVoteRepository";
 import IVote from "@/domain/entities/IVote";
 
 export default class VoteRepository implements IVoteRepository {

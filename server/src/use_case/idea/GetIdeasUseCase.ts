@@ -1,6 +1,6 @@
 import IIdea from "@/domain/entities/IIdea";
-import { IIdeaRepository } from "@/domain/repositories/IIdeaRepository";
-import { IVoteRepository } from "@/domain/repositories/IVoteRepository";
+import IIdeaRepository from "@/domain/repositories/IIdeaRepository";
+import IVoteRepository from "@/domain/repositories/IVoteRepository";
 import { PipelineStage } from "mongoose";
 
 interface GetIdeasQuery {

@@ -1,4 +1,4 @@
-import { ICommentRepository } from "@/domain/repositories/IComment";
+import ICommentRepository from "@/domain/repositories/IComment";
 import IComment from "@/domain/entities/IComment";
 
 export default class GetCommentsUseCase {

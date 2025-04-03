@@ -1,3 +1,3 @@
 export default interface IAiService {
-    generateText(prompt: string): Promise<string>;
+    generateResponse(prompt: string): Promise<string>;
 }

@@ -1,4 +1,4 @@
-import { IUserRepository } from "@/domain/repositories/IUserRepository";
+import IUserRepository from "@/domain/repositories/IUserRepository";
 import IUser from "@/domain/entities/IUser";
 
 export default class UpdateUserUseCase {
