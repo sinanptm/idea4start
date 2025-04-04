@@ -1,18 +1,16 @@
-import { Schema, model } from "mongoose";
 import IVote from "@/domain/entities/IVote";
+import { Schema, model, models } from "mongoose";
 
 const voteSchema = new Schema<IVote>({
     userId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
-        unique: true,
     },
     ideaId: {
         type: Schema.Types.ObjectId,
         ref: "Idea",
         required: true,
-        unique: true,
         index: true
     },
     type: {
@@ -29,6 +27,6 @@ const voteSchema = new Schema<IVote>({
 
 voteSchema.index({ userId: 1, ideaId: 1 }, { unique: true });
 
-const Vote = model("Vote", voteSchema);
+const Vote = models.Vote || model("Vote", voteSchema);
 
 export default Vote;
