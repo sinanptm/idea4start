@@ -5,7 +5,6 @@ import IUserRepository from "@/domain/repositories/IUserRepository";
 interface DeleteCommentQuery {
     commentId: string;
     userId: string;
-    ideaId: string;
 }
 
 export default class DeleteCommentUseCase {

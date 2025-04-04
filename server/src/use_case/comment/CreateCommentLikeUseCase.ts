@@ -9,7 +9,7 @@ interface LikeCommentQuery {
     userId: string;
 }
 
-export default class LikeCommentUseCase {
+export default class CreateCommentLikeUseCase {
     constructor(
         private readonly commentRepository: ICommentRepository,
         private readonly userRepository: IUserRepository,

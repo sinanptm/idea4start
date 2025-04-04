@@ -3,7 +3,6 @@ import IUserRepository from "@/domain/repositories/IUserRepository";
 import IVoteRepository from "@/domain/repositories/IVoteRepository";
 
 interface UpdateVoteQuery {
-    voteId: string;
     voteType: string;
     userId: string;
     ideaId: string;
@@ -16,8 +15,8 @@ export default class UpdateVoteUseCase {
     ) { }
 
     async exec(query: UpdateVoteQuery): Promise<void> {
-        const { voteId, voteType, userId, ideaId } = query;
-        const existingVote = await this.voteRepository.findById(voteId);
+        const { voteType, userId, ideaId } = query;
+        const existingVote = await this.voteRepository.findByUserIdAndIdeaId(userId, ideaId);
         const user = await this.userRepository.findById(userId);
         if (!user) {
             throw new UnauthorizedError("User not found");
