@@ -3,7 +3,7 @@ import IUser from "./IUser";
 import ICommentLike from "./ICommentLike";
 
 interface IComment {
-    _id: string;
+    _id?: string;
     ideaId?: IIdea['_id'];
     userId?: IUser['_id'];
     content: string;
