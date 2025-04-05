@@ -11,6 +11,14 @@ import CreateCommentLikeUseCase from "@/use_case/comment/CreateCommentLikeUseCas
 import CreateUserUseCase from "@/use_case/user/CreateUserUseCase";
 import UpdateUserUseCase from "@/use_case/user/UpdateUserUseCase";
 import GetCommentsUseCase from "@/use_case/comment/GetCommentsUseCase";
+import GetHomePageStaticsUseCase from "@/use_case/GetHomePageStaticsUseCase";
+
+// ! Home Page
+export const getHomePageStaticsUseCase = new GetHomePageStaticsUseCase(
+    ideaRepository,
+    userRepository
+);
+
 // ! Ideas
 export const getIdeasUseCase = new GetIdeasUseCase(
     ideaRepository,

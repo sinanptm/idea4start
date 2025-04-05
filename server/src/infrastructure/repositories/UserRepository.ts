@@ -22,4 +22,8 @@ export default class UserRepository implements IUserRepository {
         await this.userModel.findByIdAndDelete(id);
     }
 
+    async countDocuments(query?: Record<string, any>): Promise<number> {
+        return await this.userModel.countDocuments(query);
+    }
+
 }   

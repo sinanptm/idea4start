@@ -1,7 +1,6 @@
 import express from "express";
 import { CLIENT, PORT } from "./config";
 import connectDb from "./config/connectDb";
-import logger from "./utils/logger";
 import cors from "cors";
 import routes from "./presentation/routes";
 import helmet from "helmet";
