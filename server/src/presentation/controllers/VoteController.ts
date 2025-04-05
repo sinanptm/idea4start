@@ -9,7 +9,8 @@ export default class VoteController {
 
     async createVote(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const { ideaId, voteType } = req.body;
+            const { ideaId } = req.params;
+            const { voteType } = req.body;
             const userId = req.user?.id!;
             await this.updateVoteUseCase.exec({ ideaId, voteType, userId });
             res.status(StatusCode.NO_CONTENT).send();

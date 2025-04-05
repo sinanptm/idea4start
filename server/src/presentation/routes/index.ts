@@ -1,14 +1,16 @@
 import { Router } from "express";
 import authRoutes from "./authRoutes";
-import authorizedRoutes from "./authorizedRoutes";
-import unAuthorizedRoutes from "./unAuthorizedRoutes";
+import ideaRoutes from "./ideaRoutes";
 import { errorHandler } from "../di/middlewares";
+import { homePageController, suggestionController } from "../di/controllers";
 
 const router = Router();
 
 router.use("/auth", authRoutes);
-router.use("/", unAuthorizedRoutes);
-router.use("/", authorizedRoutes);
+router.use("/idea", ideaRoutes);
+
+router.get("/suggestions", suggestionController.getSuggestions.bind(suggestionController));
+router.get("/", homePageController.getHomePageStatics.bind(homePageController));
 
 router.use(errorHandler);
 

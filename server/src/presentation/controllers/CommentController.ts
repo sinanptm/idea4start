@@ -18,7 +18,8 @@ export default class CommentController {
 
     async createComment(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const { ideaId, content } = req.body;
+            const { ideaId } = req.params;
+            const { content } = req.body;
             const userId = req.user?.id!;
             const comment = await this.createCommentUseCase.exec({ ideaId, content, userId });
             res.status(StatusCode.CREATED).json(comment);
@@ -29,7 +30,7 @@ export default class CommentController {
 
     async getComments(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const { ideaId } = req.query;
+            const { ideaId } = req.params;
             const comments = await this.getCommentsUseCase.exec(ideaId as string);
             res.status(StatusCode.OK).json(comments);
         } catch (error) {
