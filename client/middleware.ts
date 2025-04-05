@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from './auth';
 
 //eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function middleware(request: NextRequest) {
+export const middleware = async (request: NextRequest) => {
   const session = await auth();
 
   if (!session?.user) {
@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
-}
+};
 
 export const config = {
   matcher: ['/login', "/profile", "/api/profile"],
