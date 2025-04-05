@@ -26,7 +26,7 @@ export const createComment = async (ideaId: string, content: string) => {
 
 
 export const createVote = async (ideaId: string, voteType: "up" | "down") => {
-    const response = await instance.patch(`/idea/${ideaId}/like`, { voteType });
+    const response = await instance.patch(`/idea/${ideaId}/vote`, { voteType });
     return response.data;
 };
 
