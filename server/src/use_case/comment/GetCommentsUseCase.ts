@@ -9,9 +9,6 @@ export default class GetCommentsUseCase {
 
     async exec(ideaId: string): Promise<CommentWithUser[]> {
         const comments = await this.commentRepository.getCommentsByIdeaId(ideaId);
-        if (!comments || comments.length === 0) {
-            throw new NotFoundError("No comments found");
-        }
         return comments;
     }
 }   

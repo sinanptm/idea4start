@@ -29,7 +29,6 @@ const IdeaDetailHeader = ({ idea }: IdeaDetailHeaderProps) => {
   const { title, user, createdAt, stage } = idea;
   const { data: session } = useSession();
   const buyMeACoffeeUrl = `https://www.buymeacoffee.com/${idea.user?.buyMeACoffee}`;
-  console.log(idea);
 
   const timeAgo = formatDistanceToNow(new Date(createdAt), {
     addSuffix: true,

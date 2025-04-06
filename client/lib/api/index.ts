@@ -3,6 +3,7 @@ import { NEXT_PUBLIC_API_URL } from "@/config";
 import { InputName } from "@/types";
 import { GetIdeasProps } from "@/types/props";
 import { IUser } from "@/types/interface";
+
 const instance = axios.create({
     baseURL: `${NEXT_PUBLIC_API_URL}/api`,
     headers: {
