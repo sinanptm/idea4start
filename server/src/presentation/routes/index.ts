@@ -1,7 +1,7 @@
 import { Router } from "express";
 import authRoutes from "./authRoutes";
 import ideaRoutes from "./ideaRoutes";
-import { errorHandler } from "../di/middlewares";
+import { authMiddleware, errorHandler } from "../di/middlewares";
 import { homePageController, suggestionController } from "../di/controllers";
 
 const router = Router();
@@ -9,7 +9,7 @@ const router = Router();
 router.use("/auth", authRoutes);
 router.use("/idea", ideaRoutes);
 
-router.get("/suggestions", suggestionController.getSuggestions.bind(suggestionController));
+router.get("/suggestions", authMiddleware.exec, suggestionController.getSuggestions.bind(suggestionController));
 router.get("/", homePageController.getHomePageStatics.bind(homePageController));
 
 router.use(errorHandler);

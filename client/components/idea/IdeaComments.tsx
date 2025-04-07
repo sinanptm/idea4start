@@ -55,10 +55,11 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
           comments.pop();
           comments.push(comment);
         },
-        onError: () => {
+        //eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onError: (error: any) => {
           toast({
             title: "Error creating comment",
-            description: "Your comment has been created successfully",
+            description: error.response.data.message || "Something went wrong",
             variant: "destructive",
           });
           comments.pop();

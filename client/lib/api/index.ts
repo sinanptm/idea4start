@@ -14,6 +14,14 @@ const instance = axios.create({
     withCredentials: true,
 });
 
+instance.interceptors.request.use(config => {
+    const token = localStorage.getItem("auth-token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
 
 export const getSuggestion = async (value: string, inputName: InputName, relativeFields?: { name: InputName, value: string; }[]) => {
     const response = await instance.post("/suggestions", { value, inputName, relativeFields });
