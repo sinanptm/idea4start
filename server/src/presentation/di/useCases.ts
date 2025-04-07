@@ -1,5 +1,5 @@
 import { commentLikeRepository, commentRepository, ideaRepository, userRepository, voteRepository } from "./repositories";
-import { geminiService } from "./services";
+import { geminiService, tokenService } from "./services";
 import GetIdeasUseCase from "@/use_case/idea/GetIdeasUseCase";
 import GetSuggestionsUseCase from "@/use_case/suggestions/GetSuggestionsUseCase";
 import GetProfileUseCase from "@/use_case/user/GetProfileUseCase";
@@ -36,7 +36,8 @@ export const getProfileUseCase = new GetProfileUseCase(
     userRepository
 );
 export const createUserUseCase = new CreateUserUseCase(
-    userRepository
+    userRepository,
+    tokenService
 );
 export const updateUserUseCase = new UpdateUserUseCase(
     userRepository
