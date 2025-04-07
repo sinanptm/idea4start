@@ -1,7 +1,9 @@
+import { UserRole } from "@/types";
+
 export interface TokenPayload {
     id: string;
     email: string;
-    role: string;
+    role: UserRole;
 }
 
 export default interface ITokenService {

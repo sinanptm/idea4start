@@ -3,7 +3,7 @@ import { CustomError } from "@/domain/entities/CustomError";
 import { StatusCode } from "@/types";
 import logger from "@/utils/logger";
 import { Request, Response, NextFunction } from "express";
-
+import { ZodError } from "zod";
 export default class ErrorHandler {
     static exec(err: any, req: Request, res: Response, next: NextFunction) {
         const message = err.message || "Internal server error";
@@ -13,6 +13,13 @@ export default class ErrorHandler {
         if (err instanceof CustomError) {
             res.status(statusCode).json({
                 message
+            });
+            return;
+        }
+
+        if (err instanceof ZodError) {
+            res.status(StatusCode.BAD_REQUEST).json({
+                message: err.errors.map((error) => error.message).join(", ")
             });
             return;
         }

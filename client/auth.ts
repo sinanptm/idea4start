@@ -34,11 +34,6 @@ export const authOptions = {
           body: JSON.stringify(user),
         });
 
-        if (typeof window !== "undefined") {
-          console.log('window');
-        } else {
-          console.log('server');
-        }
         const userData = await response.json();
         user.id = userData.user._id;
       } catch (error) {

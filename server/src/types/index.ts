@@ -37,3 +37,8 @@ export interface CustomRequest extends Request {
         [key: string]: any;
     };
 }
+
+export enum UserRole {
+    USER = "user",
+    ADMIN = "admin",
+}
