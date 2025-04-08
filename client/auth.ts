@@ -35,6 +35,8 @@ export const authOptions = {
         });
 
         const userData = await response.json();
+        console.log("User Data", userData);
+
         user.id = userData.user._id;
       } catch (error) {
         console.error("Error saving user data:", error);

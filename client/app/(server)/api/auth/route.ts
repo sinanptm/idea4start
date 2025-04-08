@@ -1,21 +1,42 @@
 import connectDB from "@/lib/db/connect";
 import User from "@/lib/db/models/User";
 import { NextResponse, NextRequest } from "next/server";
+import { cookies } from "next/headers";
+import { NEXT_PUBLIC_API_URL, NODE_ENV } from "@/config";
 
 export async function POST(request: NextRequest) {
   try {
     const userData = await request.json();
+    const cookieStore = await cookies();
 
     if (!userData) {
       return NextResponse.json(
-        { error: "Authentication required" },
+        { error: "User Data is required" },
         { status: 401 }
       );
     }
 
-    await connectDB();
+    if (NODE_ENV === "development") {
+      const token = await fetch(`${NEXT_PUBLIC_API_URL}/api/auth`, {
+        method: "POST",
+        body: JSON.stringify(userData),
+      });
 
-    const user = await User.findOneAndUpdate(
+
+      if (token.ok) {
+        const tokenData = await token.json();
+        cookieStore.set("user-token", tokenData.token);
+        return NextResponse.json(
+          { message: "User data saved successfully", user: tokenData.user },
+          { status: 200 }
+        );
+      }
+    }
+
+
+
+    await connectDB();
+    let user = await User.findOneAndUpdate(
       { email: userData.email },
       {
         $set: {

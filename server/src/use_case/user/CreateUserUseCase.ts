@@ -1,3 +1,4 @@
+import IUser from "@/domain/entities/IUser";
 import IUserRepository from "@/domain/repositories/IUserRepository";
 import ITokenService from "@/domain/service/ITokenService";
 import { UserRole } from "@/types";
@@ -15,13 +16,29 @@ export default class CreateUserUseCase {
         private readonly tokenService: ITokenService
     ) { }
 
-    async exec(query: CreateUserQuery): Promise<string> {
+    async exec(query: CreateUserQuery): Promise<{ user: IUser, token: string; }> {
         const { email, name, image } = createUserSchema.parse(query);
-        const user = await this.userRepository.create({ email, name, image });
+
+        let user = await this.userRepository.findByEmail(email);
+        if (!user) {
+            user = await this.userRepository.create({ email, name, image });
+        } else {
+            user = await this.userRepository.update(user._id!, { email, name, image }) as IUser;
+        }
 
         const token = this.tokenService.generateToken({ email, id: user._id!, role: UserRole.USER });
 
-        return token;
+        user = {
+            _id: user._id!,
+            email: user.email,
+            name: user.name,
+            image: user.image
+        };
+
+        return {
+            user,
+            token
+        };
     }
 }
 

@@ -26,4 +26,8 @@ export default class UserRepository implements IUserRepository {
         return await this.userModel.countDocuments(query);
     }
 
+    async findByEmail(email: string): Promise<IUser | null> {
+        return await this.userModel.findOne({ email });
+    }
+
 }   

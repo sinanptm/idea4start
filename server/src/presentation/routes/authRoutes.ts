@@ -4,11 +4,11 @@ import { authMiddleware } from "../di/middlewares";
 
 const router = Router();
 
-router.post("/", userController.createUser);
-router.use(authMiddleware.exec);
+router.post("/", userController.createUser.bind(userController));
+router.use(authMiddleware.exec.bind(authMiddleware));
 router.route("/")
-    .get(userController.getProfile)
-    .put(userController.updateUser)
-    .delete(userController.logout);
+    .get(userController.getProfile.bind(userController))
+    .put(userController.updateUser.bind(userController))
+    .delete(userController.logout.bind(userController));
 
 export default router;

@@ -5,7 +5,6 @@ import cors from "cors";
 import routes from "./presentation/routes";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
-
 const app = express();
 
 app.use(express.json());

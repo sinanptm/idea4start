@@ -3,4 +3,5 @@ import BaseRepository from "./BaseRepository";
 
 export default interface IUserRepository extends BaseRepository<IUser> {
     countDocuments(query?: Record<string, any>): Promise<number>;
+    findByEmail(email: string): Promise<IUser | null>;
 }
