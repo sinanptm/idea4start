@@ -34,7 +34,6 @@ export default class UserController {
 
     async createUser(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            console.log("Create User Request", req.body);
             const { name, email, image } = req.body;
             const { user, token } = await this.createUserUseCase.exec({ name, email, image });
             res.status(StatusCode.CREATED).json({ user, token });

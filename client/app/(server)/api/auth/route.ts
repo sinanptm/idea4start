@@ -1,13 +1,12 @@
 import connectDB from "@/lib/db/connect";
 import User from "@/lib/db/models/User";
 import { NextResponse, NextRequest } from "next/server";
-import { cookies } from "next/headers";
 import { NEXT_PUBLIC_API_URL, NODE_ENV } from "@/config";
+import axios from "axios";
 
 export async function POST(request: NextRequest) {
   try {
     const userData = await request.json();
-    const cookieStore = await cookies();
 
     if (!userData) {
       return NextResponse.json(
@@ -17,17 +16,12 @@ export async function POST(request: NextRequest) {
     }
 
     if (NODE_ENV === "development") {
-      const token = await fetch(`${NEXT_PUBLIC_API_URL}/api/auth`, {
-        method: "POST",
-        body: JSON.stringify(userData),
-      });
+      const response = await axios.post(`${NEXT_PUBLIC_API_URL}/api/auth`, userData);
 
-
-      if (token.ok) {
-        const tokenData = await token.json();
-        cookieStore.set("user-token", tokenData.token);
+      if (response.status === 201) {
+        const { user, token } = response.data;
         return NextResponse.json(
-          { message: "User data saved successfully", user: tokenData.user },
+          { message: "User data saved successfully: From API", user, token },
           { status: 200 }
         );
       }

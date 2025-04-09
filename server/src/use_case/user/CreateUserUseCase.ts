@@ -43,7 +43,7 @@ export default class CreateUserUseCase {
 }
 
 const createUserSchema = z.object({
-    email: z.string().email(),
-    name: z.string(),
-    image: z.string(),
+    email: z.string({ required_error: "Email is required" }).email(),
+    name: z.string({ required_error: "Name is required" }),
+    image: z.string({ required_error: "Image is required" }),
 });

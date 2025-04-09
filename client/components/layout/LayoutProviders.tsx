@@ -9,6 +9,7 @@ import { SessionProvider } from "next-auth/react";
 import { RootLayoutProps } from "@/types/props";
 import NavBar from "@/components/layout/NavBar";
 import Toaster from "@/components/ui/toaster";
+import TokenSetter from "@/components/auth/TokenSetter";
 
 const LayoutProviders = ({ children }: RootLayoutProps) => {
     return (
@@ -25,6 +26,7 @@ const LayoutProviders = ({ children }: RootLayoutProps) => {
                             <Sidebar />
                             <SidebarInset>
                                 <NavBar Footer={<SideBarFooter />} />
+                                <TokenSetter />
                                 {children}
                                 <Analytics mode="auto" />
                                 <Toaster />

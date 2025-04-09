@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { Session } from "next-auth";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
 import {
@@ -8,7 +8,6 @@ import {
   AUTH_SECRET,
   GITHUB_CLIENT_SECRET,
   GITHUB_CLIENT_ID,
-  NEXT_PUBLIC_API_URL,
 } from "@/config";
 
 export const authOptions = {
@@ -34,24 +33,35 @@ export const authOptions = {
           body: JSON.stringify(user),
         });
 
-        const userData = await response.json();
-        console.log("User Data", userData);
+        if (!response.ok) {
+          throw new Error("Failed to sign in", await response.json());
+        }
 
-        user.id = userData.user._id;
+        const responseData = await response.json();
+        const { user: userData, token } = responseData;
+
+        user.id = userData._id;
+        user.accessToken = token;
+
+        return true;
       } catch (error) {
         console.error("Error saving user data:", error);
+        return false;
       }
-      return true;
     },
 
-    async session({ session, token }: { session: any, token: any; }) {
-      session.user.id = token.id;
+    async session({ session, token }: { session: Session, token: any; }) {
+      if (session?.user) {
+        session.user.id = token.id;
+        session.accessToken = token.accessToken;
+      }
       return session;
     },
 
     async jwt({ token, user }: { token: any, user: any; }) {
       if (user) {
         token.id = user.id;
+        token.accessToken = user.accessToken;
       }
       return token;
     },
