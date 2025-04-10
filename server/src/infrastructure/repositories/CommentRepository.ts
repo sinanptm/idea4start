@@ -53,6 +53,7 @@ export default class CommentRepository implements ICommentRepository {
             },
             { $sort: { likesCount: -1 } }
         ]);
+        console.log(comments);
         return comments;
     }
     async findAll(): Promise<IComment[]> {

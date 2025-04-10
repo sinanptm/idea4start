@@ -20,13 +20,13 @@ import LoginDialog from "../auth/LoginDialog";
 const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
   const { data: session } = useSession();
   const [content, setContent] = useState("");
-  const { data, isLoading } = useGetComments({ ideaId });
-  const comments = data?.comments || [];
+  const { data: comments, isLoading } = useGetComments({ ideaId });
+  console.log(comments);
   const { mutate: createComment, isPending: isCreating } = useCreateComment();
   const { mutate: likeComment, isPending: isLiking } = useLikeComment();
 
   const handleCreateComment = () => {
-    if (!content.trim()) return;
+    if (!content.trim() || !comments) return;
     const newCommentId = `comment_${Math.random().toString(36).substring(2, 15)}`;
 
     const newComment = {
@@ -37,7 +37,7 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
       user: session?.user,
       likes: [],
     };
-
+    // @ts-ignore
     comments.push(newComment);
 
     createComment(
@@ -53,6 +53,7 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
           console.log(comment);
 
           comments.pop();
+          // @ts-ignore
           comments.push(comment);
         },
         //eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,6 +70,7 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
   };
 
   const handleLikeComment = (commentId: string) => {
+    if (!comments) return;
     const id = `like_${Math.random().toString(36).substring(2, 15)}`;
     const newLike = {
       _id: id,
@@ -139,6 +141,8 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
       </Card>
     );
   }
+
+  if (!comments) return null;
 
   return (
     <Card>

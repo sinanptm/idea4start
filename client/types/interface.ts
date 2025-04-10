@@ -25,6 +25,12 @@ export interface IIdea {
     userLiked?: boolean;
 }
 
+export interface CommentWithUser extends IComment {
+    user: IUser;
+    likes: ICommentLike[];
+    likesCount: number;
+}
+
 export interface IVote {
     _id: string;
     ideaId?: string;

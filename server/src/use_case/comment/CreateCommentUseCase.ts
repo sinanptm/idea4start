@@ -16,6 +16,7 @@ export default class CreateCommentUseCase {
     ) { }
 
     async exec(query: CreateCommentQuery): Promise<IComment> {
+        console.log(query);
         if (!query.ideaId || !query.content || !query.userId || query.content.trim() === "") {
             throw new BadRequestError("Invalid request content, ideaId, userId is required");
         }

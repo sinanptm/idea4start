@@ -60,7 +60,7 @@ export const GET = withErrorHandler(async (request: NextRequest, { params }: { p
         { $sort: { likesCount: -1 } }
     ]);
 
-    return NextResponse.json({ comments: commentsWithLikes }, { status: StatusCode.Ok });
+    return NextResponse.json(commentsWithLikes, { status: StatusCode.Ok });
 });
 
 // comment create

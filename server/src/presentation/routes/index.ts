@@ -9,7 +9,7 @@ const router = Router();
 router.use("/auth", authRoutes);
 router.use("/idea", ideaRoutes);
 
-router.get("/suggestions", authMiddleware.exec, suggestionController.getSuggestions.bind(suggestionController));
+router.post("/suggestions", authMiddleware.exec, suggestionController.getSuggestions.bind(suggestionController));
 router.get("/", homePageController.getHomePageStatics.bind(homePageController));
 
 router.use(errorHandler);

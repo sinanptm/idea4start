@@ -2,7 +2,7 @@ import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/config";
 import { InputName } from "@/types";
 import { GetIdeasProps } from "@/types/props";
-import { IUser, IVote } from "@/types/interface";
+import { IUser, IVote, CommentWithUser } from "@/types/interface";
 
 const instance = axios.create({
     baseURL: `${NEXT_PUBLIC_API_URL}/api`,
@@ -47,7 +47,7 @@ export const deleteComment = async (ideaId: string, commentId: string) => {
     return response.data;
 };
 
-export const getComments = async (ideaId: string) => {
+export const getComments = async (ideaId: string): Promise<CommentWithUser[]> => {
     const response = await instance.get(`/idea/${ideaId}/comment`);
     return response.data;
 };
