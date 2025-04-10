@@ -31,5 +31,13 @@
         "Pass the error to the next middleware if it is an unexpected error"
       ]
     }
+  ],
+  "ignore": [
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    ".env",
+    "pnpm-lock.yaml",
   ]
 }
