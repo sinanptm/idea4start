@@ -2,7 +2,7 @@ import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/config";
 import { InputName } from "@/types";
 import { GetIdeasProps } from "@/types/props";
-import { IUser } from "@/types/interface";
+import { IUser, IVote } from "@/types/interface";
 
 const instance = axios.create({
     baseURL: `${NEXT_PUBLIC_API_URL}/api`,
@@ -34,7 +34,7 @@ export const createComment = async (ideaId: string, content: string) => {
 };
 
 
-export const createVote = async (ideaId: string, voteType: "up" | "down") => {
+export const createVote = async (ideaId: string, voteType: IVote["type"]) => {
     const response = await instance.patch(`/idea/${ideaId}/vote`, { voteType });
     return response.data;
 };

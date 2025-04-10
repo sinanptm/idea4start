@@ -13,7 +13,7 @@ export default class VoteController {
             const { voteType } = req.body;
             const userId = req.user?.id!;
             await this.updateVoteUseCase.exec({ ideaId, voteType, userId });
-            res.status(StatusCode.NO_CONTENT).send();
+            res.status(StatusCode.NO_CONTENT).json({ message: "Vote Recorded" });
         } catch (error) {
             next(error);
         }

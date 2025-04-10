@@ -17,6 +17,7 @@ export default class CreateUserUseCase {
     ) { }
 
     async exec(query: CreateUserQuery): Promise<{ user: IUser, token: string; }> {
+
         const { email, name, image } = createUserSchema.parse(query);
 
         let user = await this.userRepository.findByEmail(email);
@@ -29,7 +30,7 @@ export default class CreateUserUseCase {
         const token = this.tokenService.generateToken({ email, id: user._id!, role: UserRole.USER });
 
         user = {
-            _id: user._id!,
+            _id: user._id?.toString(),
             email: user.email,
             name: user.name,
             image: user.image

@@ -3,7 +3,7 @@ import IUserRepository from "@/domain/repositories/IUserRepository";
 import IVoteRepository from "@/domain/repositories/IVoteRepository";
 
 interface UpdateVoteQuery {
-    voteType: string;
+    voteType: "up" | "down" | "neutral";
     userId: string;
     ideaId: string;
 }
@@ -22,17 +22,26 @@ export default class UpdateVoteUseCase {
             throw new UnauthorizedError("User not found");
         }
         if (existingVote) {
-            if (existingVote.userId !== user._id) {
+            // If the vote is neutral, delete the vote
+            if (voteType === "neutral") {
+                await this.voteRepository.delete(existingVote._id!);
+                return;
+            }
+            if (existingVote.userId?.toString() !== user._id?.toString()) {
                 throw new UnauthorizedError("User not authorized to update this vote");
             }
-            existingVote.type = voteType as "up" | "down";
+            // If the vote is not neutral, update the vote
+            existingVote.type = voteType;
             await this.voteRepository.update(existingVote._id!, existingVote);
         } else {
-            await this.voteRepository.create({
-                userId,
-                ideaId,
-                type: voteType as "up" | "down"
-            });
+            // If the vote is not neutral, create the vote
+            if (voteType !== "neutral") {
+                await this.voteRepository.create({
+                    userId,
+                    ideaId,
+                    type: voteType as "up" | "down"
+                });
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useIdeasFilter from "../useIdeasFilter";
 import { createVote } from "@/lib/api";
+import { IVote } from "@/types/interface";
 
 
 
@@ -8,7 +9,7 @@ const useCreateVote = () => {
     const queryClient = useQueryClient();
     const { businessModel, industry, stage, sort, search, page, timePeriod } = useIdeasFilter();
     return useMutation({
-        mutationFn: ({ ideaId, voteType }: { ideaId: string, voteType: "up" | "down"; }) => {
+        mutationFn: ({ ideaId, voteType }: { ideaId: string, voteType: IVote["type"]; }) => {
             return createVote(ideaId, voteType);
         },
         onMutate: async () => {

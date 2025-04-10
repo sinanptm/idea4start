@@ -6,7 +6,9 @@ import { Response, NextFunction } from "express";
 export default class AuthMiddleware {
     constructor(
         private readonly tokenService: ITokenService
-    ) { }
+    ) {
+        this.exec = this.exec.bind(this);
+    }
     exec(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const authHeader = req.headers.authorization || req.headers.Authorization;

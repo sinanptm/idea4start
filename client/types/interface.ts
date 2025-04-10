@@ -29,7 +29,7 @@ export interface IVote {
     _id: string;
     ideaId?: string;
     userId?: string;
-    type: 'up' | 'down';
+    type: 'up' | 'down' | 'neutral';
 }
 
 export interface IUser {

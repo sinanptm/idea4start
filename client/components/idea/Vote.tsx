@@ -14,16 +14,16 @@ const Vote = ({ votes, ideaId }: VoteProps) => {
                 <Button
                     variant="ghost"
                     size="sm"
-                    disabled={isSubmitting || isUpVoted}
+                    disabled={isSubmitting}
                     aria-label="upvote"
-                    aria-disabled={isSubmitting || isUpVoted}
+                    aria-disabled={isSubmitting}
                     className={cn(
                         "rounded-full h-8 w-8 p-0 transition-colors",
                         isUpVoted
                             ? "bg-green-100 text-green-600 hover:bg-green-100 hover:text-green-600 dark:bg-green-900/30 dark:text-green-400"
                             : "hover:bg-slate-100 dark:hover:bg-slate-800",
                     )}
-                    onClick={() => handleVote("up")}
+                    onClick={() => handleVote(isUpVoted ? "neutral" : "up")}
                 >
                     <Image
                         src="/assets/arrow-up.svg"
@@ -41,16 +41,16 @@ const Vote = ({ votes, ideaId }: VoteProps) => {
                 <Button
                     variant="ghost"
                     size="sm"
-                    disabled={isSubmitting || isDownVoted}
+                    disabled={isSubmitting}
                     aria-label="downvote"
-                    aria-disabled={isSubmitting || isDownVoted}
+                    aria-disabled={isSubmitting}
                     className={cn(
                         "rounded-full h-8 w-8 p-0 transition-colors",
                         isDownVoted
                             ? "bg-red-100 text-red-600 hover:bg-red-100 hover:text-red-600 dark:bg-red-900/30 dark:text-red-400"
                             : "hover:bg-slate-100 dark:hover:bg-slate-800",
                     )}
-                    onClick={() => handleVote("down")}
+                    onClick={() => handleVote(isDownVoted ? "neutral" : "down")}
                 >
                     <Image
                         src="/assets/arrow-down.svg"
