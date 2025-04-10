@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
 
     await connectDB();
-    let user = await User.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       { email: userData.email },
       {
         $set: {

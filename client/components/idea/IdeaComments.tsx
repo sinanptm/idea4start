@@ -37,8 +37,8 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
       user: session?.user,
       likes: [],
     };
-    // @ts-ignore
-    comments.push(newComment);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    comments.push(newComment as any);
 
     createComment(
       { ideaId, content },
@@ -53,8 +53,8 @@ const IdeaComments = ({ ideaId }: IdeaCommentsProps) => {
           console.log(comment);
 
           comments.pop();
-          // @ts-ignore
-          comments.push(comment);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          comments.push(comment as any);
         },
         //eslint-disable-next-line @typescript-eslint/no-explicit-any
         onError: (error: any) => {
