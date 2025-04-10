@@ -14,8 +14,8 @@ router.patch("/:ideaId/vote", voteController.createVote.bind(voteController));
 router.route("/:ideaId/comment")
     .post(commentController.createComment.bind(commentController))
     .put(commentController.updateComment.bind(commentController))
-    .delete(commentController.deleteComment.bind(commentController));
+    .delete(commentController.deleteComment.bind(commentController))
+    .patch(commentController.createCommentLike.bind(commentController));
 
-router.post("/:ideaId/comment/like", commentController.createCommentLike.bind(commentController));
 
 export default router;
