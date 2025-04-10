@@ -1,31 +1,6 @@
 {
   "rules": [
     {
-      "sequential": true,
-      "steps": [
-        "Execute all setup requirements as specified in .initial-prompt.",
-        "Generate the complete initial codebase.",
-        "Index and document the current structure.",
-        "Verify all implementation steps.",
-        "Log completion status before proceeding to .features.",
-        "always use memo for components",
-        "always use useQuery for fetching data ",
-        "always use arrow functions and export the function in the last line of the file if possible as default export",
-        "use Emoji's in error message toast if possible"
-      ]
-    },
-    {
-      "name": "Feature Implementation",
-      "description": "Generate and integrate all features defined in .features without modifying the initial structure.",
-      "sequential": true,
-      "steps": [
-        "Begin only after .initial-prompt completion.",
-        "Implement all feature specifications from .features.",
-        "Ensure seamless integration with the initial codebase.",
-        "Verify proper functionality before proceeding to .seo-guidelines."
-      ]
-    },
-    {
       "name": "SEO Implementation",
       "description": "Optimize for search engines based on .seo-guidelines.",
       "sequential": true,
@@ -47,7 +22,13 @@
         "Perform a final verification before project completion.",
         "Verify all implementation steps.",
         "Use memoization for performance optimizations. using useMemo and useCallback and memo",
-        "Arrange imports in a waterfall model"
+        "Arrange imports in a waterfall model",
+        "always use memo for components",
+        "always use useQuery for fetching data ",
+        "always use arrow functions and export the function in the last line of the file if possible as default export",
+        "use Emoji's in error message toast if possible",
+        "always use try catch block for error handling",
+        "Pass the error to the next middleware if it is an unexpected error"
       ]
     }
   ]
